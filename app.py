@@ -365,5 +365,4 @@ option = {
 };
 
 st_echarts(
-    options=options, height="600px", key="render_pie_events"
-)
+    options=options, height="600px")
