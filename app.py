@@ -625,4 +625,4 @@ c = (
     
     .set_global_opts(title_opts=opts.TitleOpts(title="Line-MarkPoint"))
 )
-st_pyecharts(grid,height="600px")
+st_pyecharts(c,height="600px")
