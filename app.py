@@ -246,7 +246,7 @@ if s is not None:
     st.write(s)
     
     
-const data = [
+data = [
   [
     [28604, 77, 17096869, 'Australia', 1990],
     [31163, 77.4, 27662440, 'Canada', 1990],
