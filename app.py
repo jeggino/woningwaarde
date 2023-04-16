@@ -43,8 +43,7 @@ sidebar = st.sidebar
 
 
 # -------------------------------------------------------
-with open("./data/drink-flavors.json", "r") as f:
-    data = json.loads(f.read())
+data = df["df_woningwaarde"].groupby("LABEL",as_index=False).size().to_json()
 
 option = {
     "title": {
