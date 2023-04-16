@@ -619,7 +619,7 @@ c = (
     .add_xaxis(df_line["Bouwjaar_rond"].tolist())
     .add_yaxis(
         "Points",
-        df_line["size"].tolist(),
+       [1, 3, 9, 27, 81, 247, 741, 2223, 6669],
         markline_opts=opts.MarkLineOpts(data=[opts.MarkLineItem(type_="average")]),
         markpoint_opts=opts.MarkPointOpts(data=[opts.MarkPointItem(type_="min"),opts.MarkPointItem(type_="max")])
 #         markpoint_opts=opts.MarkPointOpts(data=[opts.MarkPointItem(type_="min")]),
