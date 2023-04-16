@@ -290,12 +290,7 @@ data = [
     [53354, 79.1, 321773631, 'United States', 2015]
   ]
 ];
-option = {
-  'title': {
-    'text': 'Life Expectancy and GDP by Country',
-    'left': '5%',
-    'top': '3%'
-  },
+option_2 = {
   'legend': {
     'right': '10%',
     'top': '3%',
@@ -325,35 +320,36 @@ option = {
       'name': '1990',
       'data': data[0],
       'type': 'scatter',
-      'symbolSize': 8,
+      'symbolSize': 'function (data) {return Math.sqrt(data[2]) / 5e2;}',
       'emphasis': {
         'focus': 'series',
         'label': {
-          'show': 'true',
+          'show': True,
           'formatter': 'function (param) {return param.data[3];}',
           'position': 'top'
         }
       },
       'itemStyle': {
         'shadowBlur': 10,
-        
+        'shadowColor': 'rgba(120, 36, 50, 0.5)',
+        'shadowOffsetY': 5,
       }
     },
     {
       'name': '2015',
       'data': data[1],
       'type': 'scatter',
-      'symbolSize': 3,
-#       emphasis: {
-#         focus: 'series',
-#         label: {
-#           show: true,
+      'symbolSize': 'function (data) { return Math.sqrt(data[2]) / 5e2;}',
+      'emphasis': {
+        'focus': 'series',
+        'label': {
+          'show': True,
 #           formatter: function (param) {
 #             return param.data[3];
 #           },
-#           position: 'top'
-#         }
-#       },
+          'position': 'top'
+        }
+      },
       'itemStyle': {
         'shadowBlur': 10,
         'shadowColor': 'rgba(25, 100, 150, 0.5)',
@@ -363,6 +359,5 @@ option = {
     }
   ]
 };
-
 st_echarts(
-    options=options, height="600px")
+    options=option_2, height="600px")
