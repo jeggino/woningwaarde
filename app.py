@@ -102,7 +102,13 @@ if s is not None:
     value_gauge = round((s / data["size"].sum()),2)
    
     liquidfill_option = {
-        "series": [{"type": "liquidFill", "data": [value_gauge], "shape": 'diamond'}]
+        "series": [{"type": "liquidFill", "data": [value_gauge],
+                    'backgroundStyle': {
+                            'borderWidth': 5,
+                            'borderColor': 'red',
+                            'color': 'yellow'
+                        }
+                   }]
     }
     
    
