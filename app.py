@@ -87,7 +87,7 @@ s = st_echarts(
 if s is not None:
     
     liquidfill_option = {
-        "series": [{"type": "liquidFill", "data": [s], "shape": 'diamond'}]
+        "series": [{"type": "liquidFill", "data": [s]/data["size"].sum(), "shape": 'diamond'}]
     }
     
    
