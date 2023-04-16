@@ -91,9 +91,10 @@ s = st_echarts(
 
 if s is not None:
     
+    value_gauge = (s * data["size"].sum())/100
    
     liquidfill_option = {
-        "series": [{"type": "liquidFill", "data": [s/data["size"].sum()], "shape": 'diamond'}]
+        "series": [{"type": "liquidFill", "data": [value_gauge], "shape": 'diamond'}]
     }
     
    
@@ -114,7 +115,7 @@ gaugeData = [
     }
   },
   {
-    'value': 40,
+    'value': value_gauge,
     'name': 'Good',
     'title': {
       'offsetCenter': ['0%', '0%']
