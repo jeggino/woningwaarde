@@ -7,7 +7,7 @@ import altair as alt
 import pydeck as pdk
 import streamlit_folium as stf
 
-from streamlit_echarts import st_echarts
+from streamlit_echarts import st_echarts,st_pyecharts
 
 import math 
 
