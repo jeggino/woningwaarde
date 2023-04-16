@@ -44,14 +44,7 @@ sidebar = st.sidebar
 
 # -------------------------------------------------------
 # stf.st_folium(df[df_woningwaarde].explore())
-option = {
-    "xAxis": {
-        "type": "category",
-        "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    },
-    "yAxis": {"type": "value"},
-    "series": [{"data": [820, 932, 901, 934, 1290, 1330, 1320], "type": "line"}],
+liquidfill_option = {
+    "series": [{"type": "liquidFill", "data": [0.6, 0.5, 0.4, 0.3]}]
 }
-st_echarts(
-    options=option, height="400px",
-)
+st_echarts(liquidfill_option)
