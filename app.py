@@ -44,24 +44,46 @@ sidebar = st.sidebar
 
 # -------------------------------------------------------
 data = df["df_woningwaarde"].groupby("LABEL",as_index=False).size()
+data_echarts = []
+for idx, row in a.iterrows():
+    data_echarts.append({"value": row["size"], "name": row["LABEL"]})
+
 st.dataframe(data)
-options = {
-    "xAxis": {
-        "type": "category",
-        "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+
+option = {
+    "legend": {"top": "bottom"},
+    "toolbox": {
+        "show": True,
+        "feature": {
+            "mark": {"show": True},
+            "dataView": {"show": True, "readOnly": False},
+            "restore": {"show": True},
+            "saveAsImage": {"show": True},
+        },
     },
-    "yAxis": {"type": "value"},
-    "series": [{"data": [120, 200, 150, 80, 70, 110, 130], "type": "bar"}],
+    "series": [
+        {
+            "name": "vvdr",
+            "type": "pie",
+            "radius": [50, 250],
+            "center": ["50%", "50%"],
+            "roseType": "area",
+            "itemStyle": {"borderRadius": 8},
+            "data": data_echarts,
+        }
+    ],
 }
+
 events = {
     "click": "function(params) { console.log(params.name); return params.value }",
     "dblclick": None,
 }
 
-st.markdown("Click on a bar for label + value, double click to see type+name+value")
 s = st_echarts(
-    options=options, events=events, height="500px", key="render_basic_bar_events"
+    options=option, height="600px", events=events, key="render_basic_bar_events"
 )
+
+
 if s is not None:
     
     liquidfill_option = {
