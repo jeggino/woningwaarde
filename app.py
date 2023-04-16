@@ -286,7 +286,7 @@ option_2 = {
         'focus': 'series',
         'label': {
           'show': True,
-#           'formatter': lambda param: param.data[3],
+          'formatter': lambda param: param[3],
             
           'position': 'top'
         }
