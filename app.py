@@ -611,6 +611,7 @@ st_pyecharts(c_w,height="600px")
 
 
 #----------------------------------
+from pyecharts.charts import Line
 df_line = df["df_corporatiebezit"].groupby("Bouwjaar_rond",as_index=False).size().tail(20)
 
 c = (
