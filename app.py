@@ -115,7 +115,7 @@ gaugeData = [
     }
   },
   {
-    'value': value_gauge,
+    'value': s,
     'name': 'Good',
     'title': {
       'offsetCenter': ['0%', '0%']
@@ -186,7 +186,7 @@ option = {
         'borderColor': 'inherit',
         'borderRadius': 20,
         'borderWidth': 1,
-        'formatter': '{value}%'
+        'formatter': '{value}'
       }
     }
   ]
