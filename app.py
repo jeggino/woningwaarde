@@ -247,7 +247,7 @@ data = [
 
 
 def fun(data):
-    return data[1]/2
+    return data.data[3] / 2
 
 option_2 = {
   'legend': {
