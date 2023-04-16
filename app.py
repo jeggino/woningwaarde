@@ -276,7 +276,8 @@ option_2 = {
       'name': '1990',
       'data': data[0],
       'type': 'scatter',
-      'symbolSize': 8,
+#       'symbolSize': 8,
+
       'emphasis': {
         'focus': 'series',
         'label': {
