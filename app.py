@@ -620,7 +620,8 @@ c = (
     .add_yaxis(
         "Points",
         df_line["size"].tolist(),
-        markline_opts=opts.MarkLineOpts(data=[opts.MarkLineItem(type_="average")])
+        markline_opts=opts.MarkLineOpts(data=[opts.MarkLineItem(type_="average")]),
+        markpoint_opts=opts.MarkPointOpts(data=[opts.MarkPointItem(type_="min"),opts.MarkPointItem(type_="max")])
 #         markpoint_opts=opts.MarkPointOpts(data=[opts.MarkPointItem(type_="min")]),
     )
     
