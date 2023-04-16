@@ -55,7 +55,7 @@ options = {
 }
 events = {
     "click": "function(params) { console.log(params.name); return params.value }",
-    "dblclick": "function(params) { return [params.type, params.name, params.value] }",
+    "dblclick": None,
 }
 
 st.markdown("Click on a bar for label + value, double click to see type+name+value")
