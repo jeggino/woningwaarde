@@ -65,7 +65,7 @@ s = st_echarts(
     options=options, events=events, height="500px", key="render_basic_bar_events"
 )
 if s is not None:    
-    liquidfill_option = {"series": [{"type": "gauge", "data": [s[2]]}]}
+    liquidfill_option = {"series": [{"type": "gauge", "data": [s]}]}
     st_echarts(liquidfill_option)
     
 
