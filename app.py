@@ -70,4 +70,5 @@ s = st_echarts(
 )
 if s is not None:
     st.write(s)
+    st.write(s[2])
 
