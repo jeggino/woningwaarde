@@ -596,7 +596,7 @@ from pyecharts import options as opts
 from pyecharts.charts import EffectScatter
 from pyecharts.faker import Faker
 
-c = (
+c_w = (
     EffectScatter()
     .add_xaxis(Faker.choose())
     .add_yaxis("", Faker.values())
@@ -608,4 +608,4 @@ c = (
     .render("effectscatter_splitline.html")
 )
 
-st_pyecharts(c,height="600px")
+st_pyecharts(c_w,height="600px")
