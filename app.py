@@ -109,7 +109,7 @@ gaugeData = [
       'offsetCenter': ['0%', '-30%']
     },
     'detail': {
-      'valueAnimation': true,
+      'valueAnimation': True,
       'offsetCenter': ['0%', '-20%']
     }
   },
@@ -120,7 +120,7 @@ gaugeData = [
       'offsetCenter': ['0%', '0%']
     },
     'detail': {
-      'valueAnimation': true,
+      'valueAnimation': True,
       'offsetCenter': ['0%', '10%']
     }
   },
@@ -131,7 +131,7 @@ gaugeData = [
       'offsetCenter': ['0%', '30%']
     },
     'detail': {
-      'valueAnimation': true,
+      'valueAnimation': True,
       'offsetCenter': ['0%', '40%']
     }
   }
