@@ -520,7 +520,7 @@ from pyecharts.faker import Faker
 
 c = (
     Scatter()
-    .add_xaxis(Faker.choose())
+    .add_xaxis(list(range(10))
     .add_yaxis("Serie 1", Faker.values())
     .add_yaxis("Serie 2", Faker.values())
     .set_global_opts(
