@@ -296,17 +296,17 @@ option_2 = {
       'name': '2015',
       'data': data[1],
       'type': 'scatter',
-      'symbolSize': [lambda x: x*3],
-#       emphasis: {
-#         focus: 'series',
-#         label: {
-#           show: true,
+#       'symbolSize': [lambda x: x*3],
+      emphasis: {
+        focus: 'series',
+        label: {
+          show: true,
 #           formatter: function (param) {
 #             return param.data[3];
 #           },
-#           position: 'top'
-#         }
-#       },
+          position: 'top'
+        }
+      },
       'itemStyle': {
         'shadowBlur': 10,
         
