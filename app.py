@@ -57,19 +57,15 @@ options = {
     "series": [{"data": [120, 200, 150, 80, 70, 110, 130], "type": "bar"}],
 }
 events = {
-    "click": "function(params) { console.log(params.name); return params.name }",
-    "dblclick": "function(params) { return [params.type, params.name, params.value] }",
+    "click": "function(params) { console.log(params.name); return  params.value }",
 }
 
 st.markdown("Click on a bar for label + value, double click to see type+name+value")
 s = st_echarts(
     options=options, events=events, height="500px", key="render_basic_bar_events"
 )
-if s is not None:
-    st.write(s)
-    
-    if s[0]=="dblclick":
-        liquidfill_option = {"series": [{"type": "gauge", "data": [s[2]]}]}
-        st_echarts(liquidfill_option)
+if s is not None:    
+    liquidfill_option = {"series": [{"type": "gauge", "data": [s[2]]}]}
+    st_echarts(liquidfill_option)
     
 
