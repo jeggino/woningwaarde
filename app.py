@@ -54,7 +54,7 @@ options = {
     "series": [{"data": [120, 200, 150, 80, 70, 110, 130], "type": "bar"}],
 }
 events = {
-    "click": "function(params) { console.log(params.name); return params.name }",
+    "click": "function(params) { console.log(params.name); return params.value }",
     "dblclick": "function(params) { return [params.type, params.name, params.value] }",
 }
 
