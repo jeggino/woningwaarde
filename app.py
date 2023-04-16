@@ -622,8 +622,7 @@ c = (
        [1, 3, 9, 27, 81, 247, 741, 2223, 6669],
         markline_opts=opts.MarkLineOpts(data=[opts.MarkLineItem(type_="average")]),
         markpoint_opts=opts.MarkPointOpts(data=[opts.MarkPointItem(type_="min"),opts.MarkPointItem(type_="max")])
-#         markpoint_opts=opts.MarkPointOpts(data=[opts.MarkPointItem(type_="min")]),
-    )
+        linestyle_opts=opts.LineStyleOpts(color="green", width=4, type_="dashed"),    )
     
     .set_global_opts(title_opts=opts.TitleOpts(title="Line-MarkPoint"))
 )
