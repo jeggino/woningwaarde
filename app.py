@@ -9,6 +9,8 @@ import streamlit_folium as stf
 
 from streamlit_echarts import st_echarts
 
+import math 
+
 # -------------------------------------------------------
 st.set_page_config(
     page_title="Amterdam woon[plaan",
@@ -427,9 +429,7 @@ option = {
             "coordinateSystem": "singleAxis",
             "type": "scatter",
             "data": [],
-            "symbolSize": JsCode(
-                "function(dataItem){return dataItem[1]*4}"
-            ).js_code,
+            "symbolSize": dataItem[1]**4,
         }
         for idx, _ in enumerate(days)
     ],
