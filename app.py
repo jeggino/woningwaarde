@@ -65,13 +65,7 @@ options = {
                 "label": {"show": True, "fontSize": "40", "fontWeight": "bold"}
             },
             "labelLine": {"show": False},
-            "data": [
-                {"value": 1048, "name": "Alberto"},
-                {"value": 735, "name": "tommaso"},
-                {"value": 580, "name": "Pasquale"},
-                {"value": 484, "name": "Romina"},
-                {"value": 300, "name": "Luigi"},
-            ],
+            "data": data,
         }
     ],
 }
