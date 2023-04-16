@@ -46,10 +46,7 @@ sidebar = st.sidebar
 data = df["df_woningwaarde"].groupby("LABEL",as_index=False).size()
 st.dataframe(data)
 
-liquidfill_option = {
-    "series": [{"type": "gauge", "data": [0.6]}]
-}
-st_echarts(liquidfill_option)
+
 
 options = {
     "xAxis": {
@@ -71,4 +68,7 @@ s = st_echarts(
 if s is not None:
     st.write(s)
     st.write(s[2])
+    liquidfill_option = {"series": [{"type": "gauge", "data": [s[2]/100,0.3]}]}
+    st_echarts(liquidfill_option)
+    
 
