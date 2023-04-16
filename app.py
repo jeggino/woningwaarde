@@ -588,4 +588,4 @@ c = (
     
 )
 
-st_pyecharts(c)
+st_pyecharts(c,height="600px")
