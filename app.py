@@ -203,6 +203,33 @@ option = {
 st_echarts(option, height="600px")
 
 
+#------------------------------------
+option = {
+  'tooltip': {
+    'formatter': '{a} <br/>{b} : {c}%'
+  },
+  'series': [
+    {
+      'name': 'Pressure',
+      'type': 'gauge',
+      'progress': {
+        'show': True
+      },
+      'detail': {
+        'valueAnimation': True,
+        'formatter': '{value}'
+      },
+      'data': [
+        {
+          'value': 50,
+          'name': 'SCORE'
+        }
+      ]
+    }
+  ]
+};
+
+st_echarts(option, height="600px")
 
 
 
