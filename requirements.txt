@@ -1,3 +1,4 @@
 streamlit
 geopandas
 streamlit_folium
+streamlit-echarts
