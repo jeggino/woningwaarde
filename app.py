@@ -44,7 +44,7 @@ sidebar = st.sidebar
 
 # -------------------------------------------------------
 data = df["df_woningwaarde"].groupby("LABEL",as_index=False).size().to_json()
-st_dataframe(data)
+st.dataframe(data)
 
 options = {
     "tooltip": {"trigger": "item"},
