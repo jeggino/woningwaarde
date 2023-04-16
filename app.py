@@ -4,7 +4,6 @@ import geopandas as gpd
 import datetime
 from datetime import date,datetime
 import altair as alt
-import plotly.express as px
 import pydeck as pdk
 import streamlit_folium as stf
 
