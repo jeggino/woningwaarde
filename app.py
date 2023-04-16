@@ -620,7 +620,7 @@ c = (
     .add_yaxis(
         "商家A",
         df_line["size"].tolist(),
-        markpoint_opts=opts.MarkPointOpts(data=[opts.MarkPointItem(type_="min"),opts.MarkPointItem(type_="max")]),
+        markpoint_opts=opts.MarkPointOpts(data=[opts.MarkPointItem(type_="min")]),
     )
     
     .set_global_opts(title_opts=opts.TitleOpts(title="Line-MarkPoint"))
