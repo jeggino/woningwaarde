@@ -43,8 +43,39 @@ sidebar = st.sidebar
 
 
 # -------------------------------------------------------
-# stf.st_folium(df[df_woningwaarde].explore())
-liquidfill_option = {
-    "series": [{"type": "liquidFill", "data": [0.8]}]
+with open("./data/drink-flavors.json", "r") as f:
+    data = json.loads(f.read())
+
+option = {
+    "title": {
+        "text": "WORLD COFFEE RESEARCH SENSORY LEXICON",
+        "subtext": "Source: https://worldcoffeeresearch.org/work/sensory-lexicon/",
+        "textStyle": {"fontSize": 14, "align": "center"},
+        "subtextStyle": {"align": "center"},
+        "sublink": "https://worldcoffeeresearch.org/work/sensory-lexicon/",
+    },
+    "series": {
+        "type": "sunburst",
+        "data": data,
+        "radius": [0, "95%"],
+        "sort": None,
+        "emphasis": {"focus": "ancestor"},
+        "levels": [
+            {},
+            {
+                "r0": "15%",
+                "r": "35%",
+                "itemStyle": {"borderWidth": 2},
+                "label": {"rotate": "tangential"},
+            },
+            {"r0": "35%", "r": "70%", "label": {"align": "right"}},
+            {
+                "r0": "70%",
+                "r": "72%",
+                "label": {"position": "outside", "padding": 3, "silent": False},
+                "itemStyle": {"borderWidth": 3},
+            },
+        ],
+    },
 }
-st_echarts(liquidfill_option)
+st_echarts(option, height="700px")
