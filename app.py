@@ -232,7 +232,122 @@ option = {
 st_echarts(option, height="600px")
 
 
+#------------------------------------
+option = {
+  'series': [
+    {
+      'type': 'gauge',
+      'center': ['50%', '60%'],
+      'startAngle': 200,
+      'endAngle': -20,
+      'min': 0,
+      'max': 360,
+      'splitNumber': 12,
+      'itemStyle': {
+        'color': '#FFAB91'
+      },
+      'progress': {
+        'show': True,
+        'width': 30
+      },
+      'pointer': {
+        'show': False
+      },
+      'axisLine': {
+        'lineStyle': {
+          'width': 30
+        }
+      },
+      'axisTick': {
+        'distance': -45,
+        'splitNumber': 5,
+        'lineStyle': {
+          'width': 2,
+          'color': '#999'
+        }
+      },
+      'splitLine': {
+        'distance': -52,
+        'length': 14,
+        'lineStyle': {
+          'width': 3,
+          'color': '#999'
+        }
+      },
+      'axisLabel': {
+        'distance': -20,
+        'color': '#999',
+        'fontSize': 20
+      },
+      'anchor': {
+        'show': False
+      },
+      'title': {
+        'show': False
+      },
+      'detail': {
+        'valueAnimation': True,
+        'width': '60%',
+        'lineHeight': 40,
+        'borderRadius': 8,
+        'offsetCenter': [0, '-15%'],
+        'fontSize': 60,
+        'fontWeight': 'bolder',
+        'formatter': '{value} °C',
+        'color': 'inherit'
+      },
+      'data': [
+        {
+          'value': 20
+        }
+      ]
+    },
+    {
+      'type': 'gauge',
+      'center': ['50%', '60%'],
+      'startAngle': 200,
+      'endAngle': -20,
+      'min': 0,
+      'max': 360,
+      'itemStyle': {
+        'color': '#FD7347'
+      },
+      'progress': {
+        'show': True,
+        'width': 8
+      },
+      'pointer': {
+        'show': False
+      },
+      'axisLine': {
+        'show': False
+      },
+      'axisTick': {
+        'show': False
+      },
+      'splitLine': {
+        'show': False
+      },
+      'axisLabel': {
+        'show': False
+      },
+      'detail': {
+        'show': False
+      },
+      'data': [
+        {
+          'value': 20
+        }
+      ]
+    }
+  ]
+};
 
+st_echarts(
+    options=option, height="600px")
+
+
+#------------------------------------
 options = {
     "title": {"text": "某站点用户访问来源", "subtext": "纯属虚构", "left": "center"},
     "tooltip": {"trigger": "item"},
