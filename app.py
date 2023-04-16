@@ -90,7 +90,7 @@ if s is not None:
     st.write(sum)
     
     liquidfill_option = {
-        "series": [{"type": "liquidFill", "data": ([s]/data["size"].sum()), "shape": 'diamond'}]
+        "series": [{"type": "liquidFill", "data": [sum], "shape": 'diamond'}]
     }
     
    
