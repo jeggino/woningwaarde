@@ -45,36 +45,35 @@ sidebar = st.sidebar
 # -------------------------------------------------------
 data = df["df_woningwaarde"].groupby("LABEL",as_index=False).size().to_json()
 
-option = {
-    "title": {
-        "text": "WORLD COFFEE RESEARCH SENSORY LEXICON",
-        "subtext": "Source: https://worldcoffeeresearch.org/work/sensory-lexicon/",
-        "textStyle": {"fontSize": 14, "align": "center"},
-        "subtextStyle": {"align": "center"},
-        "sublink": "https://worldcoffeeresearch.org/work/sensory-lexicon/",
-    },
-    "series": {
-        "type": "sunburst",
-        "data": data,
-        "radius": [0, "95%"],
-        "sort": None,
-        "emphasis": {"focus": "ancestor"},
-        "levels": [
-            {},
-            {
-                "r0": "15%",
-                "r": "35%",
-                "itemStyle": {"borderWidth": 2},
-                "label": {"rotate": "tangential"},
+options = {
+    "tooltip": {"trigger": "item"},
+    "legend": {"top": "5%", "left": "center"},
+    "series": [
+        {
+            "name": "访问来源",
+            "type": "pie",
+            "radius": ["40%", "70%"],
+            "avoidLabelOverlap": False,
+            "itemStyle": {
+                "borderRadius": 10,
+                "borderColor": "#fff",
+                "borderWidth": 2,
             },
-            {"r0": "35%", "r": "70%", "label": {"align": "right"}},
-            {
-                "r0": "70%",
-                "r": "72%",
-                "label": {"position": "outside", "padding": 3, "silent": False},
-                "itemStyle": {"borderWidth": 3},
+            "label": {"show": False, "position": "center"},
+            "emphasis": {
+                "label": {"show": True, "fontSize": "40", "fontWeight": "bold"}
             },
-        ],
-    },
+            "labelLine": {"show": False},
+            "data": [
+                {"value": 1048, "name": "Alberto"},
+                {"value": 735, "name": "tommaso"},
+                {"value": 580, "name": "Pasquale"},
+                {"value": 484, "name": "Romina"},
+                {"value": 300, "name": "Luigi"},
+            ],
+        }
+    ],
 }
-st_echarts(option, height="700px")
+st_echarts(
+    options=options, height="500px",
+)
