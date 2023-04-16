@@ -191,4 +191,4 @@ option = {
   ]
 };
 
-st_echarts(option)
+st_echarts(option, height="600px")
