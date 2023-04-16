@@ -43,7 +43,7 @@ sidebar = st.sidebar
 
 
 # -------------------------------------------------------
-data = df["df_woningwaarde"].groupby("LABEL",as_index=False).size().to_json()
+data = df["df_woningwaarde"].groupby("LABEL",as_index=False).size()
 st.dataframe(data)
 
 options = {
