@@ -98,3 +98,97 @@ if s is not None:
     
    
     st_echarts(liquidfill_option)
+    
+
+    
+gaugeData = [
+  {
+    'value': 20,
+    'name': 'Perfect',
+    'title': {
+      'offsetCenter': ['0%', '-30%']
+    },
+    'detail': {
+      'valueAnimation': true,
+      'offsetCenter': ['0%', '-20%']
+    }
+  },
+  {
+    'value': 40,
+    'name': 'Good',
+    'title': {
+      'offsetCenter': ['0%', '0%']
+    },
+    'detail': {
+      'valueAnimation': true,
+      'offsetCenter': ['0%', '10%']
+    }
+  },
+  {
+    'value': 60,
+    'name': 'Commonly',
+    'title': {
+      'offsetCenter': ['0%', '30%']
+    },
+    'detail': {
+      'valueAnimation': true,
+      'offsetCenter': ['0%', '40%']
+    }
+  }
+];
+
+option = {
+  'series': [
+    {
+      'type': 'gauge',
+      'startAngle': 90,
+      'endAngle': -270,
+      'pointer': {
+        'show': False
+      },
+      'progress': {
+        'show': True,
+        'overlap': False,
+        'roundCap': False,
+        'clip': False,
+        'itemStyle': {
+          'borderWidth': 1,
+          'borderColor': '#464646'
+        }
+      },
+      'axisLine': {
+        'lineStyle': {
+          'width': 40
+        }
+      },
+      'splitLine': {
+        'show': False,
+        'distance': 0,
+        'length': 10
+      },
+      'axisTick': {
+        'show': False
+      },
+      'axisLabel': {
+        'show': False,
+        'distance': 50
+      },
+      'data': gaugeData,
+      'title': {
+        'fontSize': 14
+      },
+      'detail': {
+        'width': 50,
+        'height': 14,
+        'fontSize': 14,
+        'color': 'inherit',
+        'borderColor': 'inherit',
+        'borderRadius': 20,
+        'borderWidth': 1,
+        'formatter': '{value}%'
+      }
+    }
+  ]
+};
+
+st_echarts(option)
