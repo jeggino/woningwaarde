@@ -52,8 +52,13 @@ st.dataframe(data)
 
 option = {
     "legend": {"top": "bottom"},
+    "labelLine": {
+        "lineStyle": {
+          "color": '#235894'
+        }
+      },
     "toolbox": {
-        "show": True,
+        "show": False,
         "feature": {
             "mark": {"show": True},
             "dataView": {"show": True, "readOnly": False},
@@ -86,11 +91,9 @@ s = st_echarts(
 
 if s is not None:
     
-    sum = (s/data["size"].sum())
-    st.write(sum)
-    
+   
     liquidfill_option = {
-        "series": [{"type": "liquidFill", "data": [sum], "shape": 'diamond'}]
+        "series": [{"type": "liquidFill", "data": [s/data["size"].sum()], "shape": 'diamond'}]
     }
     
    
