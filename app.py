@@ -618,7 +618,7 @@ c = (
     Line()
     .add_xaxis(df_line["Bouwjaar_rond"].tolist())
     .add_yaxis(
-        "商家A",
+        "Points",
         df_line["size"].tolist(),
         markpoint_opts=opts.MarkPointOpts(data=[opts.MarkPointItem(type_="min")]),
     )
