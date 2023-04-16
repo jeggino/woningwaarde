@@ -246,8 +246,8 @@ data = [
 ];
 
 
-def fun(x):
-    return x[1]/2
+def fun(data):
+    return data[1]/2
 
 option_2 = {
   'legend': {
