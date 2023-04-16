@@ -247,11 +247,6 @@ data = [
 
 
 option_2 = {
-  'title': {
-    'text': 'Life Expectancy and GDP by Country',
-    'left': '5%',
-    'top': '3%'
-  },
   'legend': {
     'right': '10%',
     'top': '3%',
@@ -286,7 +281,7 @@ option_2 = {
         'focus': 'series',
         'label': {
           'show': True,
-          'formatter': lambda param: param[3],
+#           'formatter': lambda param: param[3],
             
           'position': 'top'
         }
@@ -300,7 +295,7 @@ option_2 = {
       'name': '2015',
       'data': data[1],
       'type': 'scatter',
-      'symbolSize': data[1][2],
+      'symbolSize': {lambda x:x**2},
 #       emphasis: {
 #         focus: 'series',
 #         label: {
