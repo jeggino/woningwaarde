@@ -244,6 +244,8 @@ data = [
     [53354, 79.1, 321773631, 'United States', 2015]
   ]
 ];
+
+
 option_2 = {
   'title': {
     'text': 'Life Expectancy and GDP by Country',
@@ -280,16 +282,15 @@ option_2 = {
       'data': data[0],
       'type': 'scatter',
       'symbolSize': 8,
-#       'emphasis': {
-#         focus: 'series',
-#         label: {
-#           show: true,
-#           formatter: function (param) {
-#             return param.data[3];
-#           },
-#           position: 'top'
-#         }
-#       },
+      'emphasis': {
+        'focus': 'series',
+        'label': {
+          'show': True,
+          'formatter': data[3],
+            
+          'position': 'top'
+        }
+      },
       'itemStyle': {
         'shadowBlur': 10,
         
