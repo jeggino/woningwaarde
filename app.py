@@ -356,8 +356,8 @@ option = {
 #       },
       'itemStyle': {
         'shadowBlur': 10,
-        shadowColor: 'rgba(25, 100, 150, 0.5)',
-        shadowOffsetY: 5,
+        'shadowColor': 'rgba(25, 100, 150, 0.5)',
+        'shadowOffsetY': 5,
         
       }
     }
