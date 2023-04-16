@@ -563,7 +563,7 @@ option = {
   'series': [
     {
       'type': 'bar3D',
-      'data': data.map(lambda item: {item[1], item[0], item[2]}),
+      'data': data.map(lambda item: [item[1], item[0], item[2]]),
       'shading': 'lambert',
       'label': {
         'fontSize': 16,
