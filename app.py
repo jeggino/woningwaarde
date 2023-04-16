@@ -45,6 +45,6 @@ sidebar = st.sidebar
 # -------------------------------------------------------
 # stf.st_folium(df[df_woningwaarde].explore())
 liquidfill_option = {
-    "series": [{"type": "liquidFill", "data": [0.8, 0.5, 0.4, 0.3]}]
+    "series": [{"type": "liquidFill", "data": [0.8]}]
 }
 st_echarts(liquidfill_option)
