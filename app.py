@@ -46,29 +46,9 @@ sidebar = st.sidebar
 data = df["df_woningwaarde"].groupby("LABEL",as_index=False).size()
 st.dataframe(data)
 
-options = {
-    "tooltip": {"trigger": "item"},
-    "legend": {"top": "5%", "left": "center"},
-    "series": [
-        {
-            "name": "访问来源",
-            "type": "pie",
-            "radius": ["40%", "70%"],
-            "avoidLabelOverlap": False,
-            "itemStyle": {
-                "borderRadius": 10,
-                "borderColor": "#fff",
-                "borderWidth": 2,
-            },
-            "label": {"show": False, "position": "center"},
-            "emphasis": {
-                "label": {"show": True, "fontSize": "40", "fontWeight": "bold"}
-            },
-            "labelLine": {"show": False},
-            "data": data,
-        }
-    ],
+liquidfill_option = {
+    "series": [{"type": "gauge", "data": [0.6]}]
 }
-st_echarts(
-    options=options, height="500px",
-)
+st_echarts(liquidfill_option)
+
+gauge
