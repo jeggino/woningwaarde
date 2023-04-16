@@ -57,7 +57,8 @@ options = {
     "series": [{"data": [120, 200, 150, 80, 70, 110, 130], "type": "bar"}],
 }
 events = {
-    "click": "function(params) { console.log(params.value); return  params.value }",
+    "click": "function(params) { console.log(params.name); return params.name }",
+    "dblclick": "function(params) { return [params.type, params.name, params.value] }",
 }
 
 st.markdown("Click on a bar for label + value, double click to see type+name+value")
