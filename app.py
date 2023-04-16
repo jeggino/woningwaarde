@@ -45,7 +45,7 @@ sidebar = st.sidebar
 # -------------------------------------------------------
 data = df["df_woningwaarde"].groupby("LABEL",as_index=False).size()
 data_echarts = []
-for idx, row in a.iterrows():
+for idx, row in data.iterrows():
     data_echarts.append({"value": row["size"], "name": row["LABEL"]})
 
 st.dataframe(data)
