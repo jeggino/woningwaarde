@@ -538,7 +538,7 @@ option = {
       }
     ]
   },
-  'series': []
+  'series': [34,87]
 };
 
 st_echarts(
