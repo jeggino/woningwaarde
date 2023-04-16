@@ -608,4 +608,4 @@ c_w = (
     .render("effectscatter_splitline.html")
 )
 
-st_pyecharts(c_w,height="600px")
+st_pyecharts(c_w)
