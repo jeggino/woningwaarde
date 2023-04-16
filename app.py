@@ -605,7 +605,6 @@ c_w = (
         xaxis_opts=opts.AxisOpts(splitline_opts=opts.SplitLineOpts(is_show=True)),
         yaxis_opts=opts.AxisOpts(splitline_opts=opts.SplitLineOpts(is_show=True)),
     )
-    .render("effectscatter_splitline.html")
 )
 
 st_pyecharts(c_w)
