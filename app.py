@@ -525,7 +525,7 @@ c = (
     .add_yaxis("Serie 2", Faker.values())
     .set_global_opts(
         title_opts=opts.TitleOpts(title="Scatter-VisualMap(Size)"),
-        visualmap_opts=opts.VisualMapOpts(type_="size", max_=350, min_=20),
+        visualmap_opts=opts.VisualMapOpts(type_="size", max_=150, min_=20),
     )
 )
 
