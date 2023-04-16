@@ -63,4 +63,13 @@ s = st_echarts(
     options=options, events=events, height="500px", key="render_basic_bar_events"
 )
 if s is not None:
-    st.write(s)
+    options = [{
+        series: [{
+            type: 'liquidFill',
+            data: [s],
+            shape: 'diamond'
+        }]
+    }];
+    
+   
+    st_echarts(liquidfill_option)
