@@ -521,11 +521,11 @@ from pyecharts.faker import Faker
 c = (
     Scatter()
     .add_xaxis(Faker.choose())
-    .add_yaxis("商家A", Faker.values())
-    .add_yaxis("商家B", Faker.values())
+    .add_yaxis("Serie 1", Faker.values())
+    .add_yaxis("Serie 2", Faker.values())
     .set_global_opts(
         title_opts=opts.TitleOpts(title="Scatter-VisualMap(Size)"),
-        visualmap_opts=opts.VisualMapOpts(type_="size", max_=150, min_=20),
+        visualmap_opts=opts.VisualMapOpts(type_="size", max_=350, min_=20),
     )
 )
 
