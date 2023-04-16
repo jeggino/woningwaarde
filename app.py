@@ -295,7 +295,7 @@ option_2 = {
       'name': '2015',
       'data': data[1],
       'type': 'scatter',
-      'symbolSize': {lambda x:x**2},
+      'symbolSize': [lambda x: x*3],
 #       emphasis: {
 #         focus: 'series',
 #         label: {
