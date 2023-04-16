@@ -607,4 +607,4 @@ c_w = (
     )
 )
 
-st_pyecharts(c_w)
+st_pyecharts(c_w,height="600px")
