@@ -197,7 +197,7 @@ st_echarts(option, height="600px")
 
 
 
-rs = [
+hours  = [
     "12a",
     "1a",
     "2a",
