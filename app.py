@@ -246,6 +246,9 @@ data = [
 ];
 
 
+def fun(x):
+    return x*4
+
 option_2 = {
   'legend': {
     'right': '10%',
@@ -296,7 +299,7 @@ option_2 = {
       'name': '2015',
       'data': data[1],
       'type': 'scatter',
-#       'symbolSize': [lambda x: x*3],
+      'symbolSize': fun(x),
 #       emphasis: {
 #         focus: 'series',
 #         label: {
