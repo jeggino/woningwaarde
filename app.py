@@ -87,7 +87,7 @@ events = {
     "legendselectchanged": "function(params) { return params.selected }",
 }
 
-st.write(s)
+
 
 s = st_echarts(
     options=option, height="600px", events=events, key="render_basic_bar_events"
@@ -97,6 +97,7 @@ s = st_echarts(
 if s is not None:
     
     
+    st.write(s)
     
     value_gauge = round((s / data["size"].sum()),2)
    
