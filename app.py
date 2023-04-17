@@ -420,7 +420,7 @@ outer_x_data = ["直达", "营销广告", "搜索引擎", "邮件营销", "联�
 outer_y_data = [335, 310, 234, 135, 1048, 251, 147, 102]
 outer_data_pair = [list(z) for z in zip(outer_x_data, outer_y_data)]
 
-c = (
+c_pie = (
     Pie()
     .add(
         series_name="访问来源",
@@ -473,7 +473,7 @@ c = (
     
 )
 
-st_pyecharts(c,height="600px")
+
 
 
 #-----------------------
@@ -518,7 +518,7 @@ from pyecharts import options as opts
 from pyecharts.charts import Scatter
 from pyecharts.faker import Faker
 
-c = (
+c_scatter = (
     Scatter()
     .add_xaxis(list(range(10)))
     .add_yaxis("Serie 1", Faker.values())
@@ -529,4 +529,24 @@ c = (
     )
 )
 
-st_pyecharts(c,height="600px")
+
+
+
+# -------------------------------------------------------
+sidebar = st.sidebar
+row_1_1,row_1_2 = st.columns([3,2], gap="large")
+row_1_2_tab1, row_1_2_tab2 = row_1_2.tabs(["Pie-chart 🥧", "Sunburst-chart ☀️"])
+"---"
+row_2_1, row_2_2 = st.columns([3,1], gap="large")
+"---"
+row_3_1,row_3_2 = st.columns([1,6], gap="large")
+
+with row_2_1:
+    st_pyecharts(c_scatter,height="600px")
+    
+with row_2_2:
+    st_pyecharts(c_pie,height="600px")
+    
+
+
+
