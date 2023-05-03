@@ -559,7 +559,7 @@ with st.sidebar:
                              iconName=['dashboard', 'money', 'economy'],
                              styles = {'navtab': {'background-color':'#111',
                                                   'color': '#818181',
-                                                  'font-size': '10px',
+                                                  'font-size': '15px',
                                                   'transition': '.1s',
                                                   'white-space': 'nowrap',
                                                   'text-transform': 'uppercase'},
@@ -572,12 +572,13 @@ with st.sidebar:
                                                      'margin-bottom': '20px',
                                                      'padding-left': '20px'}},
                              key="1")
-        genre = st.radio("What\'s your favorite movie genre",('Comedy', 'Drama', 'Documentary'))
+        
         
 
 if tabs =='Dashboard':
     st.title("Navigation Bar")
     st.write('Name of option is {}'.format(tabs))
+    genre = st.sidebar.radio("What\'s your favorite movie genre",('Comedy', 'Drama', 'Documentary'))
 
 elif tabs == 'Money':
     st.title("Paper")
