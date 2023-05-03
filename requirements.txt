@@ -2,3 +2,4 @@ streamlit
 geopandas
 streamlit_folium
 streamlit-echarts
+streamlit-on-Hover-tabs
