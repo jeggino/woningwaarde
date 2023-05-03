@@ -569,9 +569,10 @@ with st.sidebar:
                                                     'left':'7.5px',
                                                     'text-align': 'left'},
                                        'tabStyle' : {'list-style-type': 'none',
-                                                     'margin-bottom': '2px',
-                                                     'padding-left': '30px'}},
+                                                     'margin-bottom': '20px',
+                                                     'padding-left': '20px'}},
                              key="1")
+        genre = st.radio("What\'s your favorite movie genre",('Comedy', 'Drama', 'Documentary'))
         
 
 if tabs =='Dashboard':
