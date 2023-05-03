@@ -560,7 +560,7 @@ with st.sidebar:
                              styles = {'navtab': {'background-color':'#111',
                                                   'color': '#818181',
                                                   'font-size': '15px',
-                                                  'transition': '.1s',
+                                                  'transition': '.6s',
                                                   'white-space': 'nowrap',
                                                   'text-transform': 'uppercase'},
                                        'tabOptionsStyle': {':hover :hover': {'color': 'red',
@@ -569,8 +569,8 @@ with st.sidebar:
                                                     'left':'7.5px',
                                                     'text-align': 'left'},
                                        'tabStyle' : {'list-style-type': 'none',
-                                                     'margin-bottom': '20px',
-                                                     'padding-left': '20px'}},
+                                                     'margin-bottom': '30px',
+                                                     'padding-left': '30px'}},
                              key="1")
         
         
