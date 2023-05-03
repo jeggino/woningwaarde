@@ -552,6 +552,8 @@ with row_2_2:
 from st_on_hover_tabs import on_hover_tabs
 
 st.header("Custom tab component for on-hover navigation bar")
+st.markdown('<style>' + open('./style.css').read() + '</style>', unsafe_allow_html=True)
+
 with st.sidebar:
     tabs = on_hover_tabs(tabName=['Dashboard', 'Money', 'Economy'], 
                          iconName=['donut_small', 'auto_stories', 'economy'], default_choice=0)
