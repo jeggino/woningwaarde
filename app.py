@@ -107,7 +107,7 @@ x_MinMax = MinMaxScaler().fit_transform(df_feature)
 # -------------------------------------------------------
 import sklearn.cluster as cluster
 from kneed import KneeLocator
-
+import seaborn as sns
 
 kmeans_kwargs = {
     "init": "random",
@@ -120,19 +120,29 @@ kmeans_kwargs = {
 sse = []
 for k in range(2, 11):
     kmeans = cluster.KMeans(n_clusters=k, **kmeans_kwargs)
-    kmeans.fit(x_StandardScaler)
+    kmeans.fit(x_MinMax)
     sse.append(kmeans.inertia_)
     
 kl = KneeLocator(
     range(2, 11), sse, curve="convex", direction="decreasing"
 )
 
-st.text(f'The elbow is reached with {kl.elbow} clusters', help=None)
-st.markdown(kl.plot_knee(), unsafe_allow_html=True)
 
+st.text(f'The elbow is reached with {kl.elbow} clusters', help=None)
+st.pyplot(kl.plot_knee())
 
 
 # -------------------------------------------------------
+clusters = st.number_input('Number of clusters',min_value=2, max_value=8,step=1,value=kl.elbow)
+kmeans = cluster.KMeans(n_clusters=clusters,init="k-means++")
+kmeans = kmeans.fit(x_MinMax)
+
+df_segmentation['Clusters'] = kmeans.labels_
+cm = sns.light_palette("green", as_cmap=True)
+ 
+# Visualizing the DataFrame with set precision
+cluster_mean = df_segmentation.groupby('Clusters').mean().style.background_gradient(cmap=cm).set_precision(0)
+st.dataframe(cluster_mean)
 
 
 
