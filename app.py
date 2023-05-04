@@ -127,6 +127,8 @@ df_segmentation['Clusters'] = kmeans.labels_
 
 # -------------------------------------------------------
 import altair as alt
+import seaborn as sns
+
 
 source = df_segmentation.melt(id_vars="Clusters",value_vars=['WON','VZN', 'WRK'])
 
@@ -148,7 +150,6 @@ st.altair_chart(chart)
 
 # -------------------------------------------------------
 import pydeck as pdk
-import seaborn as sns
 
 option_tootip = st.selectbox('',('WON','VZN', 'WRK'))
 
