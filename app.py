@@ -5,7 +5,7 @@ import datetime
 from datetime import date,datetime
 import altair as alt
 import pydeck as pdk
-import streamlit_folium as stf
+from streamlit_folium import st_folium
 
 from streamlit_echarts import st_echarts,st_pyecharts
 
@@ -163,6 +163,15 @@ chart = alt.Chart(source).mark_boxplot(ticks=True).encode(
 )
 
 st.altair_chart(chart)
+
+
+# -------------------------------------------------------
+map = df_segmentation.explore("Clusters",categorical=True,
+                tiles="CartoDB positron",
+                legend_kwds={"colorbar":False,"caption":"Clusters","fmt": "{:.0f}"},
+                )
+
+st_folium(map)
 
 
 
