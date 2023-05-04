@@ -140,8 +140,29 @@ df_segmentation['Clusters'] = kmeans.labels_
 # cm = sns.light_palette("green", as_cmap=True)
 
 # Visualizing the DataFrame with set precision
-cluster_mean = df_segmentation.groupby('Clusters').mean()
-st.dataframe(cluster_mean)
+# cluster_mean = df_segmentation.groupby('Clusters').mean()
+# st.dataframe(cluster_mean)
+
+
+# -------------------------------------------------------
+import altair as alt
+
+source = df_segmentation.melt(id_vars="Clusters",value_vars=['WON','VZN', 'WRK'])
+
+chart = alt.Chart(source).mark_boxplot(ticks=True).encode(
+    x=alt.X("Clusters:N", title=None, axis=alt.Axis(labels=False, ticks=False), scale=alt.Scale(padding=1)), 
+    y=alt.Y("value:Q"), 
+    color="Clusters:N",
+    column=alt.Column('variable:N', sort=['WON','VZN', 'WRK'], header=alt.Header(orient='bottom'))
+).properties(
+    width=100
+).configure_facet(
+    spacing=7
+).configure_view(
+    stroke=None
+)
+
+st.altair_chart(chart)
 
 
 
