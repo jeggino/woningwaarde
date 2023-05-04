@@ -187,7 +187,7 @@ polygon_layer = pdk.Layer(
 r = pdk.Deck(
     [polygon_layer],
 #     tooltip = tooltip,
-#     map_style = filter_map,
+    map_style = light_no_labels,
 #     initial_view_state=INITIAL_VIEW_STATE,
 )
 
