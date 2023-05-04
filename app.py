@@ -170,8 +170,8 @@ st.altair_chart(chart)
 # -------------------------------------------------------
 import pydeck as pdk
 
-colors = dict(zip(list(range(0,clusters)),
-                  sns.color_palette(n_colors=clusters,as_cmap=True)
+colors = dict(zip(list(range(0,kl.elbow)),
+                  sns.color_palette(n_colors=kl.elbow,as_cmap=True)
                  )
              )
 
@@ -184,8 +184,8 @@ polygon_layer = pdk.Layer(
     opacity=0.6,
     stroked=True,
     filled=True,
-#     extruded=True,
-#     get_elevation="WON/100",
+    extruded=True,
+    get_elevation="WON/100",
     wireframe=True,
     get_fill_color='Color',
     get_line_color=[255, 255, 255],
