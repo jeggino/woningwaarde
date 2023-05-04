@@ -177,11 +177,11 @@ df_segmentation['Color'] = df_segmentation["Color"].apply(lambda x: [i * 255 for
 polygon_layer = pdk.Layer(
     'GeoJsonLayer',
     df_segmentation,
-    opacity=0.6,
+    opacity=0.8,
     stroked=True,
     filled=True,
     extruded=True,
-    get_elevation="WON/100",
+#     get_elevation="WON/100",
     wireframe=True,
     get_fill_color='Color',
     get_line_color=[255, 255, 255],
