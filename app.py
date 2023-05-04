@@ -117,7 +117,7 @@ def analysis_cluster():
     kmeans = cluster.KMeans(n_clusters=option_clusters,init="k-means++")
     kmeans = kmeans.fit(x_MinMax)
 
-    df_segmentation['Clusters'] = kmeans.labels_
+    df_segmentation['Clusters'] = kmeans.labels_ + 1
     
     return df_segmentation, option_clusters
 
