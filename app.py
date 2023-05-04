@@ -96,13 +96,13 @@ df = get_data()
 
 # -------------------------------------------------------
 import numpy as np
-from sklearn import preprocessing
+from sklearn.preprocessing import MinMaxScaler
 
 df_segmentation = df[['geometry', 'LABEL','WON','VZN', 'WRK']]
 
 # Standardizing the features
 df_feature = df_segmentation.iloc[:,2:]
-x_MinMax = preprocessing.MinMaxScaler().fit_transform(df_feature)
+x_MinMax = MinMaxScaler().fit_transform(df_feature)
 
 # -------------------------------------------------------
 import sklearn.cluster as cluster
