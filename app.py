@@ -89,8 +89,10 @@ def get_data():
 
     return df_4
 
+
 # -------------------------------------------------------
 df = get_data()
+
 
 # -------------------------------------------------------
 import numpy as np
@@ -101,6 +103,7 @@ df_segmentation = df[['geometry', 'LABEL','WON','VZN', 'WRK']]
 # Standardizing the features
 df_feature = df_segmentation.iloc[:,2:]
 x_MinMax = MinMaxScaler().fit_transform(df_feature)
+
 
 # -------------------------------------------------------
 import sklearn.cluster as cluster
@@ -127,7 +130,6 @@ kl = KneeLocator(
 
 
 st.text(f'The elbow is reached with {kl.elbow} clusters', help=None)
-# st.pyplot(kl.plot_knee())
 
 
 # -------------------------------------------------------
@@ -166,13 +168,26 @@ st.altair_chart(chart)
 
 
 # -------------------------------------------------------
-map = df_segmentation.explore("Clusters",
-                              categorical=True,
-                              tiles="CartoDB positron",
-                              legend_kwds={"colorbar":False,"caption":"Clusters","fmt": "{:.0f}"}
-                             )
+# map = df_segmentation.explore("Clusters",
+#                               categorical=True,
+#                               tiles="CartoDB positron",
+#                               legend_kwds={"colorbar":False,"caption":"Clusters","fmt": "{:.0f}"}
+#                              )
 
-folium_static(map)
+
+
+m = leafmap.Map(center=[40, -100], zoom=4)
+naip_url = 'https://www.mrlc.gov/geoserver/mrlc_display/NLCD_2019_Land_Cover_L48/wms?'
+m.add_wms_layer(
+    url=naip_url,
+    layers='NLCD_2019_Land_Cover_L48',
+    name='NLCD 2019',
+    attribution='MRLC',
+    format='image/png',
+    shown=True,
+)
+m.add_legend(title='NLCD Land Cover Type', builtin_legend='NLCD')
+folium_static(m)
 
 
 
