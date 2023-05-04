@@ -174,7 +174,7 @@ polygon_layer = pdk.Layer(
     'GeoJsonLayer',
     df_segmentation,
     opacity=0.6,
-#     stroked=True,
+    stroked=True,
     filled=True,
 #     extruded=True,
 #     wireframe=True,
@@ -187,7 +187,7 @@ polygon_layer = pdk.Layer(
 r = pdk.Deck(
     [polygon_layer],
 #     tooltip = tooltip,
-    map_style = light_no_labels,
+    map_style = "light_no_labels",
 #     initial_view_state=INITIAL_VIEW_STATE,
 )
 
