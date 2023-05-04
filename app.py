@@ -16,6 +16,8 @@ st.set_page_config(
     layout="wide",
 )
 
+left, right = st.columns([2,3],gap="large")
+
 
 # -------------------------------------------------------
 @st.cache_data() 
@@ -147,7 +149,7 @@ PALETTE = [ 'Pastel1', 'Pastel1_r', 'Pastel2', 'Pastel2_r', 'Set1', 'Set1_r', 'S
 option_palette = st.sidebar.selectbox('Palette',PALETTE)
 palette = sns.color_palette(option_palette,n_colors=option_clusters)
 
-option_outliers = st.sidebar.checkbox('outliers')
+option_outliers = left.sidebar.checkbox('outliers')
 
 source = df_segmentation.melt(id_vars="Clusters",value_vars=['WON','VZN', 'WRK'])
 
@@ -212,8 +214,6 @@ r = pdk.Deck(
 
 
 #-----------------------------
-left, right = st.columns([2,3],gap="large")
-
 with left:
     st.altair_chart(chart, use_container_width=False,theme=None)
     
