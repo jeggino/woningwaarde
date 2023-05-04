@@ -94,32 +94,38 @@ x_MinMax = MinMaxScaler().fit_transform(df_feature)
 import sklearn.cluster as cluster
 from kneed import KneeLocator
 
-kmeans_kwargs = {
-    "init": "random",
-    "n_init": 10,
-    "max_iter": 300,
-    "random_state": 42,
-}
+@st.cache_data() 
+def analysis_cluster(experimental_allow_widgets=True):
+    kmeans_kwargs = {
+        "init": "random",
+        "n_init": 10,
+        "max_iter": 300,
+        "random_state": 42,
+    }
 
-# A list holds the SSE values for each k
-sse = []
-for k in range(2, 11):
-    kmeans = cluster.KMeans(n_clusters=k, **kmeans_kwargs)
-    kmeans.fit(x_MinMax)
-    sse.append(kmeans.inertia_)
+    # A list holds the SSE values for each k
+    sse = []
+    for k in range(2, 11):
+        kmeans = cluster.KMeans(n_clusters=k, **kmeans_kwargs)
+        kmeans.fit(x_MinMax)
+        sse.append(kmeans.inertia_)
+
+    kl = KneeLocator(
+        range(2, 11), sse, curve="convex", direction="decreasing"
+    )
+
+
+    # -------------------------------------------------------
+    option_clusters = st.sidebar.number_input(f'The best number of cluster is {kl.elbow}, but you can play aroud',min_value=2, max_value=8,step=1,value=kl.elbow)
+
+    kmeans = cluster.KMeans(n_clusters=option_clusters,init="k-means++")
+    kmeans = kmeans.fit(x_MinMax)
+
+    df_segmentation['Clusters'] = kmeans.labels_
     
-kl = KneeLocator(
-    range(2, 11), sse, curve="convex", direction="decreasing"
-)
+    return df_segmentation, option_clusters
 
-
-# -------------------------------------------------------
-option_clusters = st.sidebar.number_input(f'The best number of cluster is {kl.elbow}, but you can play aroud',min_value=2, max_value=8,step=1,value=kl.elbow)
-
-kmeans = cluster.KMeans(n_clusters=option_clusters,init="k-means++")
-kmeans = kmeans.fit(x_MinMax)
-
-df_segmentation['Clusters'] = kmeans.labels_
+df_segmentation, option_clusters = analysis_cluster()
 
 
 # -------------------------------------------------------
