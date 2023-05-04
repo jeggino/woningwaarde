@@ -9,8 +9,6 @@ import streamlit_folium as stf
 
 from streamlit_echarts import st_echarts,st_pyecharts
 
-import math 
-
 # -------------------------------------------------------
 st.set_page_config(
     page_title="Amterdam woon[plaan",
@@ -141,7 +139,7 @@ df_segmentation['Clusters'] = kmeans.labels_
 cm = sns.light_palette("green", as_cmap=True)
 # st.dataframe(df_segmentation.drop("geometry",axis=1))
 # Visualizing the DataFrame with set precision
-cluster_mean = df_segmentation.groupby('Clusters').mean().style.background_gradient(cmap=cm).set_precision(0)
+cluster_mean = df_segmentation.groupby('Clusters',as_index=False).mean()
 st.dataframe(cluster_mean)
 
 
