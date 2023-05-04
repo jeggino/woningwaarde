@@ -133,7 +133,7 @@ source = df_segmentation.melt(id_vars="Clusters",value_vars=['WON','VZN', 'WRK']
 chart = alt.Chart(source).mark_boxplot(ticks=True).encode(
     x=alt.X("Clusters:N", title=None, axis=alt.Axis(labels=False, ticks=False), scale=alt.Scale(padding=1)), 
     y=alt.Y("value:Q"), 
-    color="Clusters:N",
+    color = alt.Color("Clusters:N", scale=alt.Scale(range=sns.color_palette("Set2",n_colors=clusters).as_hex())),
     column=alt.Column('variable:N', sort=['WON','VZN', 'WRK'], header=alt.Header(orient='bottom'))
 ).properties(
     width=100
@@ -153,7 +153,7 @@ import seaborn as sns
 option_tootip = st.selectbox('',('WON','VZN', 'WRK'))
 
 colors = dict(zip(list(range(0,clusters)),
-                  sns.color_palette(n_colors=clusters,palette="twilight_shifted")
+                  sns.color_palette("Set2",n_colors=clusters)
                  )
              )
 
