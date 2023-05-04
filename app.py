@@ -129,18 +129,6 @@ df_segmentation, option_clusters = analysis_cluster()
 
 
 # -------------------------------------------------------
-# Visualizing the DataFrame with set precision
-import seaborn as sns
-import numpy as np
-# cluster_mean = df_segmentation.drop("geometry",axis=1).groupby('Clusters').mean()
-# st.dataframe(cluster_mean.style.background_gradient(cmap=cm).set_precision(0))
-df = pd.DataFrame(
-   np.random.randn(10, 20),
-   columns=('col %d' % i for i in range(20)))
-
-st.dataframe(df.style.highlight_max(axis=0))
-
-# -------------------------------------------------------
 import altair as alt
 import seaborn as sns
 
