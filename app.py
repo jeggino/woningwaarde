@@ -200,7 +200,13 @@ st.pydeck_chart(pydeck_obj=r, use_container_width=True)
 
 
 
-
+with st.sidebar:
+    clusters
+    option_palette
+    option_tootip
+    
+    
+    
 
 
 
