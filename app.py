@@ -168,7 +168,7 @@ st.altair_chart(chart)
 
 
 # -------------------------------------------------------
-colors = dict(zip(list(range(0,5)),sns.color_palette(palette=None, n_colors=5, desat=None, as_cmap=False)))
+colors = dict(zip(list(range(0,clusters)),sns.color_palette(palette=None, n_colors=clusters).as_hex()))
 df_segmentation['Color'] = df_segmentation['Clusters'].map(colors)
 polygon_layer = pdk.Layer(
     'GeoJsonLayer',
