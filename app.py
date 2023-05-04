@@ -149,22 +149,27 @@ PALETTE = [ 'Pastel1', 'Pastel1_r', 'Pastel2', 'Pastel2_r', 'Set1', 'Set1_r', 'S
 option_palette = st.sidebar.selectbox('Palette',PALETTE)
 palette = sns.color_palette(option_palette,n_colors=option_clusters)
 
-option_outliers = left.checkbox('outliers')
 
-source = df_segmentation.melt(id_vars="Clusters",value_vars=['WON','VZN', 'WRK'])
+@st.cache_data(experimental_allow_widgets=True) 
+def box_plot():
+    option_outliers = left.checkbox('outliers')
 
-chart = alt.Chart(source).mark_boxplot(ticks=True,outliers=option_outliers).encode(
-    x=alt.X("Clusters:N", title=None, axis=alt.Axis(labels=False, ticks=False), scale=alt.Scale(padding=1)), 
-    y=alt.Y("value:Q"), 
-    color = alt.Color("Clusters:N", scale=alt.Scale(range=palette.as_hex())),
-    column=alt.Column('variable:N', sort=['WON','VZN', 'WRK'], header=alt.Header(orient='bottom'))
-).properties(
-    width=100
-).configure_facet(
-    spacing=7
-).configure_view(
-    stroke=None
-)
+    source = df_segmentation.melt(id_vars="Clusters",value_vars=['WON','VZN', 'WRK'])
+
+    chart = alt.Chart(source).mark_boxplot(ticks=True,outliers=option_outliers).encode(
+        x=alt.X("Clusters:N", title=None, axis=alt.Axis(labels=False, ticks=False), scale=alt.Scale(padding=1)), 
+        y=alt.Y("value:Q"), 
+        color = alt.Color("Clusters:N", scale=alt.Scale(range=palette.as_hex())),
+        column=alt.Column('variable:N', sort=['WON','VZN', 'WRK'], header=alt.Header(orient='bottom'))
+    ).properties(
+        width=100
+    ).configure_facet(
+        spacing=7
+    ).configure_view(
+        stroke=None
+    )
+    
+    return chart
 
 
 # -------------------------------------------------------
@@ -215,7 +220,7 @@ r = pdk.Deck(
 
 #-----------------------------
 with left:
-    st.altair_chart(chart, use_container_width=False,theme=None)
+    st.altair_chart(box_plot(), use_container_width=False,theme=None)
     
 with right:
     st.pydeck_chart(pydeck_obj=r, use_container_width=True)
