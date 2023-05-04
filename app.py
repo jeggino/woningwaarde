@@ -187,7 +187,7 @@ m.add_wms_layer(
     shown=True,
 )
 m.add_legend(title='NLCD Land Cover Type', builtin_legend='NLCD')
-folium_static(m)
+st_folium(m)
 
 
 
