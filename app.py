@@ -150,8 +150,10 @@ st.altair_chart(chart)
 import pydeck as pdk
 import seaborn as sns
 
-colors = dict(zip(list(range(0,kl.elbow)),
-                  sns.color_palette(n_colors=kl.elbow,palette="twilight_shifted")
+option_tootip = st.selectbox('',('WON','VZN', 'WRK'))
+
+colors = dict(zip(list(range(0,clusters)),
+                  sns.color_palette(n_colors=clusters,palette="twilight_shifted")
                  )
              )
 
@@ -165,7 +167,8 @@ polygon_layer = pdk.Layer(
     stroked=True,
     filled=True,
     extruded=True,
-    get_elevation="WON/100",
+    get_elevation=option_tootip,
+    elevation_scale=0.01,
     wireframe=True,
     get_fill_color='Color',
     get_line_color=[255, 255, 255],
