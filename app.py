@@ -151,7 +151,7 @@ import pydeck as pdk
 import seaborn as sns
 
 colors = dict(zip(list(range(0,kl.elbow)),
-                  sns.color_palette(n_colors=kl.elbow,as_cmap=True)
+                  sns.color_palette(n_colors=kl.elbow,palette="twilight_shifted")
                  )
              )
 
@@ -161,7 +161,7 @@ df_segmentation['Color'] = df_segmentation["Color"].apply(lambda x: [round(i * 2
 polygon_layer = pdk.Layer(
     'GeoJsonLayer',
     df_segmentation,
-    opacity=0.6,
+    opacity=1,
     stroked=True,
     filled=True,
     extruded=True,
