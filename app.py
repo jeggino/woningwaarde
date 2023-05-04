@@ -195,7 +195,7 @@ INITIAL_VIEW_STATE = pdk.ViewState(
     latitude=52.374119, 
     longitude=4.895906,
     zoom=10,
-    pitch=15,
+    pitch=35,
     bearing=0
 )
 
