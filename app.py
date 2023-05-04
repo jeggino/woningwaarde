@@ -174,12 +174,28 @@ st.altair_chart(chart)
 #                               legend_kwds={"colorbar":False,"caption":"Clusters","fmt": "{:.0f}"}
 #                              )
 
-import leafmap
+polygon_layer = pdk.Layer(
+    'GeoJsonLayer',
+    df_segmentation,
+    opacity=0.6,
+    stroked=True,
+    filled=True,
+    extruded=True,
+    wireframe=True,
+#     get_elevation=filter_huur,
+#     get_fill_color='color',
+    get_line_color=[255, 255, 255],
+    pickable=True
+)
 
-m = leafmap.Map()
-m.add_basemap("OpenTopoMap")
-st_folium(m)
+r = pdk.Deck(
+    [polygon_layer],
+#     tooltip = tooltip,
+#     map_style = filter_map,
+#     initial_view_state=INITIAL_VIEW_STATE,
+)
 
+st.pydeck_chart(pydeck_obj=r, use_container_width=True)
 
 
 
