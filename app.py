@@ -149,7 +149,7 @@ PALETTE = [ 'Pastel1', 'Pastel1_r', 'Pastel2', 'Pastel2_r', 'Set1', 'Set1_r', 'S
 option_palette = st.sidebar.selectbox('Palette',PALETTE)
 palette = sns.color_palette(option_palette,n_colors=option_clusters)
 
-option_outliers = left.sidebar.checkbox('outliers')
+option_outliers = left.checkbox('outliers')
 
 source = df_segmentation.melt(id_vars="Clusters",value_vars=['WON','VZN', 'WRK'])
 
