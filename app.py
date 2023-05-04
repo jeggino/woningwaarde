@@ -129,7 +129,7 @@ kl = KneeLocator(
 
 
 st.text(f'The elbow is reached with {kl.elbow} clusters', help=None)
-st.pyplot(kl.plot_knee())
+# st.pyplot(kl.plot_knee())
 
 
 # -------------------------------------------------------
@@ -141,7 +141,7 @@ df_segmentation['Clusters'] = kmeans.labels_
 cm = sns.light_palette("green", as_cmap=True)
  
 # Visualizing the DataFrame with set precision
-cluster_mean = df_segmentation.groupby('Clusters').mean().style.background_gradient(cmap=cm).set_precision(0)
+cluster_mean = df_segmentation.groupby('Clusters').mean()#.style.background_gradient(cmap=cm).set_precision(0)
 st.dataframe(cluster_mean)
 
 
