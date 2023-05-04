@@ -150,8 +150,8 @@ st.altair_chart(chart)
 import pydeck as pdk
 import seaborn as sns
 
-colors = dict(zip(list(range(0,clusters)),
-                  sns.color_palette(n_colors=clusters,palette="bright",as_cmap=True)
+colors = dict(zip(list(range(0,kl.elbow)),
+                  sns.color_palette(n_colors=kl.elbow,as_cmap=True)
                  )
              )
 
@@ -161,12 +161,12 @@ df_segmentation['Color'] = df_segmentation["Color"].apply(lambda x: [round(i * 2
 polygon_layer = pdk.Layer(
     'GeoJsonLayer',
     df_segmentation,
-    opacity=0.8,
-#     stroked=True,
+    opacity=0.6,
+    stroked=True,
     filled=True,
-#     extruded=True,
-#     get_elevation="WON/100",
-#     wireframe=True,
+    extruded=True,
+    get_elevation="WON/100",
+    wireframe=True,
     get_fill_color='Color',
     get_line_color=[255, 255, 255],
     pickable=True
