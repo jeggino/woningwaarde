@@ -136,12 +136,6 @@ chart = alt.Chart(source).mark_boxplot(ticks=True).encode(
     y=alt.Y("value:Q"), 
     color = alt.Color("Clusters:N", scale=alt.Scale(range=palette.as_hex())),
     column=alt.Column('variable:N', sort=['WON','VZN', 'WRK'], header=alt.Header(orient='bottom'))
-).properties(
-    width=100
-).configure_facet(
-    spacing=7
-).configure_view(
-    stroke=None
 )
 
 
