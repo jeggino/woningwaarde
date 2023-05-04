@@ -174,7 +174,7 @@ st.altair_chart(chart)
 #                               legend_kwds={"colorbar":False,"caption":"Clusters","fmt": "{:.0f}"}
 #                              )
 
-
+import leafmap
 
 m = leafmap.Map(center=[40, -100], zoom=4)
 naip_url = 'https://www.mrlc.gov/geoserver/mrlc_display/NLCD_2019_Land_Cover_L48/wms?'
