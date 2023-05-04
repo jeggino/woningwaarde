@@ -162,7 +162,7 @@ polygon_layer = pdk.Layer(
     'GeoJsonLayer',
     df_segmentation,
     opacity=0.8,
-    stroked=True,
+#     stroked=True,
     filled=True,
 #     extruded=True,
 #     get_elevation="WON/100",
