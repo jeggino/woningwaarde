@@ -168,7 +168,7 @@ import pydeck as pdk
 
 option_tootip = st.sidebar.selectbox('',('WON','VZN', 'WRK'))
 
-colors = dict(zip(list(range(0,option_clusters)),
+colors = dict(zip(list(range(1,option_clusters+1)),
                   palette
                  )
              )
