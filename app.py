@@ -192,9 +192,9 @@ r = pdk.Deck(
 
 
 #-----------------------------
-left, right = st.columns([2,3])
+left, right = st.columns([2,3],gap="large")
 
-left.altair_chart(chart, use_container_width=False,theme=None)
+left.altair_chart(chart, use_container_width=True,theme=None)
 right.pydeck_chart(pydeck_obj=r, use_container_width=True)
 
     
