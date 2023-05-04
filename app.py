@@ -168,32 +168,45 @@ st.altair_chart(chart)
 
 
 # -------------------------------------------------------
+import pydeck as pdk
+
 colors = dict(zip(list(range(0,clusters)),
-                  sns.color_palette(palette=None, n_colors=clusters).as_hex()
+                  sns.color_palette(n_colors=clusters,as_cmap=True)
                  )
              )
 
 df_segmentation['Color'] = df_segmentation['Clusters'].map(colors)
+df_segmentation['Color'] = df_segmentation["Color"].apply(lambda x: [i * 255 for i in x])
 
 polygon_layer = pdk.Layer(
     'GeoJsonLayer',
     df_segmentation,
     opacity=0.6,
-#     stroked=True,
+    stroked=True,
     filled=True,
-#     extruded=True,
-#     wireframe=True,
-#     get_elevation=filter_huur,
+    extruded=True,
+    get_elevation="WON/100",
+    wireframe=True,
     get_fill_color='Color',
     get_line_color=[255, 255, 255],
     pickable=True
 )
 
+INITIAL_VIEW_STATE = pdk.ViewState(
+    latitude=52.374119, 
+    longitude=4.895906,
+    zoom=10,
+    pitch=15,
+    bearing=0
+)
+
+tooltip = {"text": "Cluster: {Clusters} \n WON: {WON} \n VZN: {VZN} \n WRK: {WRK}"}
+
 r = pdk.Deck(
     [polygon_layer],
-#     tooltip = tooltip,
+    initial_view_state=INITIAL_VIEW_STATE,
+    tooltip = tooltip,
     map_style = "light_no_labels",
-#     initial_view_state=INITIAL_VIEW_STATE,
 )
 
 st.pydeck_chart(pydeck_obj=r, use_container_width=True)
