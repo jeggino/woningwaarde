@@ -176,17 +176,8 @@ st.altair_chart(chart)
 
 import leafmap
 
-m = leafmap.Map(center=[40, -100], zoom=4)
-naip_url = 'https://www.mrlc.gov/geoserver/mrlc_display/NLCD_2019_Land_Cover_L48/wms?'
-m.add_wms_layer(
-    url=naip_url,
-    layers='NLCD_2019_Land_Cover_L48',
-    name='NLCD 2019',
-    attribution='MRLC',
-    format='image/png',
-    shown=True,
-)
-m.add_legend(title='NLCD Land Cover Type', builtin_legend='NLCD')
+m = leafmap.Map()
+m.add_basemap("OpenTopoMap")
 st_folium(m)
 
 
