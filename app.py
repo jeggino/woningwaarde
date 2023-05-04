@@ -139,7 +139,7 @@ kmeans = kmeans.fit(x_MinMax)
 
 df_segmentation['Clusters'] = kmeans.labels_
 cm = sns.light_palette("green", as_cmap=True)
- 
+st.dataframe(df_segmentation.drop("geometry",axis=1))
 # Visualizing the DataFrame with set precision
 cluster_mean = df_segmentation.drop("geometry",axis=1).groupby('Clusters').mean()#.style.background_gradient(cmap=cm).set_precision(0)
 st.dataframe(cluster_mean)
