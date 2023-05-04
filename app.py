@@ -138,27 +138,23 @@ option_palette = st.sidebar.selectbox('Palette',PALETTE)
 palette = sns.color_palette(option_palette,n_colors=option_clusters)
 
 
-@st.cache_data(experimental_allow_widgets=True) 
-def box_plot():
-    option_outliers = left.checkbox('outliers')
+option_outliers = left.checkbox('outliers')
 
-    source = df_segmentation.melt(id_vars="Clusters",value_vars=['WON','VZN', 'WRK'])
+source = df_segmentation.melt(id_vars="Clusters",value_vars=['WON','VZN', 'WRK'])
 
-    chart = alt.Chart(source).mark_boxplot(ticks=True,outliers=option_outliers).encode(
-        x=alt.X("Clusters:N", title=None, axis=alt.Axis(labels=False, ticks=False), scale=alt.Scale(padding=1)), 
-        y=alt.Y("value:Q"), 
-        color = alt.Color("Clusters:N", scale=alt.Scale(range=palette.as_hex())),
-        column=alt.Column('variable:N', sort=['WON','VZN', 'WRK'], header=alt.Header(orient='bottom'))
-    ).properties(
-        width=100
-    ).configure_facet(
-        spacing=7
-    ).configure_view(
-        stroke=None
-    )
+chart = alt.Chart(source).mark_boxplot(ticks=True,outliers=option_outliers).encode(
+    x=alt.X("Clusters:N", title=None, axis=alt.Axis(labels=False, ticks=False), scale=alt.Scale(padding=1)), 
+    y=alt.Y("value:Q"), 
+    color = alt.Color("Clusters:N", scale=alt.Scale(range=palette.as_hex())),
+    column=alt.Column('variable:N', sort=['WON','VZN', 'WRK'], header=alt.Header(orient='bottom'))
+).properties(
+    width=100
+).configure_facet(
+    spacing=7
+).configure_view(
+    stroke=None
+)
     
-    return chart
-
 
 # -------------------------------------------------------
 import pydeck as pdk
