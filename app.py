@@ -132,14 +132,15 @@ st.text(f'The elbow is reached with {kl.elbow} clusters', help=None)
 
 # -------------------------------------------------------
 clusters = st.number_input('Number of clusters',min_value=2, max_value=8,step=1,value=kl.elbow)
+
 kmeans = cluster.KMeans(n_clusters=clusters,init="k-means++")
 kmeans = kmeans.fit(x_MinMax)
 
 df_segmentation['Clusters'] = kmeans.labels_
-cm = sns.light_palette("green", as_cmap=True)
-# st.dataframe(df_segmentation.drop("geometry",axis=1))
+# cm = sns.light_palette("green", as_cmap=True)
+
 # Visualizing the DataFrame with set precision
-cluster_mean = df_segmentation.groupby('Clusters',as_index=False).mean()
+cluster_mean = df_segmentation.groupby('Clusters').mean()
 st.dataframe(cluster_mean)
 
 
