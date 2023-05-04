@@ -3,5 +3,5 @@ geopandas
 streamlit-folium
 streamlit-echarts
 streamlit-on-Hover-tabs
-sklearn
+scikit-learn
 kneed
