@@ -108,7 +108,7 @@ x_MinMax = MinMaxScaler().fit_transform(df_feature)
 # -------------------------------------------------------
 import sklearn.cluster as cluster
 from kneed import KneeLocator
-import seaborn as sns
+
 
 kmeans_kwargs = {
     "init": "random",
@@ -139,11 +139,6 @@ kmeans = cluster.KMeans(n_clusters=clusters,init="k-means++")
 kmeans = kmeans.fit(x_MinMax)
 
 df_segmentation['Clusters'] = kmeans.labels_
-# cm = sns.light_palette("green", as_cmap=True)
-
-# Visualizing the DataFrame with set precision
-# cluster_mean = df_segmentation.groupby('Clusters').mean()
-# st.dataframe(cluster_mean)
 
 
 # -------------------------------------------------------
@@ -169,9 +164,10 @@ st.altair_chart(chart)
 
 # -------------------------------------------------------
 import pydeck as pdk
+import seaborn as sns
 
-colors = dict(zip(list(range(0,kl.elbow)),
-                  sns.color_palette(n_colors=kl.elbow,as_cmap=True)
+colors = dict(zip(list(range(0,clusters)),
+                  sns.color_palette(n_colors=clusters,palette="bright",as_cmap=True)
                  )
              )
 
