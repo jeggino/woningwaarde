@@ -4,3 +4,4 @@ streamlit-folium
 streamlit-echarts
 scikit-learn
 kneed
+seaborn
