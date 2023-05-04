@@ -147,9 +147,11 @@ PALETTE = [ 'Pastel1', 'Pastel1_r', 'Pastel2', 'Pastel2_r', 'Set1', 'Set1_r', 'S
 option_palette = st.sidebar.selectbox('Palette',PALETTE)
 palette = sns.color_palette(option_palette,n_colors=option_clusters)
 
+option_outliers = st.sidebar.checkbox('outliers')
+
 source = df_segmentation.melt(id_vars="Clusters",value_vars=['WON','VZN', 'WRK'])
 
-chart = alt.Chart(source).mark_boxplot(ticks=True).encode(
+chart = alt.Chart(source).mark_boxplot(ticks=True,outliers=option_outliers).encode(
     x=alt.X("Clusters:N", title=None, axis=alt.Axis(labels=False, ticks=False), scale=alt.Scale(padding=1)), 
     y=alt.Y("value:Q"), 
     color = alt.Color("Clusters:N", scale=alt.Scale(range=palette.as_hex())),
