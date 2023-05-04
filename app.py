@@ -83,19 +83,20 @@ df = get_data()
 # -------------------------------------------------------
 from sklearn.preprocessing import MinMaxScaler
 
-df_segmentation = df[['geometry', 'LABEL','WON','VZN', 'WRK']]
 
-# Standardizing the features
-df_feature = df_segmentation.iloc[:,2:]
-x_MinMax = MinMaxScaler().fit_transform(df_feature)
 
 
 # -------------------------------------------------------
 import sklearn.cluster as cluster
 from kneed import KneeLocator
 
-@st.cache_data() 
-def analysis_cluster(experimental_allow_widgets=True):
+@st.cache_data(experimental_allow_widgets=True) 
+def analysis_cluster():
+    df_segmentation = df[['geometry', 'LABEL','WON','VZN', 'WRK']]
+
+    # Standardizing the features
+    df_feature = df_segmentation.iloc[:,2:]
+    x_MinMax = MinMaxScaler().fit_transform(df_feature)
     kmeans_kwargs = {
         "init": "random",
         "n_init": 10,
