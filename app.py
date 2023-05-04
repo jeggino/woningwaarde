@@ -204,7 +204,7 @@ r = pdk.Deck(
 
 #-----------------------------
 with left:
-    st.altair_chart(box_plot(), use_container_width=False,theme=None)
+    st.altair_chart(chart, use_container_width=False,theme=None)
     
 with right:
     st.pydeck_chart(pydeck_obj=r, use_container_width=True)
