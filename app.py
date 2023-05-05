@@ -208,6 +208,11 @@ with left:
     
 with right:
     st.pydeck_chart(pydeck_obj=r, use_container_width=True)
+    
+    
+#-----------------------------
+cluster_mean = df_segmentation.groupby('Clusters').mean().style.background_gradient(cmap=cm).set_precision(0)
+st.dataframe(cluster_mean)
 
     
     
