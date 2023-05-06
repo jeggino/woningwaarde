@@ -212,6 +212,7 @@ with right:
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from yellowbrick.classifier import ClassPredictionError
+from streamlit_yellowbrick import st_yellowbrick
 
 
 # Create classification dataset
@@ -222,11 +223,6 @@ from yellowbrick.classifier import ClassPredictionError
 
 # Perform 80/20 training/test split
 X_train, X_test, y_train, y_test = train_test_split(x_MinMax, df_segmentation["Clusters"], test_size=0.20)
-
-st.write(len(X_train))
-st.write(len(y_train))
-st.write(len(X_test))
-st.write(len(y_test))
 
 # Instantiate the classification model and visualizer
 visualizer = ClassPredictionError(
@@ -241,7 +237,7 @@ visualizer.fit(X_train, y_train)
 visualizer.score(X_test, y_test)
 
 # Draw visualization
-visualizer.show()
+st_yellowbrick(visualizer) 
 
     
     
