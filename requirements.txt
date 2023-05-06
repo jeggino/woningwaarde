@@ -6,4 +6,4 @@ scikit-learn
 kneed
 seaborn
 leafmap
-yellowbrick
+streamlit-yellowbrick
