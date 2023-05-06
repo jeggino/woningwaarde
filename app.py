@@ -220,7 +220,7 @@ X = x_MinMax
 y = df_segmentation["Clusters"]
 
 
-# classes = ["apple", "kiwi", "pear", "banana", "orange"]
+classes = ['cluster %d' % i for i in range(1,kl.elbow+1)]
 
 # Perform 80/20 training/test split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20,
@@ -228,7 +228,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20,
 # Instantiate the classification model and visualizer
 visualizer = ClassPredictionError(
     RandomForestClassifier(random_state=42, n_estimators=10), 
-#     classes=classes
+    classes=classes
 )
 
 # Fit the training data to the visualizer
