@@ -219,11 +219,6 @@ from streamlit_yellowbrick import st_yellowbrick
 # X = x_MinMax
 # y = df_segmentation["Clusters"]
 
-# Create classification dataset
-X, y = make_classification(
-    n_samples=1000, n_classes=5, n_informative=3, n_clusters_per_class=1,
-    random_state=36,
-)
 
 classes = ["apple", "kiwi", "pear", "banana", "orange"]
 
