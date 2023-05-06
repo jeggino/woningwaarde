@@ -213,7 +213,7 @@ import streamlit as st
 from streamlit_yellowbrick import st_yellowbrick
 
 from yellowbrick.datasets import load_credit
-from yellowbrick.features import PCA,RandomForestClassifier
+from yellowbrick.features import PCA
 
 # Specify the features of interest and the target
 X, y = load_credit()
