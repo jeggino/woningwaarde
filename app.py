@@ -238,12 +238,26 @@ from streamlit_yellowbrick import st_yellowbrick
 # st.dataframe(y)
 
 # Perform 80/20 training/test split
-X_train, X_test, y_train, y_test = train_test_split(x_MinMax, df_segmentation["Clusters"], test_size=0.20)
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from yellowbrick.classifier import ClassPredictionError
 
+
+# Create classification dataset
+X, y = make_classification(
+    n_samples=1000, n_classes=5, n_informative=3, n_clusters_per_class=1,
+    random_state=36,
+)
+
+classes = ["apple", "kiwi", "pear", "banana", "orange"]
+
+# Perform 80/20 training/test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20,
+                                                    random_state=42)
 # Instantiate the classification model and visualizer
 visualizer = ClassPredictionError(
-    RandomForestClassifier(n_estimators=10),
-    classes=['cluster %d' % i for i in range(1,option_clusters+1)]
+    RandomForestClassifier(random_state=42, n_estimators=10), classes=classes
 )
 
 # Fit the training data to the visualizer
