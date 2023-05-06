@@ -3,10 +3,7 @@ import pandas as pd
 import geopandas as gpd
 import datetime
 from datetime import date,datetime
-import altair as alt
 import pydeck as pdk
-from streamlit_folium import st_folium,folium_static
-
 from streamlit_echarts import st_echarts,st_pyecharts
 
 # -------------------------------------------------------
@@ -126,7 +123,7 @@ def analysis_cluster():
 
 
 # -------------------------------------------------------
-df_segmentation, option_clusters = analysis_cluster()[:2]
+df_segmentation, option_clusters, x_MinMax = analysis_cluster()
 
 
 # -------------------------------------------------------
@@ -218,7 +215,7 @@ from yellowbrick.classifier import ClassPredictionError
 
 
 # Create classification dataset
-X = analysis_cluster()[2]
+X = x_MinMax
 y = df_segmentation["Clusters"]
 
 # Perform 80/20 training/test split
