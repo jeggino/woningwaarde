@@ -224,8 +224,8 @@ from yellowbrick.classifier import ClassPredictionError
 X_train, X_test, y_train, y_test = train_test_split(x_MinMax, df_segmentation["Clusters"], test_size=0.20)
 
 st.write(len(X_train))
-st.write(len(X_test))
 st.write(len(y_train))
+st.write(len(X_test))
 st.write(len(y_test))
 
 # Instantiate the classification model and visualizer
