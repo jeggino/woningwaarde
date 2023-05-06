@@ -222,6 +222,10 @@ from yellowbrick.classifier import ClassPredictionError
 
 # Perform 80/20 training/test split
 X_train, X_test, y_train, y_test = train_test_split(x_MinMax, df_segmentation["Clusters"], test_size=0.20)
+
+df.write(X_train)
+df.write(y_train)
+
 # Instantiate the classification model and visualizer
 visualizer = ClassPredictionError(
     RandomForestClassifier(n_estimators=10),
