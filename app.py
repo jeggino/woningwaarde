@@ -220,7 +220,7 @@ X = x_MinMax
 y = df_segmentation["Clusters"]
 
 
-classes = ['cluster %d' % i for i in range(1,kl.elbow+1)]
+classes = ['cluster %d' % i for i in range(1,option_clusters+1)]
 
 # Perform 80/20 training/test split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20,
