@@ -213,7 +213,7 @@ import streamlit as st
 from streamlit_yellowbrick import st_yellowbrick
 
 from yellowbrick.datasets import load_credit
-from yellowbrick.features import PCA
+from yellowbrick.features import PCA,RandomForestClassifier
 
 # Specify the features of interest and the target
 X, y = load_credit()
@@ -225,35 +225,35 @@ st_yellowbrick(visualizer)      # Finalize and render the figure
 
 
 
-# from sklearn.model_selection import train_test_split
-# from sklearn.ensemble import RandomForestClassifier
-# from yellowbrick.classifier import ClassPredictionError
-# from streamlit_yellowbrick import st_yellowbrick
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from yellowbrick.classifier import ClassPredictionError
+from streamlit_yellowbrick import st_yellowbrick
 
 
-# # Create classification dataset
-# # X = x_MinMax
-# # y = df_segmentation["Clusters"]
+# Create classification dataset
+# X = x_MinMax
+# y = df_segmentation["Clusters"]
 
-# # st.dataframe(y)
+# st.dataframe(y)
 
-# # Perform 80/20 training/test split
-# X_train, X_test, y_train, y_test = train_test_split(x_MinMax, df_segmentation["Clusters"], test_size=0.20)
+# Perform 80/20 training/test split
+X_train, X_test, y_train, y_test = train_test_split(x_MinMax, df_segmentation["Clusters"], test_size=0.20)
 
-# # Instantiate the classification model and visualizer
-# visualizer = ClassPredictionError(
-#     RandomForestClassifier(n_estimators=10),
-#     classes=['cluster %d' % i for i in range(1,option_clusters+1)]
-# )
+# Instantiate the classification model and visualizer
+visualizer = ClassPredictionError(
+    RandomForestClassifier(n_estimators=10),
+    classes=['cluster %d' % i for i in range(1,option_clusters+1)]
+)
 
-# # Fit the training data to the visualizer
-# visualizer.fit(X_train, y_train)
+# Fit the training data to the visualizer
+visualizer.fit(X_train, y_train)
 
-# # Evaluate the model on the test data
-# visualizer.score(X_test, y_test)
+# Evaluate the model on the test data
+visualizer.score(X_test, y_test)
 
-# # Draw visualization
-# st_yellowbrick(visualizer) 
+# Draw visualization
+st_yellowbrick(visualizer) 
 
     
     
