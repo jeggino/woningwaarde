@@ -215,19 +215,20 @@ from yellowbrick.classifier import ClassPredictionError
 from streamlit_yellowbrick import st_yellowbrick
 
 
-# Create classification dataset
-# X = x_MinMax
-# y = df_segmentation["Clusters"]
+Create classification dataset
+X = x_MinMax
+y = df_segmentation["Clusters"]
 
 
-classes = ["apple", "kiwi", "pear", "banana", "orange"]
+# classes = ["apple", "kiwi", "pear", "banana", "orange"]
 
 # Perform 80/20 training/test split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20,
                                                     random_state=42)
 # Instantiate the classification model and visualizer
 visualizer = ClassPredictionError(
-    RandomForestClassifier(random_state=42, n_estimators=10), classes=classes
+    RandomForestClassifier(random_state=42, n_estimators=10), 
+#     classes=classes
 )
 
 # Fit the training data to the visualizer
