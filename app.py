@@ -209,22 +209,6 @@ with right:
     
     
 #-----------------------------
-import streamlit as st
-from streamlit_yellowbrick import st_yellowbrick
-
-from yellowbrick.datasets import load_credit
-from yellowbrick.features import PCA
-
-# Specify the features of interest and the target
-X, y = load_credit()
-classes = ['account in default', 'current with bills']
-
-visualizer = PCA(scale=True, classes=classes)
-visualizer.fit_transform(X, y)  # Fit the data to the visualizer
-st_yellowbrick(visualizer)      # Finalize and render the figure
-
-
-
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from yellowbrick.classifier import ClassPredictionError
@@ -234,15 +218,6 @@ from streamlit_yellowbrick import st_yellowbrick
 # Create classification dataset
 # X = x_MinMax
 # y = df_segmentation["Clusters"]
-
-# st.dataframe(y)
-
-# Perform 80/20 training/test split
-from sklearn.datasets import make_classification
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from yellowbrick.classifier import ClassPredictionError
-
 
 # Create classification dataset
 X, y = make_classification(
