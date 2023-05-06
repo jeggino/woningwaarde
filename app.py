@@ -209,35 +209,51 @@ with right:
     
     
 #-----------------------------
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from yellowbrick.classifier import ClassPredictionError
+import streamlit as st
 from streamlit_yellowbrick import st_yellowbrick
 
+from yellowbrick.datasets import load_credit
+from yellowbrick.features import PCA
 
-# Create classification dataset
-# X = x_MinMax
-# y = df_segmentation["Clusters"]
+# Specify the features of interest and the target
+X, y = load_credit()
+classes = ['account in default', 'current with bills']
 
-# st.dataframe(y)
+visualizer = PCA(scale=True, classes=classes)
+visualizer.fit_transform(X, y)  # Fit the data to the visualizer
+st_yellowbrick(visualizer)      # Finalize and render the figure
 
-# Perform 80/20 training/test split
-X_train, X_test, y_train, y_test = train_test_split(x_MinMax, df_segmentation["Clusters"], test_size=0.20)
 
-# Instantiate the classification model and visualizer
-visualizer = ClassPredictionError(
-    RandomForestClassifier(n_estimators=10),
-    classes=['cluster %d' % i for i in range(1,option_clusters+1)]
-)
 
-# Fit the training data to the visualizer
-visualizer.fit(X_train, y_train)
+# from sklearn.model_selection import train_test_split
+# from sklearn.ensemble import RandomForestClassifier
+# from yellowbrick.classifier import ClassPredictionError
+# from streamlit_yellowbrick import st_yellowbrick
 
-# Evaluate the model on the test data
-visualizer.score(X_test, y_test)
 
-# Draw visualization
-st_yellowbrick(visualizer) 
+# # Create classification dataset
+# # X = x_MinMax
+# # y = df_segmentation["Clusters"]
+
+# # st.dataframe(y)
+
+# # Perform 80/20 training/test split
+# X_train, X_test, y_train, y_test = train_test_split(x_MinMax, df_segmentation["Clusters"], test_size=0.20)
+
+# # Instantiate the classification model and visualizer
+# visualizer = ClassPredictionError(
+#     RandomForestClassifier(n_estimators=10),
+#     classes=['cluster %d' % i for i in range(1,option_clusters+1)]
+# )
+
+# # Fit the training data to the visualizer
+# visualizer.fit(X_train, y_train)
+
+# # Evaluate the model on the test data
+# visualizer.score(X_test, y_test)
+
+# # Draw visualization
+# st_yellowbrick(visualizer) 
 
     
     
