@@ -7,3 +7,4 @@ kneed
 seaborn
 leafmap
 streamlit-yellowbrick
+yellowbrick
