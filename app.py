@@ -234,7 +234,7 @@ visualizer.fit(X_train, y_train)
 visualizer.score(X_test, y_test)
 
 # Draw visualization
-st.visualizer.show()
+visualizer.show()
 
     
     
