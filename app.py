@@ -121,11 +121,11 @@ def analysis_cluster():
 
     df_segmentation['Clusters'] = kmeans.labels_ + 1
     
-    return df_segmentation, option_clusters
+    return df_segmentation, option_clusters, x_MinMax
 
 
 # -------------------------------------------------------
-df_segmentation, option_clusters = analysis_cluster()
+df_segmentation, option_clusters = analysis_cluster()[:2]
 
 
 # -------------------------------------------------------
@@ -217,7 +217,7 @@ from yellowbrick.classifier import ClassPredictionError
 
 
 # Create classification dataset
-X, y = x_MinMax, df_segmentation["Clusters"]
+X, y = analysis_cluster()[2], df_segmentation["Clusters"]
 
 # Perform 80/20 training/test split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
