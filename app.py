@@ -211,8 +211,30 @@ with right:
     
     
 #-----------------------------
-cluster_mean = df_segmentation.groupby('Clusters').mean().style.background_gradient(cmap=cm).set_precision(0)
-st.dataframe(cluster_mean)
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from yellowbrick.classifier import ClassPredictionError
+
+
+# Create classification dataset
+X, y = x_MinMax, df_segmentation["Clusters"]
+
+# Perform 80/20 training/test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
+# Instantiate the classification model and visualizer
+visualizer = ClassPredictionError(
+    RandomForestClassifier(n_estimators=10),
+    classes=['cluster %d' % i for i in range(1,option_clusters+1)]
+)
+
+# Fit the training data to the visualizer
+visualizer.fit(X_train, y_train)
+
+# Evaluate the model on the test data
+visualizer.score(X_test, y_test)
+
+# Draw visualization
+st.visualizer.show()
 
     
     
