@@ -215,7 +215,7 @@ from yellowbrick.classifier import ClassPredictionError
 from streamlit_yellowbrick import st_yellowbrick
 
 
-Create classification dataset
+#Create classification dataset
 X = x_MinMax
 y = df_segmentation["Clusters"]
 
