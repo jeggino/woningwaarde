@@ -251,7 +251,7 @@ classifiers = [
 
 dict_models = dict(zip(MODELS,classifiers))
 
-option_model = st.sidebar..selectbox("Select a model", MODELS, index=0)
+option_model = st.sidebar.selectbox("Select a model", MODELS, index=0)
 
 #Create classification dataset
 X = x_MinMax
