@@ -220,10 +220,9 @@ with right:
             text.value = 'Points in viewport: %s' % int(filtered_df.count()['lng'])
         except Exception as e:
             text.value = 'Error: %s' % e
-   
-
-    st.write(r.deck_widget.on_click(filter_by_viewport))
-    
+            
+    st.json(r.deck_widget.on_click(filter_by_viewport), expanded=True)
+       
     
 #-----------------------------
 from sklearn.model_selection import train_test_split
