@@ -167,10 +167,10 @@ colors = dict(zip(list(range(1,option_clusters+1)),
 df_segmentation['Color'] = df_segmentation['Clusters'].map(colors)
 df_segmentation['Color'] = df_segmentation["Color"].apply(lambda x: [round(i * 255) for i in x])
 
- def on_click(info):
-        print('Testing...')
-        st.write("TEST TEST")
-        
+def on_click(info):
+    print('Testing...')
+    st.write("TEST TEST")
+
 polygon_layer = pdk.Layer(
     'GeoJsonLayer',
     df_segmentation,
