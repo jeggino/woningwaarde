@@ -206,6 +206,7 @@ with left:
     
 with right:
     st.pydeck_chart(pydeck_obj=r, use_container_width=True)
+    st.write(r.deck_widget.on_click()
     
     
 #-----------------------------
