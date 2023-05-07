@@ -206,7 +206,15 @@ with left:
     
 with right:
     st.pydeck_chart(pydeck_obj=r, use_container_width=True)
-    st.write(r.deck_widget.on_click())
+    
+    def filter_by_viewport(widget_instance, payload):
+        try:
+            west_lng, north_lat = payload['data']['nw']
+            east_lng, south_lat = payload['data']['se']
+        except Exception as e:
+            text.value = 'Error: %s' % e
+
+    st.write(r.deck_widget.on_click(filter_by_viewport))
     
     
 #-----------------------------
