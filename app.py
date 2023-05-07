@@ -167,6 +167,10 @@ colors = dict(zip(list(range(1,option_clusters+1)),
 df_segmentation['Color'] = df_segmentation['Clusters'].map(colors)
 df_segmentation['Color'] = df_segmentation["Color"].apply(lambda x: [round(i * 255) for i in x])
 
+ def on_click(info):
+        print('Testing...')
+        st.write("TEST TEST")
+        
 polygon_layer = pdk.Layer(
     'GeoJsonLayer',
     df_segmentation,
@@ -179,7 +183,8 @@ polygon_layer = pdk.Layer(
     wireframe=True,
     get_fill_color='Color',
     get_line_color=[255, 255, 255],
-    pickable=True
+    pickable=True,
+    on_click=on_click
 )
 
 INITIAL_VIEW_STATE = pdk.ViewState(
@@ -207,17 +212,7 @@ with left:
 with right:
     st.pydeck_chart(pydeck_obj=r, use_container_width=True)
     
-    def filter_by_bbox(row, west_lng, east_lng, north_lat, south_lat):
-        return west_lng < row['lng'] < east_lng and south_lat < row['lat'] < north_lat
-
-    def filter_by_viewport(widget_instance, payload):
-        try:
-            west_lng, north_lat = payload['data']['nw']
-            east_lng, south_lat = payload['data']['se']
-            filtered_df = df[df.apply(lambda row: filter_by_bbox(row, west_lng, east_lng, north_lat, south_lat), axis=1)]
-            text.value = 'Points in viewport: %s' % int(filtered_df.count()['lng'])
-        except Exception as e:
-            text.value = 'Error: %s' % e
+   
 
     st.write(r.deck_widget.on_click(filter_by_viewport))
     
