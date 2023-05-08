@@ -466,7 +466,7 @@ country = ['Switzerland (2011)', 'Chile (2013)', 'Japan (2014)',
 voting_pop = [40, 45.7, 52, 53.6, 54.1, 54.2, 54.5, 54.7, 55.1, 56.6]
 reg_voters = [49.1, 42, 52.7, 84.3, 51.7, 61.1, 55.3, 64.2, 91.1, 58.9]
 
-df_3  = pd.Dataframe(data = {"country":country,"voting_pop":voting_pop,"reg_voters":reg_voters}
+df_3  = pd.Dataframe(data = {"country":country,"voting_pop":voting_pop,"reg_voters":reg_voters})
 
 fig4 = go.Figure()
 
@@ -479,6 +479,7 @@ fig4.add_trace(go.Scatter(
         line_color='rgba(156, 165, 196, 1.0)',
     )
 ))
+                     
 fig4.add_trace(go.Scatter(
     x=reg_voters, y=country,
     name='Percent of estimated registered voters',
