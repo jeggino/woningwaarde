@@ -290,22 +290,22 @@ st_yellowbrick(visualizer)
 import folium
 from streamlit_folium import st_folium
 
-df_raw = pd.read_csv('bird_migration.csv')
+df_folium = df_segmentation
+df_folium["long"] = df_segmentation.centroid.x
+df_folium["lat"] = df_segmentation.centroid.y
 
-df_raw["class"] = pd.cut(df_raw.direction,7,labels=["a","b","c","d","e","f","g"],include_lowest=True)
+dictionary_colors = dict(zip(df_folium["Clusters"].unique(),list(folium.map.Icon.color_options)))
+df_folium["Color"] = df_folium["Clusters"].map(dictionary_colors)
 
-dictionary_colors = dict(zip(df_raw["class"].unique(),list(folium.map.Icon.color_options)))
-df_raw["Color"] = df_raw["class"].map(dictionary_colors)
+source = df_folium.iloc[:1000,:]
 
-source = df_raw.iloc[:1000,:]
-
-m = folium.Map(location=[source["latitude"].mean(),source["longitude"].mean()])
+m = folium.Map(location=[source["lat"].mean(),source["long"].mean()])
 
 folium.TileLayer('cartodbpositron').add_to(m)
 
 dictionar_layers = {}
-for i in df_raw["class"].unique():
-    dictionar_layers[i] = folium.FeatureGroup(name=f'My Points_{i}', show=False)
+for i in df_raw["Clusters"].unique():
+    dictionar_layers[i] = folium.FeatureGroup(name=f'Clusters {i}', show=False)
 
 for key in dictionar_layers.keys():
     m.add_child(dictionar_layers[key])
@@ -313,10 +313,10 @@ for key in dictionar_layers.keys():
 for row, columns in source.iterrows():
     
     folium.Marker(
-        [columns["latitude"], columns["longitude"]], 
-        tooltip=columns["class"],
+        [columns["lat"], columns["long"]], 
+        tooltip=columns["Clusters"],
         icon=folium.Icon(color=columns["Color"], icon="glyphicon-map-marker"),
-    ).add_to(dictionar_layers[columns["class"]])
+    ).add_to(dictionar_layers[columns["Clusters"]])
 
 folium.map.LayerControl(position='topright', collapsed=True, autoZIndex=True).add_to(m)
 
