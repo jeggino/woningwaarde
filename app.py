@@ -429,9 +429,8 @@ st.markdown(f"Image #{clicked} clicked" if clicked > -1 else "No image clicked")
 
 
 #----------------------------------------
-import plotly.graph_objects as go
+import plotly.express as px
 from streamlit_plotly_events import plotly_events
-
 
 
 df = px.data.election()
@@ -451,6 +450,17 @@ fig2 = px.choropleth_mapbox(geo_df,
 selected_points_2 = plotly_events(fig2, click_event=True, hover_event=False)
 st.write(selected_points_2)
 
+
+#-------------------
+import plotly.express as px
+df = px.data.gapminder()
+fig3 = px.scatter_geo(df, locations="iso_alpha", color="continent",
+                     hover_name="country", size="pop",
+                     animation_frame="year",
+                     mapbox_style="open-street-map",
+                     projection="natural earth")
+selected_points_3 = plotly_events(fig3, click_event=True, hover_event=False)
+st.write(selected_points_3)
 
 
 
