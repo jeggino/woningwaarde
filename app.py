@@ -289,33 +289,14 @@ from streamlit_plotly_events import plotly_events
 import streamlit as st
 from streamlit_plotly_events import plotly_events
 
-import plotly.io as pio
 import streamlit as st
-import plotly.express as px
+from streamlit_plotly_events import plotly_events
 
-pio.templates.default = "plotly"
 
-df = px.data.tips()
-fig = px.scatter(
-    df,
-    x="total_bill",
-    y="tip",
-    color="day",
-    color_discrete_sequence=[
-        "#0068c9",
-        "#83c9ff",
-        "#ff2b2b",
-        "#ffabab",
-        "#29b09d",
-        "#7defa1",
-        "#ff8700",
-        "#ffd16a",
-        "#6d3fc0",
-        "#d5dae5",
-    ],
-    title="streamlit colors",
-)
-st.plotly_chart(fig)
+# Select other Plotly events by specifying kwargs
+fig = px.line(x=[1], y=[1])
+selected_points = plotly_events(fig, click_event=False, hover_event=True)
+st.write(selected_points)
 
 
 # df_folium = df_segmentation
