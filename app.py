@@ -292,9 +292,11 @@ from streamlit_plotly_events import plotly_events
 import streamlit as st
 from streamlit_plotly_events import plotly_events
 
+df = px.data.gapminder().query("year==2007")
+fig = px.scatter_geo(df, locations="iso_alpha", color="continent",
+                     hover_name="country", size="pop",
+                     projection="natural earth")
 
-# Select other Plotly events by specifying kwargs
-fig = px.line(x=[1], y=[1])
 selected_points = plotly_events(fig, click_event=False, hover_event=True)
 st.write(selected_points)
 
