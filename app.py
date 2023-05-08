@@ -297,7 +297,7 @@ else:
     ssl._create_default_https_context = _create_unverified_https_context
 
 st.header("Map data")
-`# read in data`
+# read in data
 df = pd.read_csv(r'https://gist.githubusercontent.com/bafu-DF/f60bd9ac9579d9f830f1f52ce7e79c86/raw/af16f3bb04d5150cc0e139d25d9c706ccbb80215/sampledata.csv', sep=',')
 
 layer = pdk.Layer(
