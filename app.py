@@ -300,7 +300,6 @@ df_folium["Color"] = df_folium["Clusters"].map(dictionary_colors)
 source = df_folium.iloc[:1000,:]
 
 m = folium.Map(location=[source["lat"].mean(),source["long"].mean()])
-
 folium.TileLayer('cartodbpositron').add_to(m)
 
 dictionar_layers = {}
@@ -320,7 +319,7 @@ for row, columns in source.iterrows():
 
 folium.map.LayerControl(position='topright', collapsed=True, autoZIndex=True).add_to(m)
 
-c1, c2 = st.columns(2)
+c1, c2 = st.columns([2,1])
 with c1:
     output = st_folium(
         m
