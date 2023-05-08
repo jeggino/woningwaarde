@@ -450,6 +450,9 @@ fig2 = px.choropleth(df2, geojson=geojson, color="Bergeron",
                     locations="district", featureidkey="properties.district",
                    )
 
+fig2.update_geos(fitbounds="locations", visible=False)
+fig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+
 selected_points_3 = plotly_events(fig2, click_event=True, hover_event=False)
 st.write(df2[df2.index==selected_points_3[0]["pointNumber"]])
 
