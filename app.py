@@ -403,9 +403,9 @@ def filter_by_viewport(widget_instance, payload):
     return payload['data']['exits_radius']
         
 
-r.deck_widget.on_click(filter_by_viewport)
+
 r
-st.json(r)
+st.write(r.deck_widget.on_click(filter_by_viewport))
 
 
 
