@@ -323,7 +323,7 @@ folium.map.LayerControl(position='topright', collapsed=True, autoZIndex=True).ad
 c1, c2 = st.columns(2)
 with c1:
     output = st_folium(
-        m,returned_objects=["last_object_clicked"]
+        m
     )
 
 with c2:
