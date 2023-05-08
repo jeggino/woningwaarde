@@ -7,4 +7,5 @@ kneed
 seaborn
 leafmap
 streamlit-yellowbrick
+streamlit-plotly-events
 yellowbrick
