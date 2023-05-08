@@ -14,7 +14,7 @@ left, right = st.columns([2,3],gap="large")
 
 
 # -------------------------------------------------------
-@st.cache_data() 
+# @st.cache_data() 
 def get_data():
     df_woningwaarde =  gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=WONINGWAARDE_2022&THEMA=woningwaarde")
     df_woningwaarde = df_woningwaarde[['LABEL', 'geometry']]
