@@ -438,7 +438,7 @@ df_1 = px.data.election()
 geo_df = gpd.GeoDataFrame.from_features(
     px.data.election_geojson()["features"]
 ).merge(df_1, on="district").set_index("district")
-st.dataframe(geo_df.drop("geometry",axis=1))
+
 fig2 = px.choropleth_mapbox(geo_df,
                            geojson=geo_df.geometry,
                            locations=geo_df.index,
@@ -448,8 +448,8 @@ fig2 = px.choropleth_mapbox(geo_df,
                            zoom=8.5)
 
 selected_points_2 = plotly_events(fig2, click_event=True, hover_event=False)
-st.write(selected_points_2)
-st.write(df_1[df_1.index==selected_points_2[0]["pointNumber"]])
+df_table = geo_df.drop("geometry",axis=1)
+st.write(df_table[df_table.index==selected_points_2[0]["pointNumber"]])
 
 
 #-------------------
