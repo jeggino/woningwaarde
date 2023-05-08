@@ -283,59 +283,52 @@ st.set_page_config(
 
 
 # #-----------------------------------
-import pandas as pd
-import plotly.express as px
-from streamlit_plotly_events import plotly_events
 import streamlit as st
-from streamlit_plotly_events import plotly_events
-
-import streamlit as st
-from streamlit_plotly_events import plotly_events
-
-import plotly.graph_objects as go
-
+import pydeck as pdk
 import pandas as pd
+import ssl
 
-df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2014_us_cities.csv')
-df.head()
+# get rid of ssl connection error (certificates)
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
 
-df['text'] = df['name'] + '<br>Population ' + (df['pop']/1e6).astype(str)+' million'
-limits = [(0,2),(3,10),(11,20),(21,50),(50,3000)]
-colors = ["royalblue","crimson","lightseagreen","orange","lightgrey"]
-cities = []
-scale = 5000
+st.header("Map data")
+`# read in data`
+df = pd.read_csv(r'https://gist.githubusercontent.com/bafu-DF/f60bd9ac9579d9f830f1f52ce7e79c86/raw/af16f3bb04d5150cc0e139d25d9c706ccbb80215/sampledata.csv', sep=',')
 
-fig = go.Figure()
+layer = pdk.Layer(
+    "ScatterplotLayer",
+    df,
+    pickable=True,
+    opacity=0.8,
+    filled=True,
+    radius_scale=2,
+    radius_min_pixels=10,
+    radius_max_pixels=500,
+    line_width_min_pixels=0.01,
+    get_position='[Longitude, Latitude]',
+    get_fill_color=[255, 0, 0],
+    get_line_color=[0, 0, 0],
+)
 
-for i in range(len(limits)):
-    lim = limits[i]
-    df_sub = df[lim[0]:lim[1]]
-    fig.add_trace(go.Scattergeo(
-        locationmode = 'USA-states',
-        lon = df_sub['lon'],
-        lat = df_sub['lat'],
-        text = df_sub['text'],
-        marker = dict(
-            size = df_sub['pop']/scale,
-            color = colors[i],
-            line_color='rgb(40,40,40)',
-            line_width=0.5,
-            sizemode = 'area'
-        ),
-        name = '{0} - {1}'.format(lim[0],lim[1])))
+# Set the viewport location
+view_state = pdk.ViewState(latitude=df['Latitude'].iloc[-1], longitude=df['Longitude'].iloc[-1], zoom=13, min_zoom= 10, max_zoom=30)
 
-fig.update_layout(
-        title_text = '2014 US city populations<br>(Click legend to toggle traces)',
-        showlegend = True,
-        geo = dict(
-            scope = 'usa',
-            landcolor = 'rgb(217, 217, 217)',
-        )
-    )
+# Render
+r = pdk.Deck(layers=[layer], map_style='mapbox://styles/mapbox/satellite-v9',
+             initial_view_state=view_state, tooltip={"html": "<b>Point ID: </b> {PointID} <br /> "
+                                                             "<b>Longitude: </b> {Longitude} <br /> "
+                                                             "<b>Latitude: </b>{Latitude} <br /> "
+                                                             "<b> Value: </b>{Value}"})
+r
 
-selected_points = plotly_events(fig, click_event=True, select_event =True)
-st.dataframe(df)
-st.write(selected_points)
+# output of clicked point should be input to a reusable list
+selectedID = st.selectbox("Choose point ID", df['PointID'])
+st.write(r)
 
 
 # df_folium = df_segmentation
