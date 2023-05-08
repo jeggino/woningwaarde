@@ -297,7 +297,8 @@ fig = px.scatter_geo(df, locations="iso_alpha", color="continent",
                      hover_name="country", size="pop",
                      projection="natural earth")
 
-selected_points = plotly_events(fig, click_event=False, hover_event=True)
+selected_points = plotly_events(fig, click_event=True, hover_event=False)
+st.dataframe(df)
 st.write(selected_points)
 
 
