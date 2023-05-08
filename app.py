@@ -21,6 +21,7 @@ def get_data():
 
     df_corporatiebezit = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=AFWC_2022&THEMA=afwc_2022")
     df_corporatiebezit = df_corporatiebezit[['Corporatie_woningen','geometry']]
+    # df_corporatiebezit["PERC"] = df_corporatiebezit.PERC.apply(lambda x: 100 if x == 999 else x)
 
     df_functiemix = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=FUNCTIEMIX&THEMA=functiemix")
     df_functiemix = df_functiemix[['WON', 'VZN', 'WRK','geometry']]
@@ -36,7 +37,7 @@ def get_data():
 
     df_winkelgebieden = gpd.read_file("https://api.data.amsterdam.nl/v1/wfs/winkelgebieden/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=winkelgebieden&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326")
     df_winkelgebieden = df_winkelgebieden[['oppervlakte','categorienaam', 'geometry']]
-
+    
     df = gpd.sjoin(df_woningwaarde,df_bouwjaar,how='left').reset_index().dissolve("index",{"LABEL":"first",
                                                                                            "Bouwjaar":"mean"}
                                                                                  ).round()
