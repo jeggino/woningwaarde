@@ -460,7 +460,7 @@ fig = px.scatter_mapbox(df, lat="centroid_lat", lon="centroid_lon",     color="p
 fig.update_layout(mapbox_style="open-street-map")
 
 selected_points_3 = plotly_events(fig, click_event=True, hover_event=False)
-st.write(df[df.index==selected_points_2[0]["pointNumber"]])
+st.write(df[df.index==selected_points_3[0]["pointNumber"]])
 
 
 
