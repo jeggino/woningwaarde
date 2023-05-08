@@ -448,7 +448,6 @@ geojson = px.data.election_geojson()
 
 fig2 = px.choropleth(df2, geojson=geojson, color="Bergeron",
                     locations="district", featureidkey="properties.district",
-                    projection="mercator"
                    )
 fig2.update_layout(mapbox_style="open-street-map")
 
