@@ -287,46 +287,79 @@ st_yellowbrick(visualizer)
 
 
 #-----------------------------------
-import folium
-from streamlit_folium import st_folium
+import pandas as pd
+import plotly.express as px
+from streamlit_plotly_events import plotly_events
+
 
 df_folium = df_segmentation
 df_folium["long"] = df_segmentation.centroid.x
 df_folium["lat"] = df_segmentation.centroid.y
 
-dictionary_colors = dict(zip(df_folium["Clusters"].unique(),list(folium.map.Icon.color_options)))
-df_folium["Color"] = df_folium["Clusters"].map(dictionary_colors)
+source = df_segmentation
+fig = px.scatter_mapbox(source, lat="lat", lon="long", hover_name="Clusters", hover_data=["Clusters"],color="Clusters",
+                        zoom=8, height=300)
+fig.update_layout(
+    mapbox_style="white-bg",
+    mapbox_layers=[
+        {
+            "below": 'traces',
+            "sourcetype": "raster",
+            "sourceattribution": "United States Geological Survey",
+            "source": [
+                "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}"
+            ]
+        }
+      ])
+fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+fig.update_layout(mapbox_style="open-street-map")
 
-source = df_folium.iloc[:1000,:]
+selected_points = plotly_events(fig, click_event=True, hover_event=True)
+st.write(selected_points)
 
-m = folium.Map(location=[source["lat"].mean(),source["long"].mean()])
-folium.TileLayer('cartodbpositron').add_to(m)
 
-dictionar_layers = {}
-for i in df_folium["Clusters"].unique():
-    dictionar_layers[i] = folium.FeatureGroup(name=f'Clusters {i}', show=False)
 
-for key in dictionar_layers.keys():
-    m.add_child(dictionar_layers[key])
 
-for row, columns in source.iterrows():
+# import folium
+# from streamlit_folium import st_folium
+
+# df_folium = df_segmentation
+# df_folium["long"] = df_segmentation.centroid.x
+# df_folium["lat"] = df_segmentation.centroid.y
+
+# dictionary_colors = dict(zip(df_folium["Clusters"].unique(),list(folium.map.Icon.color_options)))
+# df_folium["Color"] = df_folium["Clusters"].map(dictionary_colors)
+
+# source = df_folium.iloc[:1000,:]
+
+# m = folium.Map(location=[source["lat"].mean(),source["long"].mean()])
+# folium.TileLayer('cartodbpositron').add_to(m)
+
+# dictionar_layers = {}
+# for i in df_folium["Clusters"].unique():
+#     dictionar_layers[i] = folium.FeatureGroup(name=f'Clusters {i}', show=False)
+
+# for key in dictionar_layers.keys():
+#     m.add_child(dictionar_layers[key])
+
+# for row, columns in source.iterrows():
     
-    folium.Marker(
-        [columns["lat"], columns["long"]], 
-        tooltip=columns["Clusters"],
-        icon=folium.Icon(color=columns["Color"], icon="glyphicon-map-marker"),
-    ).add_to(dictionar_layers[columns["Clusters"]])
+#     folium.Marker(
+#         [columns["lat"], columns["long"]], 
+#         tooltip=columns["Clusters"],
+#         icon=folium.Icon(color=columns["Color"], icon="glyphicon-map-marker"),
+#     ).add_to(dictionar_layers[columns["Clusters"]])
 
-folium.map.LayerControl(position='topright', collapsed=True, autoZIndex=True).add_to(m)
+# folium.map.LayerControl(position='topright', collapsed=True, autoZIndex=True).add_to(m)
 
-c1, c2 = st.columns([2,1])
-with c1:
-    output = st_folium(
-        m, feature_group_to_add=dictionar_layers[1]
-    )
+# c1, c2 = st.columns([2,1])
+# with c1:
+#     output = st_folium(
+#         m
+#     )
 
-with c2:
-    st.write(output)
+# with c2:
+#     st.write(output)
 
     
     
