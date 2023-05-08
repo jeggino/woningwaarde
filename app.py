@@ -315,14 +315,14 @@ for row, columns in source.iterrows():
         [columns["lat"], columns["long"]], 
         tooltip=columns["Clusters"],
         icon=folium.Icon(color=columns["Color"], icon="glyphicon-map-marker"),
-    ).add_to(m)
+    ).add_to(dictionar_layers["Clusters"])
 
 folium.map.LayerControl(position='topright', collapsed=True, autoZIndex=True).add_to(m)
 
 c1, c2 = st.columns([2,1])
 with c1:
     output = st_folium(
-        m
+        m, feature_group_to_add=dictionar_layers[1]
     )
 
 with c2:
