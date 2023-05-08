@@ -465,6 +465,7 @@ st.write(selected_points)
 import plotly.express as px
 
 df = px.data.election()
+st.dataframe(df)
 geojson = px.data.election_geojson()
 
 fig2 = px.choropleth_mapbox(df, geojson=geojson, color="Bergeron",
