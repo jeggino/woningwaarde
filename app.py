@@ -304,7 +304,7 @@ m = folium.Map(location=[source["lat"].mean(),source["long"].mean()])
 folium.TileLayer('cartodbpositron').add_to(m)
 
 dictionar_layers = {}
-for i in df_raw["Clusters"].unique():
+for i in df_folium["Clusters"].unique():
     dictionar_layers[i] = folium.FeatureGroup(name=f'Clusters {i}', show=False)
 
 for key in dictionar_layers.keys():
