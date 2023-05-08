@@ -13,305 +13,320 @@ st.set_page_config(
     layout="wide",
 )
 
-left, right = st.columns([2,3],gap="large")
+# left, right = st.columns([2,3],gap="large")
 
 
-# -------------------------------------------------------
-@st.cache_data() 
-def get_data():
-    df_woningwaarde =  gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=WONINGWAARDE_2022&THEMA=woningwaarde")
-    df_woningwaarde = df_woningwaarde[['LABEL', 'geometry']]
+# # -------------------------------------------------------
+# @st.cache_data() 
+# def get_data():
+#     df_woningwaarde =  gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=WONINGWAARDE_2022&THEMA=woningwaarde")
+#     df_woningwaarde = df_woningwaarde[['LABEL', 'geometry']]
 
-    df_corporatiebezit = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=AFWC_2022&THEMA=afwc_2022")
-    df_corporatiebezit = df_corporatiebezit[['Corporatie_woningen','geometry']]
+#     df_corporatiebezit = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=AFWC_2022&THEMA=afwc_2022")
+#     df_corporatiebezit = df_corporatiebezit[['Corporatie_woningen','geometry']]
 
-    df_functiemix = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=FUNCTIEMIX&THEMA=functiemix")
-    df_functiemix = df_functiemix[['WON', 'VZN', 'WRK','geometry']]
+#     df_functiemix = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=FUNCTIEMIX&THEMA=functiemix")
+#     df_functiemix = df_functiemix[['WON', 'VZN', 'WRK','geometry']]
 
-    df_stadsparken = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=PARKPLANTSOENGROEN&THEMA=stadsparken")
-    df_stadsparken  =df_stadsparken[['Oppervlakte_m2', 'geometry']]
+#     df_stadsparken = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=PARKPLANTSOENGROEN&THEMA=stadsparken")
+#     df_stadsparken  =df_stadsparken[['Oppervlakte_m2', 'geometry']]
 
-    df_trammetro = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=TRAMMETRO_PUNTEN_2022&THEMA=trammetro")
-    df_trammetro = df_trammetro[['Modaliteit', 'Lijn', 'geometry']]
-    df_trammetro["Lijn"] = df_trammetro["Lijn"].str.split(expand=False,pat="|").apply(lambda x: len(x))
+#     df_trammetro = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=TRAMMETRO_PUNTEN_2022&THEMA=trammetro")
+#     df_trammetro = df_trammetro[['Modaliteit', 'Lijn', 'geometry']]
+#     df_trammetro["Lijn"] = df_trammetro["Lijn"].str.split(expand=False,pat="|").apply(lambda x: len(x))
 
-    df_bouwjaar = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=BOUWJAAR&THEMA=bouwjaar")
+#     df_bouwjaar = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=BOUWJAAR&THEMA=bouwjaar")
 
-    df_winkelgebieden = gpd.read_file("https://api.data.amsterdam.nl/v1/wfs/winkelgebieden/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=winkelgebieden&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326")
-    df_winkelgebieden = df_winkelgebieden[['oppervlakte','categorienaam', 'geometry']]
+#     df_winkelgebieden = gpd.read_file("https://api.data.amsterdam.nl/v1/wfs/winkelgebieden/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=winkelgebieden&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326")
+#     df_winkelgebieden = df_winkelgebieden[['oppervlakte','categorienaam', 'geometry']]
 
-    df = gpd.sjoin(df_woningwaarde,df_bouwjaar,how='left').reset_index().dissolve("index",{"LABEL":"first",
-                                                                                           "Bouwjaar":"mean"}
-                                                                                 ).round()
+#     df = gpd.sjoin(df_woningwaarde,df_bouwjaar,how='left').reset_index().dissolve("index",{"LABEL":"first",
+#                                                                                            "Bouwjaar":"mean"}
+#                                                                                  ).round()
 
-    df_1 = gpd.sjoin(df,df_corporatiebezit,how='left').reset_index().dissolve("index",{"LABEL":"first",
-                                                                                       "Bouwjaar":"first",
-                                                                                       "Corporatie_woningen":"sum"},
-                                                                              dropna=False
-                                                                             ).round()
-    df_2 = gpd.sjoin(df_1,df_trammetro,how='left').reset_index().dissolve("index",{"LABEL":"first","Bouwjaar":"first",
-                                                                                   "Corporatie_woningen":"first",
-                                                                                   "Lijn":"sum"},
-                                                                          dropna=False).round()
+#     df_1 = gpd.sjoin(df,df_corporatiebezit,how='left').reset_index().dissolve("index",{"LABEL":"first",
+#                                                                                        "Bouwjaar":"first",
+#                                                                                        "Corporatie_woningen":"sum"},
+#                                                                               dropna=False
+#                                                                              ).round()
+#     df_2 = gpd.sjoin(df_1,df_trammetro,how='left').reset_index().dissolve("index",{"LABEL":"first","Bouwjaar":"first",
+#                                                                                    "Corporatie_woningen":"first",
+#                                                                                    "Lijn":"sum"},
+#                                                                           dropna=False).round()
 
-    df_3 = gpd.sjoin(df_2,df_functiemix,how='left').reset_index().dissolve("index",{"LABEL":"first","Bouwjaar":"first",
-                                                                                    "Corporatie_woningen":"first",
-                                                                                    "Lijn":"first",
-                                                                                    'WON':"sum",
-                                                                                    'VZN':"sum",
-                                                                                    'WRK':"sum"},
-                                                                           dropna=False).round()
+#     df_3 = gpd.sjoin(df_2,df_functiemix,how='left').reset_index().dissolve("index",{"LABEL":"first","Bouwjaar":"first",
+#                                                                                     "Corporatie_woningen":"first",
+#                                                                                     "Lijn":"first",
+#                                                                                     'WON':"sum",
+#                                                                                     'VZN':"sum",
+#                                                                                     'WRK':"sum"},
+#                                                                            dropna=False).round()
 
-    df_4 = gpd.sjoin(df_3,df_stadsparken,how='left').reset_index().dissolve("index",{"LABEL":"first","Bouwjaar":"first",
-                                                                                    "Corporatie_woningen":"first",
-                                                                                    "Lijn":"first",
-                                                                                    'WON':"first",
-                                                                                    'VZN':"first",
-                                                                                    'WRK':"first",
-                                                                                     "Oppervlakte_m2":"sum"},
-                                                                            dropna=False).round()
+#     df_4 = gpd.sjoin(df_3,df_stadsparken,how='left').reset_index().dissolve("index",{"LABEL":"first","Bouwjaar":"first",
+#                                                                                     "Corporatie_woningen":"first",
+#                                                                                     "Lijn":"first",
+#                                                                                     'WON':"first",
+#                                                                                     'VZN':"first",
+#                                                                                     'WRK':"first",
+#                                                                                      "Oppervlakte_m2":"sum"},
+#                                                                             dropna=False).round()
 
-    return df_4
-
-
-# -------------------------------------------------------
-df = get_data()
+#     return df_4
 
 
-# -------------------------------------------------------
-from sklearn.preprocessing import MinMaxScaler
-import sklearn.cluster as cluster
-from kneed import KneeLocator
-
-@st.cache_data(experimental_allow_widgets=True) 
-def analysis_cluster():
-    df_segmentation = df[['geometry', 'LABEL','WON','VZN', 'WRK']]
-
-    # Standardizing the features
-    df_feature = df_segmentation.iloc[:,2:]
-    x_MinMax = MinMaxScaler().fit_transform(df_feature)
-    kmeans_kwargs = {
-        "init": "random",
-        "n_init": 10,
-        "max_iter": 300,
-        "random_state": 42,
-    }
-
-    # A list holds the SSE values for each k
-    sse = []
-    for k in range(2, 11):
-        kmeans = cluster.KMeans(n_clusters=k, **kmeans_kwargs)
-        kmeans.fit(x_MinMax)
-        sse.append(kmeans.inertia_)
-
-    kl = KneeLocator(
-        range(2, 11), sse, curve="convex", direction="decreasing"
-    )
+# # -------------------------------------------------------
+# df = get_data()
 
 
-    # -------------------------------------------------------
-    option_clusters = st.sidebar.number_input(f'The best number of cluster is {kl.elbow}, but you can play aroud',
-                                              min_value=2, max_value=8,step=1,value=kl.elbow)
+# # -------------------------------------------------------
+# from sklearn.preprocessing import MinMaxScaler
+# import sklearn.cluster as cluster
+# from kneed import KneeLocator
 
-    kmeans = cluster.KMeans(n_clusters=option_clusters,init="k-means++")
-    kmeans = kmeans.fit(x_MinMax)
+# @st.cache_data(experimental_allow_widgets=True) 
+# def analysis_cluster():
+#     df_segmentation = df[['geometry', 'LABEL','WON','VZN', 'WRK']]
 
-    df_segmentation['Clusters'] = kmeans.labels_ + 1
+#     # Standardizing the features
+#     df_feature = df_segmentation.iloc[:,2:]
+#     x_MinMax = MinMaxScaler().fit_transform(df_feature)
+#     kmeans_kwargs = {
+#         "init": "random",
+#         "n_init": 10,
+#         "max_iter": 300,
+#         "random_state": 42,
+#     }
+
+#     # A list holds the SSE values for each k
+#     sse = []
+#     for k in range(2, 11):
+#         kmeans = cluster.KMeans(n_clusters=k, **kmeans_kwargs)
+#         kmeans.fit(x_MinMax)
+#         sse.append(kmeans.inertia_)
+
+#     kl = KneeLocator(
+#         range(2, 11), sse, curve="convex", direction="decreasing"
+#     )
+
+
+#     # -------------------------------------------------------
+#     option_clusters = st.sidebar.number_input(f'The best number of cluster is {kl.elbow}, but you can play aroud',
+#                                               min_value=2, max_value=8,step=1,value=kl.elbow)
+
+#     kmeans = cluster.KMeans(n_clusters=option_clusters,init="k-means++")
+#     kmeans = kmeans.fit(x_MinMax)
+
+#     df_segmentation['Clusters'] = kmeans.labels_ + 1
     
-    return df_segmentation, option_clusters, x_MinMax
+#     return df_segmentation, option_clusters, x_MinMax
 
 
-# -------------------------------------------------------
-df_segmentation, option_clusters, x_MinMax = analysis_cluster()
+# # -------------------------------------------------------
+# df_segmentation, option_clusters, x_MinMax = analysis_cluster()
 
 
-# -------------------------------------------------------
-import altair as alt
-import seaborn as sns
+# # -------------------------------------------------------
+# import altair as alt
+# import seaborn as sns
 
 
-PALETTE = [ 'Pastel1', 'Pastel1_r', 'Pastel2', 'Pastel2_r', 'Set1', 'Set1_r', 'Set2', 'Set2_r', 'Set3', 'Set3_r', 'Spectral', 'Spectral_r', 'Wistia', 'Wistia_r', 'afmhot', 'afmhot_r', 'autumn', 'autumn_r', 'binary', 'binary_r', 'bone', 'bone_r', 'brg', 'brg_r', 'bwr', 'bwr_r', 'cividis', 'cividis_r', 'cool', 'cool_r', 'coolwarm', 'coolwarm_r', 'copper', 'copper_r', 'crest', 'crest_r', 'cubehelix', 'cubehelix_r', 'flag', 'flag_r', 'flare', 'flare_r', 'gist_earth', 'gist_earth_r', 'gist_gray', 'gist_gray_r', 'gist_heat', 'gist_heat_r', 'gist_ncar', 'gist_ncar_r', 'gist_rainbow', 'gist_rainbow_r', 'gist_stern', 'gist_stern_r', 'gist_yarg', 'gist_yarg_r', 'gnuplot', 'gnuplot2', 'gnuplot2_r', 'gnuplot_r', 'gray', 'gray_r', 'hot', 'hot_r', 'hsv', 'hsv_r', 'icefire', 'icefire_r', 'inferno', 'inferno_r', 'jet', 'jet_r', 'magma', 'magma_r', 'mako', 'mako_r', 'nipy_spectral', 'nipy_spectral_r', 'ocean', 'ocean_r', 'pink', 'pink_r', 'plasma', 'plasma_r', 'prism', 'prism_r', 'rainbow', 'rainbow_r', 'rocket', 'rocket_r', 'seismic', 'seismic_r', 'spring', 'spring_r', 'summer', 'summer_r', 'tab10', 'tab10_r', 'tab20', 'tab20_r', 'tab20b', 'tab20b_r', 'tab20c', 'tab20c_r', 'terrain', 'terrain_r', 'turbo', 'turbo_r', 'twilight', 'twilight_r', 'twilight_shifted', 'twilight_shifted_r', 'viridis', 'viridis_r', 'vlag', 'vlag_r', 'winter', 'winter_r']
-option_palette = st.sidebar.selectbox('Palette',PALETTE,index=4)
-palette = sns.color_palette(option_palette,n_colors=option_clusters)
+# PALETTE = [ 'Pastel1', 'Pastel1_r', 'Pastel2', 'Pastel2_r', 'Set1', 'Set1_r', 'Set2', 'Set2_r', 'Set3', 'Set3_r', 'Spectral', 'Spectral_r', 'Wistia', 'Wistia_r', 'afmhot', 'afmhot_r', 'autumn', 'autumn_r', 'binary', 'binary_r', 'bone', 'bone_r', 'brg', 'brg_r', 'bwr', 'bwr_r', 'cividis', 'cividis_r', 'cool', 'cool_r', 'coolwarm', 'coolwarm_r', 'copper', 'copper_r', 'crest', 'crest_r', 'cubehelix', 'cubehelix_r', 'flag', 'flag_r', 'flare', 'flare_r', 'gist_earth', 'gist_earth_r', 'gist_gray', 'gist_gray_r', 'gist_heat', 'gist_heat_r', 'gist_ncar', 'gist_ncar_r', 'gist_rainbow', 'gist_rainbow_r', 'gist_stern', 'gist_stern_r', 'gist_yarg', 'gist_yarg_r', 'gnuplot', 'gnuplot2', 'gnuplot2_r', 'gnuplot_r', 'gray', 'gray_r', 'hot', 'hot_r', 'hsv', 'hsv_r', 'icefire', 'icefire_r', 'inferno', 'inferno_r', 'jet', 'jet_r', 'magma', 'magma_r', 'mako', 'mako_r', 'nipy_spectral', 'nipy_spectral_r', 'ocean', 'ocean_r', 'pink', 'pink_r', 'plasma', 'plasma_r', 'prism', 'prism_r', 'rainbow', 'rainbow_r', 'rocket', 'rocket_r', 'seismic', 'seismic_r', 'spring', 'spring_r', 'summer', 'summer_r', 'tab10', 'tab10_r', 'tab20', 'tab20_r', 'tab20b', 'tab20b_r', 'tab20c', 'tab20c_r', 'terrain', 'terrain_r', 'turbo', 'turbo_r', 'twilight', 'twilight_r', 'twilight_shifted', 'twilight_shifted_r', 'viridis', 'viridis_r', 'vlag', 'vlag_r', 'winter', 'winter_r']
+# option_palette = st.sidebar.selectbox('Palette',PALETTE,index=4)
+# palette = sns.color_palette(option_palette,n_colors=option_clusters)
 
 
-option_outliers = left.checkbox('outliers')
+# option_outliers = left.checkbox('outliers')
 
-source = df_segmentation.melt(id_vars="Clusters",value_vars=['WON','VZN', 'WRK'])
+# source = df_segmentation.melt(id_vars="Clusters",value_vars=['WON','VZN', 'WRK'])
 
-chart = alt.Chart(source).mark_boxplot(ticks=True,outliers=option_outliers).encode(
-    x=alt.X("Clusters:N", title=None, axis=alt.Axis(labels=False, ticks=False), scale=alt.Scale(padding=1)), 
-    y=alt.Y("value:Q"), 
-    color = alt.Color("Clusters:N", scale=alt.Scale(range=palette.as_hex())),
-    column=alt.Column('variable:N', sort=['WON','VZN', 'WRK'], header=alt.Header(orient='bottom'))
-).properties(
-    width=100
-).configure_facet(
-    spacing=7
-).configure_view(
-    stroke=None
-)
+# chart = alt.Chart(source).mark_boxplot(ticks=True,outliers=option_outliers).encode(
+#     x=alt.X("Clusters:N", title=None, axis=alt.Axis(labels=False, ticks=False), scale=alt.Scale(padding=1)), 
+#     y=alt.Y("value:Q"), 
+#     color = alt.Color("Clusters:N", scale=alt.Scale(range=palette.as_hex())),
+#     column=alt.Column('variable:N', sort=['WON','VZN', 'WRK'], header=alt.Header(orient='bottom'))
+# ).properties(
+#     width=100
+# ).configure_facet(
+#     spacing=7
+# ).configure_view(
+#     stroke=None
+# )
     
 
-# -------------------------------------------------------
-import pydeck as pdk
+# # -------------------------------------------------------
+# import pydeck as pdk
 
-option_tootip = st.sidebar.selectbox('',('WON','VZN', 'WRK'))
+# option_tootip = st.sidebar.selectbox('',('WON','VZN', 'WRK'))
 
-colors = dict(zip(list(range(1,option_clusters+1)),
-                  palette
-                 )
-             )
+# colors = dict(zip(list(range(1,option_clusters+1)),
+#                   palette
+#                  )
+#              )
 
-df_segmentation['Color'] = df_segmentation['Clusters'].map(colors)
-df_segmentation['Color'] = df_segmentation["Color"].apply(lambda x: [round(i * 255) for i in x])
-
-
-polygon_layer = pdk.Layer(
-    'GeoJsonLayer',
-    df_segmentation,
-    opacity=1,
-    stroked=True,
-    filled=True,
-    extruded=True,
-    get_elevation=option_tootip,
-    elevation_scale=0.01,
-    wireframe=True,
-    get_fill_color='Color',
-    get_line_color=[255, 255, 255],
-    pickable=True,
-)
-
-INITIAL_VIEW_STATE = pdk.ViewState(
-    latitude=52.374119, 
-    longitude=4.895906,
-    zoom=10,
-    pitch=35,
-    bearing=0
-)
-
-tooltip = {"text": "Cluster: {Clusters} \n WON: {WON} \n VZN: {VZN} \n WRK: {WRK}"}
-
-r = pdk.Deck(
-    [polygon_layer],
-    initial_view_state=INITIAL_VIEW_STATE,
-    tooltip = tooltip,
-    map_style = "light_no_labels",
-)
+# df_segmentation['Color'] = df_segmentation['Clusters'].map(colors)
+# df_segmentation['Color'] = df_segmentation["Color"].apply(lambda x: [round(i * 255) for i in x])
 
 
-#-----------------------------
-with left:
-    st.altair_chart(chart, use_container_width=False,theme=None)
+# polygon_layer = pdk.Layer(
+#     'GeoJsonLayer',
+#     df_segmentation,
+#     opacity=1,
+#     stroked=True,
+#     filled=True,
+#     extruded=True,
+#     get_elevation=option_tootip,
+#     elevation_scale=0.01,
+#     wireframe=True,
+#     get_fill_color='Color',
+#     get_line_color=[255, 255, 255],
+#     pickable=True,
+# )
+
+# INITIAL_VIEW_STATE = pdk.ViewState(
+#     latitude=52.374119, 
+#     longitude=4.895906,
+#     zoom=10,
+#     pitch=35,
+#     bearing=0
+# )
+
+# tooltip = {"text": "Cluster: {Clusters} \n WON: {WON} \n VZN: {VZN} \n WRK: {WRK}"}
+
+# r = pdk.Deck(
+#     [polygon_layer],
+#     initial_view_state=INITIAL_VIEW_STATE,
+#     tooltip = tooltip,
+#     map_style = "light_no_labels",
+# )
+
+
+# #-----------------------------
+# with left:
+#     st.altair_chart(chart, use_container_width=False,theme=None)
     
-with right:
-    st.pydeck_chart(pydeck_obj=r, use_container_width=True)
+# with right:
+#     st.pydeck_chart(pydeck_obj=r, use_container_width=True)
     
-    def filter_by_viewport(widget_instance, payload):
+#     def filter_by_viewport(widget_instance, payload):
         
-        return payload['data']
+#         return payload['data']
             
-    st.write(r.deck_widget.on_click(filter_by_viewport))
+#     st.write(r.deck_widget.on_click(filter_by_viewport))
        
     
-#-----------------------------
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from yellowbrick.classifier import ClassPredictionError
-from streamlit_yellowbrick import st_yellowbrick
-from sklearn.neural_network import MLPClassifier
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.svm import SVC
-from sklearn.gaussian_process import GaussianProcessClassifier
-from sklearn.gaussian_process.kernels import RBF
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
-from sklearn.naive_bayes import GaussianNB
-from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+# #-----------------------------
+# from sklearn.model_selection import train_test_split
+# from sklearn.ensemble import RandomForestClassifier
+# from yellowbrick.classifier import ClassPredictionError
+# from streamlit_yellowbrick import st_yellowbrick
+# from sklearn.neural_network import MLPClassifier
+# from sklearn.neighbors import KNeighborsClassifier
+# from sklearn.svm import SVC
+# from sklearn.gaussian_process import GaussianProcessClassifier
+# from sklearn.gaussian_process.kernels import RBF
+# from sklearn.tree import DecisionTreeClassifier
+# from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
+# from sklearn.naive_bayes import GaussianNB
+# from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 
-MODELS = [
-    "Nearest Neighbors",
-    "Linear SVM",
-    "RBF SVM",
-    "Gaussian Process",
-    "Decision Tree",
-    "Random Forest",
-    "Neural Net",
-    "AdaBoost",
-    "Naive Bayes",
-    "QDA",
-]
+# MODELS = [
+#     "Nearest Neighbors",
+#     "Linear SVM",
+#     "RBF SVM",
+#     "Gaussian Process",
+#     "Decision Tree",
+#     "Random Forest",
+#     "Neural Net",
+#     "AdaBoost",
+#     "Naive Bayes",
+#     "QDA",
+# ]
 
-classifiers = [
-    KNeighborsClassifier(3),
-    SVC(kernel="linear", C=0.025),
-    SVC(gamma=2, C=1),
-    GaussianProcessClassifier(1.0 * RBF(1.0)),
-    DecisionTreeClassifier(max_depth=5),
-    RandomForestClassifier(max_depth=5, n_estimators=10, max_features=1),
-    MLPClassifier(alpha=1, max_iter=1000),
-    AdaBoostClassifier(),
-    GaussianNB(),
-    QuadraticDiscriminantAnalysis(),
-]
+# classifiers = [
+#     KNeighborsClassifier(3),
+#     SVC(kernel="linear", C=0.025),
+#     SVC(gamma=2, C=1),
+#     GaussianProcessClassifier(1.0 * RBF(1.0)),
+#     DecisionTreeClassifier(max_depth=5),
+#     RandomForestClassifier(max_depth=5, n_estimators=10, max_features=1),
+#     MLPClassifier(alpha=1, max_iter=1000),
+#     AdaBoostClassifier(),
+#     GaussianNB(),
+#     QuadraticDiscriminantAnalysis(),
+# ]
 
-dict_models = dict(zip(MODELS,classifiers))
+# dict_models = dict(zip(MODELS,classifiers))
 
-option_model = st.sidebar.selectbox("Select a model", MODELS, index=0)
+# option_model = st.sidebar.selectbox("Select a model", MODELS, index=0)
 
-#Create classification dataset
-X = x_MinMax
-y = df_segmentation["Clusters"]
-
-
-# Perform 80/20 training/test split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20,
-                                                    random_state=42)
-# Instantiate the classification model and visualizer
-visualizer = ClassPredictionError(
-    dict_models[option_model], 
-)
-
-# Fit the training data to the visualizer
-visualizer.fit(X_train, y_train)
-
-# Evaluate the model on the test data
-visualizer.score(X_test, y_test)
-
-# Draw visualization
-st_yellowbrick(visualizer) 
+# #Create classification dataset
+# X = x_MinMax
+# y = df_segmentation["Clusters"]
 
 
-#-----------------------------------
+# # Perform 80/20 training/test split
+# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20,
+#                                                     random_state=42)
+# # Instantiate the classification model and visualizer
+# visualizer = ClassPredictionError(
+#     dict_models[option_model], 
+# )
+
+# # Fit the training data to the visualizer
+# visualizer.fit(X_train, y_train)
+
+# # Evaluate the model on the test data
+# visualizer.score(X_test, y_test)
+
+# # Draw visualization
+# st_yellowbrick(visualizer) 
+
+
+# #-----------------------------------
 import pandas as pd
 import plotly.express as px
 from streamlit_plotly_events import plotly_events
+import streamlit as st
+from streamlit_plotly_events import plotly_events
+
+# Writes a component similar to st.write()
+fig = px.line(x=[1], y=[1])
+selected_points = plotly_events(fig)
+
+# Can write inside of things using with!
+with st.beta_expander('Plot'):
+    fig = px.line(x=[1], y=[1])
+    selected_points = plotly_events(fig)
+
+# Select other Plotly events by specifying kwargs
+fig = px.line(x=[1], y=[1])
+selected_points = plotly_events(fig, click_event=False, hover_event=True)
 
 
-df_folium = df_segmentation
-df_folium["long"] = df_segmentation.centroid.x
-df_folium["lat"] = df_segmentation.centroid.y
+# df_folium = df_segmentation
+# df_folium["long"] = df_segmentation.centroid.x
+# df_folium["lat"] = df_segmentation.centroid.y
 
-source = df_segmentation
-fig = px.scatter_mapbox(source, lat="lat", lon="long", hover_name="Clusters", hover_data=["Clusters"],color="Clusters",
-                        zoom=8, height=300)
-fig.update_layout(
-    mapbox_style="white-bg",
-    mapbox_layers=[
-        {
-            "below": 'traces',
-            "sourcetype": "raster",
-            "sourceattribution": "United States Geological Survey",
-            "source": [
-                "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}"
-            ]
-        }
-      ])
-fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-fig.update_layout(mapbox_style="open-street-map")
+# source = df_segmentation
+# fig = px.scatter_mapbox(source, lat="lat", lon="long", hover_name="Clusters", hover_data=["Clusters"],color="Clusters",
+#                         zoom=8, height=300)
+# fig.update_layout(
+#     mapbox_style="white-bg",
+#     mapbox_layers=[
+#         {
+#             "below": 'traces',
+#             "sourcetype": "raster",
+#             "sourceattribution": "United States Geological Survey",
+#             "source": [
+#                 "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}"
+#             ]
+#         }
+#       ])
+# fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+# fig.update_layout(mapbox_style="open-street-map")
 
-selected_points = plotly_events(fig, click_event=True, hover_event=True)
-st.write(selected_points)
+# selected_points = plotly_events(fig, click_event=True, hover_event=True)
+# st.write(selected_points)
 
 
 
