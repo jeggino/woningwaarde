@@ -1,14 +1,11 @@
 import streamlit as st
 import pandas as pd
 import geopandas as gpd
-import datetime
-from datetime import date,datetime
 import pydeck as pdk
-from streamlit_echarts import st_echarts,st_pyecharts
 
 # -------------------------------------------------------
 st.set_page_config(
-    page_title="Amterdam woon[plaan",
+    page_title="Amterdam woonplaan",
     page_icon="🏠",
     layout="wide",
 )
