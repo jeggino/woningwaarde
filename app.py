@@ -283,52 +283,7 @@ st.set_page_config(
 
 
 # #-----------------------------------
-import streamlit as st
-import pydeck as pdk
-import pandas as pd
-import ssl
 
-# get rid of ssl connection error (certificates)
-try:
-    _create_unverified_https_context = ssl._create_unverified_context
-except AttributeError:
-    pass
-else:
-    ssl._create_default_https_context = _create_unverified_https_context
-
-st.header("Map data")
-# read in data
-df = pd.read_csv(r'https://gist.githubusercontent.com/bafu-DF/f60bd9ac9579d9f830f1f52ce7e79c86/raw/af16f3bb04d5150cc0e139d25d9c706ccbb80215/sampledata.csv', sep=',')
-
-layer = pdk.Layer(
-    "ScatterplotLayer",
-    df,
-    pickable=True,
-    opacity=0.8,
-    filled=True,
-    radius_scale=2,
-    radius_min_pixels=10,
-    radius_max_pixels=500,
-    line_width_min_pixels=0.01,
-    get_position='[Longitude, Latitude]',
-    get_fill_color=[255, 0, 0],
-    get_line_color=[0, 0, 0],
-)
-
-# Set the viewport location
-view_state = pdk.ViewState(latitude=df['Latitude'].iloc[-1], longitude=df['Longitude'].iloc[-1], zoom=13, min_zoom= 10, max_zoom=30)
-
-# Render
-r = pdk.Deck(layers=[layer], map_style='mapbox://styles/mapbox/satellite-v9',
-             initial_view_state=view_state, tooltip={"html": "<b>Point ID: </b> {PointID} <br /> "
-                                                             "<b>Longitude: </b> {Longitude} <br /> "
-                                                             "<b>Latitude: </b>{Latitude} <br /> "
-                                                             "<b> Value: </b>{Value}"})
-r
-
-# output of clicked point should be input to a reusable list
-selectedID = st.selectbox("Choose point ID", df['PointID'])
-st.write(r)
 
 
 # df_folium = df_segmentation
@@ -400,8 +355,51 @@ st.write(r)
 # with c2:
 #     st.write(output)
 
-    
-    
+
+
+"""
+ScatterplotLayer
+================
+
+Plot of the number of exits for various subway stops within San Francisco, California.
+
+Adapted from the deck.gl documentation.
+"""
+
+import pydeck as pdk
+import pandas as pd
+import math
+
+SCATTERPLOT_LAYER_DATA = "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/bart-stations.json"
+df = pd.read_json(SCATTERPLOT_LAYER_DATA)
+
+# Use pandas to calculate additional data
+df["exits_radius"] = df["exits"].apply(lambda exits_count: math.sqrt(exits_count))
+
+# Define a layer to display on a map
+layer = pdk.Layer(
+    "ScatterplotLayer",
+    df,
+    pickable=True,
+    opacity=0.8,
+    stroked=True,
+    filled=True,
+    radius_scale=6,
+    radius_min_pixels=1,
+    radius_max_pixels=100,
+    line_width_min_pixels=1,
+    get_position="coordinates",
+    get_radius="exits_radius",
+    get_fill_color=[255, 140, 0],
+    get_line_color=[0, 0, 0],
+)
+
+# Set the viewport location
+view_state = pdk.ViewState(latitude=37.7749295, longitude=-122.4194155, zoom=10, bearing=0, pitch=0)
+
+# Render
+r = pdk.Deck(layers=[layer], initial_view_state=view_state, tooltip={"text": "{name}\n{address}"},map_style='mapbox://styles/mapbox/satellite-v9')
+r
 
 
 
