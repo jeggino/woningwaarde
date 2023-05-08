@@ -449,6 +449,7 @@ fig2 = px.choropleth_mapbox(geo_df,
 
 selected_points_2 = plotly_events(fig2, click_event=True, hover_event=False)
 st.write(selected_points_2)
+st.write(df_1[df_1.index==selected_points_2[0]["pointNumber"]])
 
 
 #-------------------
