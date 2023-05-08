@@ -24,7 +24,6 @@ def get_data():
 
     df_corporatiebezit = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=AFWC_2022&THEMA=afwc_2022")
     df_corporatiebezit = df_corporatiebezit[['Corporatie_woningen','geometry']]
-    # df_corporatiebezit["PERC"] = df_corporatiebezit.PERC.apply(lambda x: 100 if x == 999 else x)
 
     df_functiemix = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=FUNCTIEMIX&THEMA=functiemix")
     df_functiemix = df_functiemix[['WON', 'VZN', 'WRK','geometry']]
@@ -265,15 +264,12 @@ X = x_MinMax
 y = df_segmentation["Clusters"]
 
 
-# classes = ['cluster %d' % i for i in range(1,option_clusters+1)]
-
 # Perform 80/20 training/test split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20,
                                                     random_state=42)
 # Instantiate the classification model and visualizer
 visualizer = ClassPredictionError(
     dict_models[option_model], 
-#     classes=classes
 )
 
 # Fit the training data to the visualizer
