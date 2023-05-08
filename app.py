@@ -291,6 +291,12 @@ import folium
 from streamlit_folium import st_folium
 
 df_raw = pd.read_csv('bird_migration.csv')
+
+df_raw["class"] = pd.cut(df_raw.direction,7,labels=["a","b","c","d","e","f","g"],include_lowest=True)
+
+dictionary_colors = dict(zip(df_raw["class"].unique(),list(folium.map.Icon.color_options)))
+df_raw["Color"] = df_raw["class"].map(dictionary_colors)
+
 source = df_raw.iloc[:1000,:]
 
 m = folium.Map(location=[source["latitude"].mean(),source["longitude"].mean()])
