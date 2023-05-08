@@ -433,12 +433,12 @@ import plotly.express as px
 from streamlit_plotly_events import plotly_events
 
 
-df = px.data.election()
-st.dataframe(df)
+df_1 = px.data.election()
+
 geo_df = gpd.GeoDataFrame.from_features(
     px.data.election_geojson()["features"]
-).merge(df, on="district").set_index("district")
-
+).merge(df_1, on="district").set_index("district")
+st.dataframe(geo_df.drop("geometry",axis=1))
 fig2 = px.choropleth_mapbox(geo_df,
                            geojson=geo_df.geometry,
                            locations=geo_df.index,
