@@ -315,7 +315,7 @@ for row, columns in source.iterrows():
         [columns["lat"], columns["long"]], 
         tooltip=columns["Clusters"],
         icon=folium.Icon(color=columns["Color"], icon="glyphicon-map-marker"),
-    ).add_to(dictionar_layers["Clusters"])
+    ).add_to(dictionar_layers[columns["Clusters"]])
 
 folium.map.LayerControl(position='topright', collapsed=True, autoZIndex=True).add_to(m)
 
