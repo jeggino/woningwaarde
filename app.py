@@ -320,8 +320,14 @@ for row, columns in source.iterrows():
 
 folium.map.LayerControl(position='topright', collapsed=True, autoZIndex=True).add_to(m)
 
-dict_map  = st_folium(m)
-st.write(dict_map)
+c1, c2 = st.columns(2)
+with c1:
+    output = st_folium(
+        m, width=700, height=500, returned_objects=["last_object_clicked"]
+    )
+
+with c2:
+    st.write(output)
 
     
     
