@@ -399,10 +399,11 @@ view_state = pdk.ViewState(latitude=37.7749295, longitude=-122.4194155, zoom=10,
 
 # Render
 r = pdk.Deck(layers=[layer], initial_view_state=view_state, tooltip={"text": "{name}\n{address}"},map_style='mapbox://styles/mapbox/satellite-v9')
-def filter_by_bbox(row):
-    return wrow['lng'], row['lat']
+def filter_by_viewport(widget_instance, payload):
+    return payload['data']['nw'], payload['data']['se']
+        
 
-r.deck_widget.on_click(filter_by_bbox)
+r.deck_widget.on_click(filter_by_viewport)
 r
 st.json(r)
 
