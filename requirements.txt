@@ -8,3 +8,5 @@ seaborn
 leafmap
 streamlit-yellowbrick
 yellowbrick
+
+st-clickable-images
