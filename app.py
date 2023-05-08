@@ -456,9 +456,7 @@ import plotly.express as px
 df = px.data.gapminder()
 fig3 = px.scatter_geo(df, locations="iso_alpha", color="continent",
                      hover_name="country", size="pop",
-                     animation_frame="year",
-                     mapbox_style="open-street-map",
-                     projection="natural earth")
+                     animation_frame="year")
 selected_points_3 = plotly_events(fig3, click_event=True, hover_event=False)
 st.write(selected_points_3)
 
