@@ -428,51 +428,10 @@ clicked = clickable_images(
 st.markdown(f"Image #{clicked} clicked" if clicked > -1 else "No image clicked")
 
 
+#----------------------------------------
 import plotly.graph_objects as go
-import streamlit as st
 from streamlit_plotly_events import plotly_events
 
-x_coords=[0,1,2,3,4,5,6,7,8,9,9,8,9,10,11,11,10,9,7,6,5,6,7,8,8,7,6,4,5,6,7,8,8,7,6,5,6,6,3,4,5,6,6,5,4,5,5,2,2,3,4,5,6,6,5,4,3,1,2,3,3,2,3,3,2,3,4,5,6,7,7,6,5,4,3,4,5,5,4,5,5]
-y_coords=[28.58056640625,22.5205078125,16.978515625,12.58203125,8.8515625,6.578125,5.15625,3.3125,1.5,1,2,5.125,4.25,3.5,3,4,5,6,7,8,11.125,10.25,9.5,9,10,11,12,16.3125,15.125,14.25,13.5,13,14,15,16,17.5,17,18,21.375,20.25,19.5,19,20,21,22.5,22,23,24,28.0625,27.125,26.25,25.5,25,26,27,28,29,34.640625,30.5,30,31,32.5,32,33,38.78125,37.0625,36.125,35.25,34.5,34,35,36,37,38,40.5,39.5,39,40,41.5,41,42]
-
-scatter = go.Scatter(
-    x=x_coords,
-    y=y_coords,
-    mode='markers+text',
-    textfont=dict(size=5),
-    textposition='middle right',
-    hoverinfo='none',
-    marker=dict(
-        size=3,
-        color='grey',
-    )
-)
-
-layout = go.Layout(
-    title='bug',
-    xaxis=dict(
-        title='',showgrid=False, zeroline=False, showticklabels=False
-    ),
-    yaxis=dict(
-        title='',showgrid=False, zeroline=False, showticklabels=False
-    ),
-    showlegend=False,
-)
-fig = go.Figure(data=[scatter], layout=layout)
-selected_points = plotly_events(fig,key='tree', click_event=True, hover_event=False)
-st.write(selected_points)
-
-import plotly.express as px
-
-# df = px.data.election()
-
-# geojson = px.data.election_geojson()
-
-# fig2 = px.choropleth_mapbox(df, geojson=geojson, color="Bergeron",
-#                            locations="district", featureidkey="properties.district",
-#                            center={"lat": 45.5517, "lon": -73.7073},
-#                            mapbox_style="carto-positron", zoom=9)
-# # fig2 = go.Figure(data=[scatter], layout=layout)
 
 
 df = px.data.election()
