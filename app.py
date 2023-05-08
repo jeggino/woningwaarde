@@ -374,6 +374,11 @@ df = pd.read_json(SCATTERPLOT_LAYER_DATA)
 # Use pandas to calculate additional data
 df["exits_radius"] = df["exits"].apply(lambda exits_count: math.sqrt(exits_count))
 
+
+MAPS = ["mapbox://styles/mapbox/streets-v12","mapbox://styles/mapbox/outdoors-v12","mapbox://styles/mapbox/light-v11","mapbox://styles/mapbox/dark-v11",
+        "mapbox://styles/mapbox/satellite-v9","mapbox://styles/mapbox/satellite-streets-v12","mapbox://styles/mapbox/navigation-day-v1","mapbox://styles/mapbox/navigation-night-v1"]
+
+option_map = st.selectbox("Chose a map style",MAPS)
 # Define a layer to display on a map
 layer = pdk.Layer(
     "ScatterplotLayer",
@@ -396,7 +401,7 @@ layer = pdk.Layer(
 view_state = pdk.ViewState(latitude=37.7749295, longitude=-122.4194155, zoom=10, bearing=0, pitch=0)
 
 # Render
-r = pdk.Deck(layers=[layer], initial_view_state=view_state, tooltip={"text": "{namej}\n{address}"},map_style='mapbox://styles/mapbox/navigation-day-v1')
+r = pdk.Deck(layers=[layer], initial_view_state=view_state, tooltip={"text": "{namej}\n{address}"},map_style=option_map)
 def filter_by_viewport(widget_instance, payload):
     return payload['data']['exits_radius']
         
