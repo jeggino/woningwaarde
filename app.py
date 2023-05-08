@@ -472,7 +472,7 @@ fig2 = px.choropleth_mapbox(df, geojson=geojson, color="Bergeron",
                            center={"lat": 45.5517, "lon": -73.7073},
                            mapbox_style="carto-positron", zoom=9)
 # fig2 = go.Figure(data=[scatter], layout=layout)
-selected_points_2 = plotly_events(fig2,key='tree', click_event=True, hover_event=False)
+selected_points_2 = plotly_events(fig2, click_event=True, hover_event=False)
 st.write(selected_points_2)
 
 
