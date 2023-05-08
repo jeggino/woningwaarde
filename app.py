@@ -428,29 +428,6 @@ clicked = clickable_images(
 st.markdown(f"Image #{clicked} clicked" if clicked > -1 else "No image clicked")
 
 
-#----------------------------------------
-import plotly.express as px
-from streamlit_plotly_events import plotly_events
-
-
-df_1 = px.data.election()
-
-geo_df = gpd.GeoDataFrame.from_features(
-    px.data.election_geojson()["features"]
-).merge(df_1, on="district").set_index("district")
-
-fig2 = px.choropleth_mapbox(geo_df,
-                           geojson=geo_df.geometry,
-                           locations=geo_df.index,
-                           color="Joly",
-                           center={"lat": 45.5517, "lon": -73.7073},
-                           mapbox_style="open-street-map",
-                           zoom=8.5)
-
-selected_points_2 = plotly_events(fig2, click_event=True, hover_event=False)
-df_table = geo_df.drop("geometry",axis=1)
-st.write(df_table[df_table.index==selected_points_2[0]["pointNumber"]])
-
 
 #-------------------
 import plotly.express as px
@@ -461,6 +438,20 @@ fig.update_layout(mapbox_style="open-street-map")
 
 selected_points_3 = plotly_events(fig, click_event=True, hover_event=False)
 st.write(df[df.index==selected_points_3[0]["pointNumber"]])
+
+
+#-------------------
+df2 = px.data.election()
+geojson = px.data.election_geojson()
+
+fig2 = px.choropleth(df2, geojson=geojson, color="Bergeron",
+                    locations="district", featureidkey="properties.district",
+                    projection="mercator"
+                   )
+fig2.update_geos(fitbounds="locations", visible=False)
+
+selected_points_3 = plotly_events(fig2, click_event=True, hover_event=False)
+st.write(df2[df2.index==selected_points_3[0]["pointNumber"]])
 
 
 
