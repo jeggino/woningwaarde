@@ -298,7 +298,7 @@ fig = px.scatter_mapbox(us_cities, lat="lat", lon="lon", hover_name="City", hove
                         color_discrete_sequence=["fuchsia"], zoom=3, height=300)
 fig.update_layout(mapbox_style="open-street-map")
 fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-selected_points = plotly_events(fig, click_event=True, hover_event=True)
+selected_points = plotly_events(fig, click_event=False, hover_event=True)
 
 
 # df_folium = df_segmentation
