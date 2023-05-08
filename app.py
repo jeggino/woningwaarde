@@ -333,7 +333,7 @@ fig.update_layout(
         )
     )
 
-selected_points = plotly_events(fig, click_event=True, Select =True)
+selected_points = plotly_events(fig, click_event=True, select_event =True)
 st.dataframe(df)
 st.write(selected_points)
 
