@@ -285,7 +285,37 @@ visualizer.score(X_test, y_test)
 # Draw visualization
 st_yellowbrick(visualizer) 
 
+
+#-----------------------------------
+import folium
+from streamlit_folium import st_folium
+
+source = df_raw.iloc[:1000,:]
+
+m = folium.Map(location=[source["latitude"].mean(),source["longitude"].mean()])
+
+folium.TileLayer('cartodbpositron').add_to(m)
+
+dictionar_layers = {}
+for i in df_raw["class"].unique():
+    dictionar_layers[i] = folium.FeatureGroup(name=f'My Points_{i}', show=False)
+
+for key in dictionar_layers.keys():
+    m.add_child(dictionar_layers[key])
+
+for row, columns in source.iterrows():
     
+    folium.Marker(
+        [columns["latitude"], columns["longitude"]], 
+        tooltip=columns["class"],
+        icon=folium.Icon(color=columns["Color"], icon="glyphicon-map-marker"),
+    ).add_to(dictionar_layers[columns["class"]])
+
+folium.map.LayerControl(position='topright', collapsed=True, autoZIndex=True).add_to(m)
+
+dict_map  = st_folium(m)
+st.write(dict_map)
+
     
     
 
