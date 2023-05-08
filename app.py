@@ -454,12 +454,13 @@ st.write(df_table[df_table.index==selected_points_2[0]["pointNumber"]])
 
 #-------------------
 import plotly.express as px
-df = px.data.gapminder()
-fig3 = px.scatter_geo(df, locations="iso_alpha", color="continent",
-                     hover_name="country", size="pop",
-                     animation_frame="year")
-selected_points_3 = plotly_events(fig3, click_event=True, hover_event=False)
-st.write(selected_points_3)
+px.set_mapbox_access_token(open(".mapbox_token").read())
+df = px.data.carshare()
+fig = px.scatter_mapbox(df, lat="centroid_lat", lon="centroid_lon",     color="peak_hour", size="car_hours",
+                  color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, zoom=10)
+
+selected_points_3 = plotly_events(fig, click_event=True, hover_event=False)
+st.write(df[df.index==selected_points_2[0]["pointNumber"]])
 
 
 
