@@ -290,6 +290,7 @@ st_yellowbrick(visualizer)
 import folium
 from streamlit_folium import st_folium
 
+df_raw = pd.read_csv('bird_migration.csv')
 source = df_raw.iloc[:1000,:]
 
 m = folium.Map(location=[source["latitude"].mean(),source["longitude"].mean()])
