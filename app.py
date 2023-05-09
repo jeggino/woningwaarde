@@ -16,7 +16,7 @@ left, right = st.columns([2,3],gap="large")
 # -------------------------------------------------------
 @st.cache_data() 
 def get_data():
-    df_raw =  gpd.read_file("data.geojson")
+    df_raw =  gpd.read_file("woningwaarde.geojson")
     return df_raw
 
 # -------------------------------------------------------
