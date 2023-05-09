@@ -103,10 +103,16 @@ import pydeck as pdk
 
 option_tootip = st.sidebar.selectbox('',('WON','VZN', 'WRK'), index=1)
 
-MAPS = ["mapbox://styles/mapbox/streets-v12","mapbox://styles/mapbox/outdoors-v12","mapbox://styles/mapbox/light-v11","mapbox://styles/mapbox/dark-v11",
-        "mapbox://styles/mapbox/satellite-v9","mapbox://styles/mapbox/satellite-streets-v12","mapbox://styles/mapbox/navigation-day-v1","mapbox://styles/mapbox/navigation-night-v1"]
+MAPS_LINKS = ["mapbox://styles/mapbox/streets-v12","mapbox://styles/mapbox/outdoors-v12",
+        "mapbox://styles/mapbox/light-v11","mapbox://styles/mapbox/dark-v11",
+        "mapbox://styles/mapbox/satellite-v9","mapbox://styles/mapbox/satellite-streets-v12",
+        "mapbox://styles/mapbox/navigation-day-v1","mapbox://styles/mapbox/navigation-night-v1"]
 
-option_map = st.sidebar.selectbox("Chose a map style",MAPS, index=0)
+MAPS_NAMES = ["streets-v12","outdoors","light","dark","satellite","satellite-streets","navigation-day","navigation-night"]
+
+MAPS_DICTIONARY = dict(zip(MAPS_NAMES,MAPS_LINKS))
+
+option_map = st.sidebar.selectbox("Chose a map style",MAPS_NAMES, index=0)
 
 colors = dict(zip(list(range(1,option_clusters+1)),
                   palette
@@ -146,7 +152,7 @@ r = pdk.Deck(
     [polygon_layer],
     initial_view_state=INITIAL_VIEW_STATE,
     tooltip = tooltip,
-    map_style = option_map,
+    map_style = MAPS_DICTIONARY[option_map],
 )
 
 
