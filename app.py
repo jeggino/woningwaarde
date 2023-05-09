@@ -536,7 +536,7 @@ import plotly.graph_objects as go
 
 fig5 = go.Figure(go.Indicator(
     domain = {'x': [0, 1], 'y': [0, 1]},
-    value = 450,
+    value = 220,
     mode = "gauge+number+delta",
     title = {'text': "Speed"},
     delta = {'reference': 380},
@@ -545,7 +545,7 @@ fig5 = go.Figure(go.Indicator(
                  {'range': [0, 250], 'color': "green"},
                  {'range': [250, 400], 'color': "yellow"},
                 {'range': [400, 500], 'color': "red"}],
-             'threshold' : {'line': {'color': "white", 'width': 4}, 'thickness': 0.75, 'value': 490}}))
+             'threshold' : {'line': {'color': "black", 'width': 4}, 'thickness': 0.75, 'value': 490}}))
 
 fig5
 
