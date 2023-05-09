@@ -378,6 +378,7 @@ fig5.update_traces(xbins_size="M1")
 fig5.update_xaxes(showgrid=True, ticklabelmode="period", dtick="M1", tickformat="%b\n%Y")
 fig5.update_layout(bargap=0.1)
 fig5.add_trace(go.Scatter(mode="markers", x=df_4["Date"], y=df_4["AAPL.Close"], name="daily"))
+fig5.update_xaxes(rangeslider_visible=True)
 
 selected_points_4 = plotly_events(fig5, click_event=True, hover_event=False)
 st.write(df_4[df_4.index==selected_points_4[0]["pointNumber"]])
