@@ -14,63 +14,10 @@ left, right = st.columns([2,3],gap="large")
 
 
 # -------------------------------------------------------
-# @st.cache_data() 
+@st.cache_data() 
 def get_data():
-    df_woningwaarde =  gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=WONINGWAARDE_2022&THEMA=woningwaarde")
-    df_woningwaarde = df_woningwaarde[['LABEL', 'geometry']]
-
-    df_corporatiebezit = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=AFWC_2022&THEMA=afwc_2022")
-    df_corporatiebezit = df_corporatiebezit[['Corporatie_woningen','geometry']]
-    # df_corporatiebezit["PERC"] = df_corporatiebezit.PERC.apply(lambda x: 100 if x == 999 else x)
-
-    df_functiemix = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=FUNCTIEMIX&THEMA=functiemix")
-    df_functiemix = df_functiemix[['WON', 'VZN', 'WRK','geometry']]
-
-    df_stadsparken = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=PARKPLANTSOENGROEN&THEMA=stadsparken")
-    df_stadsparken  =df_stadsparken[['Oppervlakte_m2', 'geometry']]
-
-    df_trammetro = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=TRAMMETRO_PUNTEN_2022&THEMA=trammetro")
-    df_trammetro = df_trammetro[['Modaliteit', 'Lijn', 'geometry']]
-    df_trammetro["Lijn"] = df_trammetro["Lijn"].str.split(expand=False,pat="|").apply(lambda x: len(x))
-
-    df_bouwjaar = gpd.read_file("https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=BOUWJAAR&THEMA=bouwjaar")
-
-    df_winkelgebieden = gpd.read_file("https://api.data.amsterdam.nl/v1/wfs/winkelgebieden/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=winkelgebieden&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326")
-    df_winkelgebieden = df_winkelgebieden[['oppervlakte','categorienaam', 'geometry']]
-    
-    df = gpd.sjoin(df_woningwaarde,df_bouwjaar,how='left').reset_index().dissolve("index",{"LABEL":"first",
-                                                                                           "Bouwjaar":"mean"}
-                                                                                 ).round()
-
-    df_1 = gpd.sjoin(df,df_corporatiebezit,how='left').reset_index().dissolve("index",{"LABEL":"first",
-                                                                                       "Bouwjaar":"first",
-                                                                                       "Corporatie_woningen":"sum"},
-                                                                              dropna=False
-                                                                             ).round()
-    df_2 = gpd.sjoin(df_1,df_trammetro,how='left').reset_index().dissolve("index",{"LABEL":"first","Bouwjaar":"first",
-                                                                                   "Corporatie_woningen":"first",
-                                                                                   "Lijn":"sum"},
-                                                                          dropna=False).round()
-
-    df_3 = gpd.sjoin(df_2,df_functiemix,how='left').reset_index().dissolve("index",{"LABEL":"first","Bouwjaar":"first",
-                                                                                    "Corporatie_woningen":"first",
-                                                                                    "Lijn":"first",
-                                                                                    'WON':"sum",
-                                                                                    'VZN':"sum",
-                                                                                    'WRK':"sum"},
-                                                                           dropna=False).round()
-
-    df_4 = gpd.sjoin(df_3,df_stadsparken,how='left').reset_index().dissolve("index",{"LABEL":"first","Bouwjaar":"first",
-                                                                                    "Corporatie_woningen":"first",
-                                                                                    "Lijn":"first",
-                                                                                    'WON':"first",
-                                                                                    'VZN':"first",
-                                                                                    'WRK':"first",
-                                                                                     "Oppervlakte_m2":"sum"},
-                                                                            dropna=False).round()
-
-    return df_4
-
+    df_raw =  gpd.read_file("data.geojson")
+    return df_raw
 
 # -------------------------------------------------------
 df = get_data()
