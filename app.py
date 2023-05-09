@@ -379,7 +379,7 @@ fig5.update_xaxes(showgrid=True, ticklabelmode="period", dtick="M1", tickformat=
 fig5.update_layout(bargap=0.1)
 fig5.add_trace(go.Scatter(mode="markers", x=df_4["Date"], y=df_4["AAPL.Close"], name="daily"))
 fig5.update_xaxes(
-    rangeslider_visible=True,
+    rangeslider_visible=False,
     rangeselector=dict(
         buttons=list([
             dict(count=1, label="1m", step="month", stepmode="backward"),
