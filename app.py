@@ -280,44 +280,6 @@ fig2 = px.choropleth(df2, geojson=geojson, color="Bergeron", color_continuous_sc
                     locations="district", featureidkey="properties.district",
                    )
 
-
-gdf = gpd.GeoDataFrame.from_features(geojson)
-
-polygon_layer = pdk.Layer(
-    'GeoJsonLayer',
-    gdf,
-    opacity=1,
-    stroked=True,
-    filled=True,
-    extruded=True,
-#     get_elevation=option_tootip,
-    elevation_scale=0.01,
-    wireframe=True,
-#     get_fill_color='Color',
-    get_line_color=[255, 255, 255],
-    pickable=True,
-)
-
-INITIAL_VIEW_STATE = pdk.ViewState(
-    latitude=52.374119, 
-    longitude=4.895906,
-    zoom=10,
-    pitch=35,
-    bearing=0
-)
-
-r = pdk.Deck(
-    [polygon_layer],
-    initial_view_state=INITIAL_VIEW_STATE,
-#     tooltip = tooltip,
-    map_style = "light_no_labels",
-)
-
-r
-
-
-
-
 fig2.update_geos(fitbounds="locations", visible=False)
 fig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 
@@ -386,15 +348,6 @@ fig4.update_layout(
                      
 selected_points_4 = plotly_events(fig4, click_event=True, hover_event=False)
 st.write(df_3[df_3.index==selected_points_4[0]["pointNumber"]])
-
-
-#---------------------
-import plotly.graph_objects as go
-
-fig4 = go.Figure(data=[go.Table(header=dict(values=['A Scores', 'B Scores']),
-                 cells=dict(values=[[100, 90, 80, 90], [95, 85, 75, 95]]))
-                     ])
-fig4
 
 
 #---------------------------
@@ -628,354 +581,354 @@ fig5
 # st_echarts(option, height="600px")
 
 
-# #------------------------------------
-# option = {
-#   'series': [
-#     {
-#       'type': 'gauge',
-#       'center': ['50%', '60%'],
-#       'startAngle': 200,
-#       'endAngle': -20,
-#       'min': 0,
-#       'max': 360,
-#       'splitNumber': 12,
-#       'itemStyle': {
-#         'color': '#FFAB91'
-#       },
-#       'progress': {
-#         'show': True,
-#         'width': 30
-#       },
-#       'pointer': {
-#         'show': False
-#       },
-#       'axisLine': {
-#         'lineStyle': {
-#           'width': 30
-#         }
-#       },
-#       'axisTick': {
-#         'distance': -45,
-#         'splitNumber': 5,
-#         'lineStyle': {
-#           'width': 2,
-#           'color': '#999'
-#         }
-#       },
-#       'splitLine': {
-#         'distance': -52,
-#         'length': 14,
-#         'lineStyle': {
-#           'width': 3,
-#           'color': '#999'
-#         }
-#       },
-#       'axisLabel': {
-#         'distance': -20,
-#         'color': '#999',
-#         'fontSize': 20
-#       },
-#       'anchor': {
-#         'show': False
-#       },
-#       'title': {
-#         'show': False
-#       },
-#       'detail': {
-#         'valueAnimation': True,
-#         'width': '60%',
-#         'lineHeight': 40,
-#         'borderRadius': 8,
-#         'offsetCenter': [0, '-15%'],
-#         'fontSize': 60,
-#         'fontWeight': 'bolder',
-#         'formatter': '{value} °C',
-#         'color': 'inherit'
-#       },
-#       'data': [
-#         {
-#           'value': 20
-#         }
-#       ]
-#     },
-#     {
-#       'type': 'gauge',
-#       'center': ['50%', '60%'],
-#       'startAngle': 200,
-#       'endAngle': -20,
-#       'min': 0,
-#       'max': 360,
-#       'itemStyle': {
-#         'color': '#FD7347'
-#       },
-#       'progress': {
-#         'show': True,
-#         'width': 8
-#       },
-#       'pointer': {
-#         'show': False
-#       },
-#       'axisLine': {
-#         'show': False
-#       },
-#       'axisTick': {
-#         'show': False
-#       },
-#       'splitLine': {
-#         'show': False
-#       },
-#       'axisLabel': {
-#         'show': False
-#       },
-#       'detail': {
-#         'show': False
-#       },
-#       'data': [
-#         {
-#           'value': 20
-#         }
-#       ]
-#     }
-#   ]
-# };
+#------------------------------------
+option = {
+  'series': [
+    {
+      'type': 'gauge',
+      'center': ['50%', '60%'],
+      'startAngle': 200,
+      'endAngle': -20,
+      'min': 0,
+      'max': 360,
+      'splitNumber': 12,
+      'itemStyle': {
+        'color': '#FFAB91'
+      },
+      'progress': {
+        'show': True,
+        'width': 30
+      },
+      'pointer': {
+        'show': False
+      },
+      'axisLine': {
+        'lineStyle': {
+          'width': 30
+        }
+      },
+      'axisTick': {
+        'distance': -45,
+        'splitNumber': 5,
+        'lineStyle': {
+          'width': 2,
+          'color': '#999'
+        }
+      },
+      'splitLine': {
+        'distance': -52,
+        'length': 14,
+        'lineStyle': {
+          'width': 3,
+          'color': '#999'
+        }
+      },
+      'axisLabel': {
+        'distance': -20,
+        'color': '#999',
+        'fontSize': 20
+      },
+      'anchor': {
+        'show': False
+      },
+      'title': {
+        'show': False
+      },
+      'detail': {
+        'valueAnimation': True,
+        'width': '60%',
+        'lineHeight': 40,
+        'borderRadius': 8,
+        'offsetCenter': [0, '-15%'],
+        'fontSize': 60,
+        'fontWeight': 'bolder',
+        'formatter': '{value} °C',
+        'color': 'inherit'
+      },
+      'data': [
+        {
+          'value': 20
+        }
+      ]
+    },
+    {
+      'type': 'gauge',
+      'center': ['50%', '60%'],
+      'startAngle': 200,
+      'endAngle': -20,
+      'min': 0,
+      'max': 360,
+      'itemStyle': {
+        'color': '#FD7347'
+      },
+      'progress': {
+        'show': True,
+        'width': 8
+      },
+      'pointer': {
+        'show': False
+      },
+      'axisLine': {
+        'show': False
+      },
+      'axisTick': {
+        'show': False
+      },
+      'splitLine': {
+        'show': False
+      },
+      'axisLabel': {
+        'show': False
+      },
+      'detail': {
+        'show': False
+      },
+      'data': [
+        {
+          'value': 20
+        }
+      ]
+    }
+  ]
+};
 
-# st_echarts(
-#     options=option, height="600px")
+st_echarts(
+    options=option, height="600px")
 
 
-# #------------------------------------
-# options = {
-#     "title": {"text": "某站点用户访问来源", "subtext": "纯属虚构", "left": "center"},
-#     "tooltip": {"trigger": "item"},
-#     "legend": {
-#         "orient": "vertical",
-#         "left": "left",
-#     },
-#     "series": [
-#         {
-#             "name": "访问来源",
-#             "type": "pie",
-#             "radius": "50%",
-#             "data": [
-#                 {"value": 1048, "name": "搜索引擎"},
-#                 {"value": 735, "name": "直接访问"},
-#                 {"value": 580, "name": "邮件营销"},
-#                 {"value": 484, "name": "联盟广告"},
-#                 {"value": 300, "name": "视频广告"},
-#             ],
-#             "emphasis": {
-#                 "itemStyle": {
-#                     "shadowBlur": 10,
-#                     "shadowOffsetX": 0,
-#                     "shadowColor": "rgba(0, 0, 0, 0.5)",
-#                 }
-#             },
-#         }
-#     ],
-# }
-# st.markdown("Select a legend, see the detail")
-# events = {
-#     "legendselectchanged": "function(params) { return params.selected }",
-# }
-# s = st_echarts(
-#     options=options, events=events, height="600px", key="render_pie_events"
-# )
-# if s is not None:
-#     st.write(s)
+#------------------------------------
+options = {
+    "title": {"text": "某站点用户访问来源", "subtext": "纯属虚构", "left": "center"},
+    "tooltip": {"trigger": "item"},
+    "legend": {
+        "orient": "vertical",
+        "left": "left",
+    },
+    "series": [
+        {
+            "name": "访问来源",
+            "type": "pie",
+            "radius": "50%",
+            "data": [
+                {"value": 1048, "name": "搜索引擎"},
+                {"value": 735, "name": "直接访问"},
+                {"value": 580, "name": "邮件营销"},
+                {"value": 484, "name": "联盟广告"},
+                {"value": 300, "name": "视频广告"},
+            ],
+            "emphasis": {
+                "itemStyle": {
+                    "shadowBlur": 10,
+                    "shadowOffsetX": 0,
+                    "shadowColor": "rgba(0, 0, 0, 0.5)",
+                }
+            },
+        }
+    ],
+}
+st.markdown("Select a legend, see the detail")
+events = {
+    "legendselectchanged": "function(params) { return params.selected }",
+}
+s = st_echarts(
+    options=options, events=events, height="600px", key="render_pie_events"
+)
+if s is not None:
+    st.write(s)
     
 
 
 
 
 
-# #---------------------------
-# import pyecharts.options as opts
-# from pyecharts.charts import Pie
+#---------------------------
+import pyecharts.options as opts
+from pyecharts.charts import Pie
 
-# """
-# Gallery 使用 pyecharts 1.1.0
-# 参考地址: https://echarts.apache.org/examples/editor.html?c=pie-nest
+"""
+Gallery 使用 pyecharts 1.1.0
+参考地址: https://echarts.apache.org/examples/editor.html?c=pie-nest
 
-# 目前无法实现的功能:
+目前无法实现的功能:
 
-# 1、暂无
-# """
+1、暂无
+"""
 
 
-# inner_x_data = ["直达", "营销广告", "搜索引擎"]
-# inner_y_data = [335, 679, 1548]
-# inner_data_pair = [list(z) for z in zip(inner_x_data, inner_y_data)]
+inner_x_data = ["直达", "营销广告", "搜索引擎"]
+inner_y_data = [335, 679, 1548]
+inner_data_pair = [list(z) for z in zip(inner_x_data, inner_y_data)]
 
-# outer_x_data = ["直达", "营销广告", "搜索引擎", "邮件营销", "联盟广告", "视频广告", "百度", "谷歌", "必应", "其他"]
-# outer_y_data = [335, 310, 234, 135, 1048, 251, 147, 102]
-# outer_data_pair = [list(z) for z in zip(outer_x_data, outer_y_data)]
+outer_x_data = ["直达", "营销广告", "搜索引擎", "邮件营销", "联盟广告", "视频广告", "百度", "谷歌", "必应", "其他"]
+outer_y_data = [335, 310, 234, 135, 1048, 251, 147, 102]
+outer_data_pair = [list(z) for z in zip(outer_x_data, outer_y_data)]
 
-# c_pie = (
-#     Pie()
-#     .add(
-#         series_name="访问来源",
-#         data_pair=inner_data_pair,
-#         radius=[0, "30%"],
-#         label_opts=opts.LabelOpts(position="inner"),
-#     )
-#     .add(
-#         series_name="访问来源",
-#         radius=["40%", "55%"],
-#         data_pair=outer_data_pair,
-#         label_opts=opts.LabelOpts(
-#             position="outside",
-#             formatter="{a|{a}}{abg|}\n{hr|}\n {b|{b}: }{c}  {per|{d}%}  ",
-#             background_color="#eee",
-#             border_color="#aaa",
-#             border_width=1,
-#             border_radius=4,
-#             rich={
-#                 "a": {"color": "#999", "lineHeight": 22, "align": "center"},
-#                 "abg": {
-#                     "backgroundColor": "#e3e3e3",
-#                     "width": "100%",
-#                     "align": "right",
-#                     "height": 22,
-#                     "borderRadius": [4, 4, 0, 0],
-#                 },
-#                 "hr": {
-#                     "borderColor": "#aaa",
-#                     "width": "100%",
-#                     "borderWidth": 0.5,
-#                     "height": 0,
-#                 },
-#                 "b": {"fontSize": 16, "lineHeight": 33},
-#                 "per": {
-#                     "color": "#eee",
-#                     "backgroundColor": "#334455",
-#                     "padding": [2, 4],
-#                     "borderRadius": 2,
-#                 },
-#             },
-#         ),
-#     )
-#     .set_global_opts(legend_opts=opts.LegendOpts(pos_left="left", orient="vertical"))
-#     .set_series_opts(
-#         tooltip_opts=opts.TooltipOpts(
-#             trigger="item", formatter="{a} <br/>{b}: {c} ({d}%)"
-#         )
-#     )
+c_pie = (
+    Pie()
+    .add(
+        series_name="访问来源",
+        data_pair=inner_data_pair,
+        radius=[0, "30%"],
+        label_opts=opts.LabelOpts(position="inner"),
+    )
+    .add(
+        series_name="访问来源",
+        radius=["40%", "55%"],
+        data_pair=outer_data_pair,
+        label_opts=opts.LabelOpts(
+            position="outside",
+            formatter="{a|{a}}{abg|}\n{hr|}\n {b|{b}: }{c}  {per|{d}%}  ",
+            background_color="#eee",
+            border_color="#aaa",
+            border_width=1,
+            border_radius=4,
+            rich={
+                "a": {"color": "#999", "lineHeight": 22, "align": "center"},
+                "abg": {
+                    "backgroundColor": "#e3e3e3",
+                    "width": "100%",
+                    "align": "right",
+                    "height": 22,
+                    "borderRadius": [4, 4, 0, 0],
+                },
+                "hr": {
+                    "borderColor": "#aaa",
+                    "width": "100%",
+                    "borderWidth": 0.5,
+                    "height": 0,
+                },
+                "b": {"fontSize": 16, "lineHeight": 33},
+                "per": {
+                    "color": "#eee",
+                    "backgroundColor": "#334455",
+                    "padding": [2, 4],
+                    "borderRadius": 2,
+                },
+            },
+        ),
+    )
+    .set_global_opts(legend_opts=opts.LegendOpts(pos_left="left", orient="vertical"))
+    .set_series_opts(
+        tooltip_opts=opts.TooltipOpts(
+            trigger="item", formatter="{a} <br/>{b}: {c} ({d}%)"
+        )
+    )
     
-# )
+)
 
 
 
 
-# #-----------------------
-# from pyecharts import options as opts
-# from pyecharts.charts import EffectScatter
-# from pyecharts.faker import Faker
+#-----------------------
+from pyecharts import options as opts
+from pyecharts.charts import EffectScatter
+from pyecharts.faker import Faker
 
-# c_w = (
-#     EffectScatter()
-#     .add_xaxis(Faker.choose())
-#     .add_yaxis("", Faker.values())
-#     .set_global_opts(
-#         title_opts=opts.TitleOpts(title="EffectScatter-显示分割线"),
-#         xaxis_opts=opts.AxisOpts(splitline_opts=opts.SplitLineOpts(is_show=True)),
-#         yaxis_opts=opts.AxisOpts(splitline_opts=opts.SplitLineOpts(is_show=True)),
-#     )
-# )
+c_w = (
+    EffectScatter()
+    .add_xaxis(Faker.choose())
+    .add_yaxis("", Faker.values())
+    .set_global_opts(
+        title_opts=opts.TitleOpts(title="EffectScatter-显示分割线"),
+        xaxis_opts=opts.AxisOpts(splitline_opts=opts.SplitLineOpts(is_show=True)),
+        yaxis_opts=opts.AxisOpts(splitline_opts=opts.SplitLineOpts(is_show=True)),
+    )
+)
 
-# st_pyecharts(c_w,height="600px")
-
-
-# #----------------------------------
-# from pyecharts.charts import Line
-# df_line = df["df_corporatiebezit"].groupby("Bouwjaar_rond",as_index=False).size().tail(20)
-
-# c = (
-#     Line()
-#     .add_xaxis(df_line["Bouwjaar_rond"].tolist())
-#     .add_yaxis(
-#         "Points",
-#        [1, 3, 9, 27, 81, 247, 741, 2223, 6669],
-#         markline_opts=opts.MarkLineOpts(data=[opts.MarkLineItem(type_="average")]),
-#         markpoint_opts=opts.MarkPointOpts(data=[opts.MarkPointItem(type_="min"),opts.MarkPointItem(type_="max")]),
-#         linestyle_opts=opts.LineStyleOpts(color="green", width=4, type_="dashed"))
-#     .set_global_opts(title_opts=opts.TitleOpts(title="Line-MarkPoint"))
-# )
-# st_pyecharts(c,height="600px")
+st_pyecharts(c_w,height="600px")
 
 
-# #-----------------
-# from pyecharts import options as opts
-# from pyecharts.charts import Scatter
-# from pyecharts.faker import Faker
+#----------------------------------
+from pyecharts.charts import Line
+df_line = df["df_corporatiebezit"].groupby("Bouwjaar_rond",as_index=False).size().tail(20)
 
-# c_scatter = (
-#     Scatter()
-#     .add_xaxis(list(range(10)))
-#     .add_yaxis("Serie 1", Faker.values())
-#     .add_yaxis("Serie 2", Faker.values())
-#     .set_global_opts(
-#         title_opts=opts.TitleOpts(title="Scatter-VisualMap(Size)"),
-#         visualmap_opts=opts.VisualMapOpts(type_="size", max_=150, min_=20),
-#     )
-# )
+c = (
+    Line()
+    .add_xaxis(df_line["Bouwjaar_rond"].tolist())
+    .add_yaxis(
+        "Points",
+       [1, 3, 9, 27, 81, 247, 741, 2223, 6669],
+        markline_opts=opts.MarkLineOpts(data=[opts.MarkLineItem(type_="average")]),
+        markpoint_opts=opts.MarkPointOpts(data=[opts.MarkPointItem(type_="min"),opts.MarkPointItem(type_="max")]),
+        linestyle_opts=opts.LineStyleOpts(color="green", width=4, type_="dashed"))
+    .set_global_opts(title_opts=opts.TitleOpts(title="Line-MarkPoint"))
+)
+st_pyecharts(c,height="600px")
+
+
+#-----------------
+from pyecharts import options as opts
+from pyecharts.charts import Scatter
+from pyecharts.faker import Faker
+
+c_scatter = (
+    Scatter()
+    .add_xaxis(list(range(10)))
+    .add_yaxis("Serie 1", Faker.values())
+    .add_yaxis("Serie 2", Faker.values())
+    .set_global_opts(
+        title_opts=opts.TitleOpts(title="Scatter-VisualMap(Size)"),
+        visualmap_opts=opts.VisualMapOpts(type_="size", max_=150, min_=20),
+    )
+)
 
 
 
 
-# # -------------------------------------------------------
-# sidebar = st.sidebar
-# row_1_1,row_1_2 = st.columns([3,2], gap="large")
-# row_1_2_tab1, row_1_2_tab2 = row_1_2.tabs(["Pie-chart 🥧", "Sunburst-chart ☀️"])
-# "---"
-# row_2_1, row_2_2 = st.columns([3,1], gap="large")
-# "---"
-# row_3_1,row_3_2 = st.columns([1,6], gap="large")
+# -------------------------------------------------------
+sidebar = st.sidebar
+row_1_1,row_1_2 = st.columns([3,2], gap="large")
+row_1_2_tab1, row_1_2_tab2 = row_1_2.tabs(["Pie-chart 🥧", "Sunburst-chart ☀️"])
+"---"
+row_2_1, row_2_2 = st.columns([3,1], gap="large")
+"---"
+row_3_1,row_3_2 = st.columns([1,6], gap="large")
 
-# with row_2_1:
-#     st_pyecharts(c_scatter,height="600px")
+with row_2_1:
+    st_pyecharts(c_scatter,height="600px")
     
-# with row_2_2:
-#     st_pyecharts(c_pie,height="600px")
+with row_2_2:
+    st_pyecharts(c_pie,height="600px")
     
 
-# #-----------------------------------
-# from st_on_hover_tabs import on_hover_tabs
+#-----------------------------------
+from st_on_hover_tabs import on_hover_tabs
 
-# st.header("Custom tab component for on-hover navigation bar")
-# st.markdown('<style>' + open('./style.css').read() + '</style>', unsafe_allow_html=True)
+st.header("Custom tab component for on-hover navigation bar")
+st.markdown('<style>' + open('./style.css').read() + '</style>', unsafe_allow_html=True)
 
-# with st.sidebar:
-#         tabs = on_hover_tabs(tabName=['Dashboard', 'Money', 'Economy'], 
-#                              iconName=['dashboard', 'money', 'economy'],
-#                              styles = {'navtab': {'background-color':'#111',
-#                                                   'color': '#818181',
-#                                                   'font-size': '15px',
-#                                                   'transition': '.6s',
-#                                                   'white-space': 'nowrap',
-#                                                   'text-transform': 'uppercase'},
-#                                        'tabOptionsStyle': {':hover :hover': {'color': 'red',
-#                                                                       'cursor': 'pointer'}},
-#                                        'iconStyle':{'position':'fixed',
-#                                                     'left':'7.5px',
-#                                                     'text-align': 'left'},
-#                                        'tabStyle' : {'list-style-type': 'none',
-#                                                      'margin-bottom': '30px',
-#                                                      'padding-left': '30px'}},
-#                              key="1")
+with st.sidebar:
+        tabs = on_hover_tabs(tabName=['Dashboard', 'Money', 'Economy'], 
+                             iconName=['dashboard', 'money', 'economy'],
+                             styles = {'navtab': {'background-color':'#111',
+                                                  'color': '#818181',
+                                                  'font-size': '15px',
+                                                  'transition': '.6s',
+                                                  'white-space': 'nowrap',
+                                                  'text-transform': 'uppercase'},
+                                       'tabOptionsStyle': {':hover :hover': {'color': 'red',
+                                                                      'cursor': 'pointer'}},
+                                       'iconStyle':{'position':'fixed',
+                                                    'left':'7.5px',
+                                                    'text-align': 'left'},
+                                       'tabStyle' : {'list-style-type': 'none',
+                                                     'margin-bottom': '30px',
+                                                     'padding-left': '30px'}},
+                             key="1")
         
         
 
-# if tabs =='Dashboard':
-#     st.title("Navigation Bar")
-#     st.write('Name of option is {}'.format(tabs))
-#     genre = st.sidebar.radio("What\'s your favorite movie genre",('Comedy', 'Drama', 'Documentary'))
+if tabs =='Dashboard':
+    st.title("Navigation Bar")
+    st.write('Name of option is {}'.format(tabs))
+    genre = st.sidebar.radio("What\'s your favorite movie genre",('Comedy', 'Drama', 'Documentary'))
 
-# elif tabs == 'Money':
-#     st.title("Paper")
-#     st.write('Name of option is {}'.format(tabs))
+elif tabs == 'Money':
+    st.title("Paper")
+    st.write('Name of option is {}'.format(tabs))
 
-# elif tabs == 'Economy':
-#     st.title("Tom")
-#     st.write('Name of option is {}'.format(tabs))
+elif tabs == 'Economy':
+    st.title("Tom")
+    st.write('Name of option is {}'.format(tabs))
     
 
