@@ -453,7 +453,7 @@ fig2 = px.choropleth(df2, geojson=geojson, color="Bergeron", color_continuous_sc
 
 gdf = gpd.GeoDataFrame.from_features(geojson)
 
- polygon_layer = pdk.Layer(
+polygon_layer = pdk.Layer(
     'GeoJsonLayer',
     gdf,
     opacity=1,
