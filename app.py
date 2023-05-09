@@ -435,7 +435,7 @@ from streamlit_plotly_events import plotly_events
 
 df = px.data.carshare()
 fig = px.scatter_mapbox(df, lat="centroid_lat", lon="centroid_lon",     color="peak_hour", size="car_hours",
-                  color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, zoom=10)
+                   size_max=15, zoom=10)
 fig.update_layout(mapbox_style="open-street-map")
 
 selected_points_2 = plotly_events(fig, click_event=True, hover_event=False)
@@ -449,6 +449,8 @@ geojson = px.data.election_geojson()
 fig2 = px.choropleth(df2, geojson=geojson, color="Bergeron",
                     locations="district", featureidkey="properties.district",
                    )
+
+gdf = gpd.GeoDataFrame.from_features(geojson)
 
 fig2.update_geos(fitbounds="locations", visible=False)
 fig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
@@ -518,6 +520,15 @@ fig4.update_layout(
                      
 selected_points_4 = plotly_events(fig4, click_event=True, hover_event=False)
 st.write(df_3[df_3.index==selected_points_4[0]["pointNumber"]])
+
+
+#---------------------
+import plotly.graph_objects as go
+
+df_3
+fig4 = go.Figure(data=[go.Table(header=dict(values=['A Scores', 'B Scores']),
+                 cells=dict(values=[[100, 90, 80, 90], [95, 85, 75, 95]]))
+                     ])
 
 
 
