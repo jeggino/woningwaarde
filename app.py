@@ -450,7 +450,43 @@ fig2 = px.choropleth(df2, geojson=geojson, color="Bergeron", color_continuous_sc
                     locations="district", featureidkey="properties.district",
                    )
 
+
 gdf = gpd.GeoDataFrame.from_features(geojson)
+
+ polygon_layer = pdk.Layer(
+    'GeoJsonLayer',
+    gdf,
+    opacity=1,
+    stroked=True,
+    filled=True,
+    extruded=True,
+#     get_elevation=option_tootip,
+    elevation_scale=0.01,
+    wireframe=True,
+#     get_fill_color='Color',
+    get_line_color=[255, 255, 255],
+    pickable=True,
+)
+
+INITIAL_VIEW_STATE = pdk.ViewState(
+    latitude=52.374119, 
+    longitude=4.895906,
+    zoom=10,
+    pitch=35,
+    bearing=0
+)
+
+r = pdk.Deck(
+    [polygon_layer],
+    initial_view_state=INITIAL_VIEW_STATE,
+    tooltip = tooltip,
+    map_style = "light_no_labels",
+)
+
+r
+
+
+
 
 fig2.update_geos(fitbounds="locations", visible=False)
 fig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
