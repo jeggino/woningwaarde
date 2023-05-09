@@ -103,6 +103,11 @@ import pydeck as pdk
 
 option_tootip = st.sidebar.selectbox('',('WON','VZN', 'WRK'))
 
+MAPS = ["mapbox://styles/mapbox/streets-v12","mapbox://styles/mapbox/outdoors-v12","mapbox://styles/mapbox/light-v11","mapbox://styles/mapbox/dark-v11",
+        "mapbox://styles/mapbox/satellite-v9","mapbox://styles/mapbox/satellite-streets-v12","mapbox://styles/mapbox/navigation-day-v1","mapbox://styles/mapbox/navigation-night-v1"]
+
+option_map = st.selectbox("Chose a map style",MAPS)
+
 colors = dict(zip(list(range(1,option_clusters+1)),
                   palette
                  )
@@ -141,7 +146,7 @@ r = pdk.Deck(
     [polygon_layer],
     initial_view_state=INITIAL_VIEW_STATE,
     tooltip = tooltip,
-    map_style = "light_no_labels",
+    map_style = option_map,
 )
 
 
@@ -225,137 +230,6 @@ visualizer.score(X_test, y_test)
 
 # Draw visualization
 st_yellowbrick(visualizer) 
-
-
-#-----------------------------------
-
-
-
-df_folium = df_segmentation
-df_folium["long"] = df_segmentation.centroid.x
-df_folium["lat"] = df_segmentation.centroid.y
-
-source = df_segmentation
-fig = px.scatter_mapbox(source, lat="lat", lon="long", hover_name="Clusters", hover_data=["Clusters"],color="Clusters",
-                        zoom=8, height=300)
-fig.update_layout(
-    mapbox_style="white-bg",
-    mapbox_layers=[
-        {
-            "below": 'traces',
-            "sourcetype": "raster",
-            "sourceattribution": "United States Geological Survey",
-            "source": [
-                "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}"
-            ]
-        }
-      ])
-fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-fig.update_layout(mapbox_style="open-street-map")
-
-selected_points = plotly_events(fig, click_event=True, hover_event=True)
-st.write(selected_points)
-
-
-
-
-import folium
-from streamlit_folium import st_folium
-
-df_folium = df_segmentation
-df_folium["long"] = df_segmentation.centroid.x
-df_folium["lat"] = df_segmentation.centroid.y
-
-dictionary_colors = dict(zip(df_folium["Clusters"].unique(),list(folium.map.Icon.color_options)))
-df_folium["Color"] = df_folium["Clusters"].map(dictionary_colors)
-
-source = df_folium.iloc[:1000,:]
-
-m = folium.Map(location=[source["lat"].mean(),source["long"].mean()])
-folium.TileLayer('cartodbpositron').add_to(m)
-
-dictionar_layers = {}
-for i in df_folium["Clusters"].unique():
-    dictionar_layers[i] = folium.FeatureGroup(name=f'Clusters {i}', show=False)
-
-for key in dictionar_layers.keys():
-    m.add_child(dictionar_layers[key])
-
-for row, columns in source.iterrows():
-    
-    folium.Marker(
-        [columns["lat"], columns["long"]], 
-        tooltip=columns["Clusters"],
-        icon=folium.Icon(color=columns["Color"], icon="glyphicon-map-marker"),
-    ).add_to(dictionar_layers[columns["Clusters"]])
-
-folium.map.LayerControl(position='topright', collapsed=True, autoZIndex=True).add_to(m)
-
-c1, c2 = st.columns([2,1])
-with c1:
-    output = st_folium(
-        m
-    )
-
-with c2:
-    st.write(output)
-
-
-
-"""
-ScatterplotLayer
-================
-
-Plot of the number of exits for various subway stops within San Francisco, California.
-
-Adapted from the deck.gl documentation.
-"""
-
-import pydeck as pdk
-import pandas as pd
-import math
-
-SCATTERPLOT_LAYER_DATA = "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/bart-stations.json"
-df = pd.read_json(SCATTERPLOT_LAYER_DATA)
-
-# Use pandas to calculate additional data
-df["exits_radius"] = df["exits"].apply(lambda exits_count: math.sqrt(exits_count))
-
-
-MAPS = ["mapbox://styles/mapbox/streets-v12","mapbox://styles/mapbox/outdoors-v12","mapbox://styles/mapbox/light-v11","mapbox://styles/mapbox/dark-v11",
-        "mapbox://styles/mapbox/satellite-v9","mapbox://styles/mapbox/satellite-streets-v12","mapbox://styles/mapbox/navigation-day-v1","mapbox://styles/mapbox/navigation-night-v1"]
-
-option_map = st.selectbox("Chose a map style",MAPS)
-# Define a layer to display on a map
-layer = pdk.Layer(
-    "ScatterplotLayer",
-    df,
-    pickable=True,
-    opacity=0.8,
-    stroked=True,
-    filled=True,
-    radius_scale=6,
-    radius_min_pixels=1,
-    radius_max_pixels=100,
-    line_width_min_pixels=1,
-    get_position="coordinates",
-    get_radius="exits_radius",
-    get_fill_color=[255, 140, 0],
-    get_line_color=[0, 0, 0],
-)
-
-# Set the viewport location
-view_state = pdk.ViewState(latitude=37.7749295, longitude=-122.4194155, zoom=10, bearing=0, pitch=0)
-
-# Render
-r = pdk.Deck(layers=[layer], initial_view_state=view_state, tooltip={"text": "{namej}\n{address}"},map_style=option_map)
-def filter_by_viewport(widget_instance, payload):
-    return payload['data']['exits_radius']
-        
-
-
-r
-st.write(r.deck_widget.on_click(filter_by_viewport))
 
 
 #-------------------
