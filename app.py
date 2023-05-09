@@ -434,7 +434,7 @@ import plotly.express as px
 from streamlit_plotly_events import plotly_events
 
 df = px.data.carshare()
-fig = px.scatter_mapbox(df, lat="centroid_lat", lon="centroid_lon",     color="peak_hour", size="car_hours",
+fig = px.scatter_mapbox(df, lat="centroid_lat", lon="centroid_lon", color_continuous_scale=px.colors.cyclical.IceFire,    color="peak_hour", size="car_hours",
                    size_max=15, zoom=10)
 fig.update_layout(mapbox_style="open-street-map")
 
@@ -446,7 +446,7 @@ st.write(df[df.index==selected_points_2[0]["pointNumber"]])
 df2 = px.data.election()
 geojson = px.data.election_geojson()
 
-fig2 = px.choropleth(df2, geojson=geojson, color="Bergeron",
+fig2 = px.choropleth(df2, geojson=geojson, color="Bergeron", color_continuous_scale=px.colors.cyclical.IceFire,
                     locations="district", featureidkey="properties.district",
                    )
 
