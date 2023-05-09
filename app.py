@@ -106,7 +106,7 @@ option_tootip = st.sidebar.selectbox('',('WON','VZN', 'WRK'))
 MAPS = ["mapbox://styles/mapbox/streets-v12","mapbox://styles/mapbox/outdoors-v12","mapbox://styles/mapbox/light-v11","mapbox://styles/mapbox/dark-v11",
         "mapbox://styles/mapbox/satellite-v9","mapbox://styles/mapbox/satellite-streets-v12","mapbox://styles/mapbox/navigation-day-v1","mapbox://styles/mapbox/navigation-night-v1"]
 
-option_map = st.selectbox("Chose a map style",MAPS)
+option_map = st.sidebar.selectbox("Chose a map style",MAPS)
 
 colors = dict(zip(list(range(1,option_clusters+1)),
                   palette
