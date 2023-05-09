@@ -479,7 +479,7 @@ INITIAL_VIEW_STATE = pdk.ViewState(
 r = pdk.Deck(
     [polygon_layer],
     initial_view_state=INITIAL_VIEW_STATE,
-    tooltip = tooltip,
+#     tooltip = tooltip,
     map_style = "light_no_labels",
 )
 
