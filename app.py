@@ -541,6 +541,7 @@ fig5 = go.Figure(go.Indicator(
     title = {'text': "Speed"},
     delta = {'reference': 380},
     gauge = {'axis': {'range': [None, 500]},
+             'bar': {'color': "darkblue"},
              'steps' : [
                  {'range': [0, 250], 'color': "green"},
                  {'range': [250, 400], 'color': "yellow"},
