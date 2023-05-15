@@ -408,7 +408,7 @@ if st.button('Say hello'):
     # Clear all those elements:
     placeholder.empty()
     
-elif st.button('Say hello'):
+if st.button('Say bye'):
     text
     chart
     
