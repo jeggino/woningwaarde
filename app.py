@@ -393,10 +393,20 @@ fig5.update_xaxes(
 selected_points_4 = plotly_events(fig5, click_event=True, hover_event=False)
 st.write(df_4[df_4.index==selected_points_4[0]["pointNumber"]])
 
-if st.button("Clear All"):
-    # Clears all st.cache_resource caches:
-    st.cache_data.clear()
 
+#----------------------------------------
+placeholder = st.empty()
+
+# Replace the placeholder with some text:
+placeholder.text("Hello")
+
+# Replace the text with a chart:
+placeholder.line_chart({"data": [1, 5, 2, 6]})
+
+if st.button('Say hello'):
+    st.write('Why hello there')
+    # Clear all those elements:
+    placeholder.empty()
 
 
 
