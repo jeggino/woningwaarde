@@ -162,8 +162,9 @@ import plotly.express as px
 from streamlit_plotly_events import plotly_events
 
 fig2 = px.choropleth(df_segmentation, geojson=df_segmentation.geometry, locations=df_segmentation.index,
-                     projection= "mercator",
-                     color_continuous_scale=px.colors.cyclical.IceFire
+                     projection= "mercator", color="Clusters",
+                     color_continuous_scale=px.colors.cyclical.IceFire,
+                     
                    )
 
 fig2.update_geos(fitbounds="locations", visible=False)
