@@ -395,7 +395,7 @@ st.write(df_4[df_4.index==selected_points_4[0]["pointNumber"]])
 
 if st.button("Clear All"):
     # Clears all st.cache_resource caches:
-    st.cache_resource.clear()
+    st.cache_data.clear()
 
 
 
