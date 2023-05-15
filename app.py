@@ -395,22 +395,15 @@ st.write(df_4[df_4.index==selected_points_4[0]["pointNumber"]])
 
 
 #----------------------------------------
-placeholder = st.empty()
-
-# Replace the placeholder with some text:
-text = placeholder.text("Hello")
-
-# Replace the text with a chart:
-chart = placeholder.line_chart({"data": [1, 5, 2, 6]})
-
-if st.button('Say hello'):
-    st.write('Why hello there')
-    # Clear all those elements:
-    placeholder.empty()
-    
-if st.button('Say bye'):
-    text
-    chart
+"---"
+txt = st.text_area('Text to analyze', '''
+    It was the best of times, it was the worst of times, it was
+    the age of wisdom, it was the age of foolishness, it was
+    the epoch of belief, it was the epoch of incredulity, it
+    was the season of Light, it was the season of Darkness, it
+    was the spring of hope, it was the winter of despair, (...)
+    ''')
+st.write('Sentiment:', run_sentiment_analysis(txt))
     
 
 
