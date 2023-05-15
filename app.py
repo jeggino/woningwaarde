@@ -156,6 +156,22 @@ r = pdk.Deck(
 )
 
 
+#-------------------
+"---"
+
+
+fig2 = px.choropleth(df_segmentation, geojson=df_segmentation.geometry, locations=df_segmentation.index,
+                     projection= "mercator",
+                     color_continuous_scale=px.colors.cyclical.IceFire
+                   )
+
+fig2.update_geos(fitbounds="locations", visible=False)
+fig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+
+selected_points_3 = plotly_events(fig2, click_event=True, hover_event=False)
+st.write(df_segmentation[df_segmentation.index==selected_points_3[0]["pointNumber"]])
+
+
 #-----------------------------
 with left:
     st.altair_chart(chart, use_container_width=False,theme=None)
