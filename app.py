@@ -393,8 +393,9 @@ fig5.update_xaxes(
 selected_points_4 = plotly_events(fig5, click_event=True, hover_event=False)
 st.write(df_4[df_4.index==selected_points_4[0]["pointNumber"]])
 
-if st.button('Say hello'):
-    st.experimental_rerun()
+if st.button("Clear All"):
+    # Clears all st.cache_resource caches:
+    st.cache_resource.clear()
 
 
 
