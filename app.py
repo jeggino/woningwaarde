@@ -158,7 +158,7 @@ r = pdk.Deck(
 
 #-------------------
 "---"
-
+import plotly.express as px
 
 fig2 = px.choropleth(df_segmentation, geojson=df_segmentation.geometry, locations=df_segmentation.index,
                      projection= "mercator",
