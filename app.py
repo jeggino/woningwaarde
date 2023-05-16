@@ -168,7 +168,8 @@ fig2 = px.choropleth(df_segmentation, geojson=df_segmentation.geometry, location
                    )
 
 fig2.update_geos(fitbounds="locations", visible=False)
-fig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+fig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0},mapbox_style="open-street-map")
+
 
 selected_points_3 = plotly_events(fig2, click_event=True, hover_event=False)
 st.write(df_segmentation[df_segmentation.index==selected_points_3[0]["pointNumber"]])
@@ -290,21 +291,6 @@ selected_points_2 = plotly_events(fig, click_event=True, hover_event=False)
 st.write(df[df.index==selected_points_2[0]["pointNumber"]])
 
 
-#-------------------
-df2 = px.data.election()
-geojson = px.data.election_geojson()
-
-fig2 = px.choropleth(df2, geojson=geojson, color="Bergeron", color_continuous_scale=px.colors.cyclical.IceFire,
-                    locations="district", featureidkey="properties.district",
-                   )
-
-fig2.update_geos(fitbounds="locations", visible=False)
-fig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-
-selected_points_3 = plotly_events(fig2, click_event=True, hover_event=False)
-st.write(df2[df2.index==selected_points_3[0]["pointNumber"]])
-
-
 #-------------
 import plotly.graph_objects as go
 
@@ -413,27 +399,7 @@ st.write(df_4[df_4.index==selected_points_4[0]["pointNumber"]])
 
 
 #----------------------------------------
-"---"
-txt = st.text_area('Text to analyze', '''
-    It was the best of times, it was the worst of times, it was
-    the age of wisdom, it was the age of foolishness, it was
-    the epoch of belief, it was the epoch of incredulity, it
-    was the season of Light, it was the season of Darkness, it
-    was the spring of hope, it was the winter of despair, (...)
-    ''')
 
-color = st.color_picker('Pick A Color', '#00f900')
-st.write('The current color is', color)
-
-
-#----------------------------------------
-dictionary_opition_color = {}
-for cluster in range(option_clusters):
-    dictionary_opition_color[cluster] = st.color_picker('Pick A Color')
-    
-for key in dictionary_opition_color.keys():
-    with st.sidebar:
-        dictionary_opition_color[key]
     
 
 
