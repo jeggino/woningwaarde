@@ -424,6 +424,16 @@ txt = st.text_area('Text to analyze', '''
 
 color = st.color_picker('Pick A Color', '#00f900')
 st.write('The current color is', color)
+
+
+#----------------------------------------
+dictionary_opition_color = {}
+for cluster in range(option_clusters):
+    dictionary_opition_color[cluster] = st.color_picker('Pick A Color')
+    
+for key in dictionary_opition_color.keys():
+    with st.sidebar:
+        dictionary_opition_color[key]
     
 
 
