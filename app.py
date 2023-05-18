@@ -70,7 +70,7 @@ def analysis_cluster():
 df_segmentation, option_clusters, x_MinMax = analysis_cluster()
 
 st.write(
-        f'<iframe src="https://en.wikipedia.org/wiki/Great_tit"></iframe>',
+        f'<iframe src="https://en.wikipedia.org/wiki/Common_Cuckoo"></iframe>',
         unsafe_allow_html=True,
     )
 # -------------------------------------------------------
