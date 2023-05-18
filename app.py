@@ -69,7 +69,10 @@ def analysis_cluster():
 # -------------------------------------------------------
 df_segmentation, option_clusters, x_MinMax = analysis_cluster()
 
-
+st.write(
+        f'<iframe src="https://en.wikipedia.org/wiki/Great_tit"></iframe>',
+        unsafe_allow_html=True,
+    )
 # -------------------------------------------------------
 import altair as alt
 import seaborn as sns
