@@ -69,10 +69,32 @@ def analysis_cluster():
 # -------------------------------------------------------
 df_segmentation, option_clusters, x_MinMax = analysis_cluster()
 
+
+#--------------------------------------------------------
+options_species = ['Cuculus canorus',
+ 'Strix aluco',
+ 'Scolopax rusticola',
+ 'Psittacula krameri',
+ 'Circus cyaneus',
+ 'Somateria mollissima',
+ 'Tachybaptus ruficollis',
+ 'Accipiter nisus',
+ 'Branta bernicla',
+ 'Turdus viscivorus']
+
+species = st.selectbox('chose a species', options_species)
+
+import wikipedia
+
+wiki = wikipedia.page(species)
+summary = wiki.summary
+url = wiki.url
 st.write(
-        f'<iframe src="https://en.wikipedia.org/wiki/Common_Cuckoo"></iframe>',
+        f'<iframe src={url}></iframe>',
         unsafe_allow_html=True,
     )
+
+st.text(summary)
 # -------------------------------------------------------
 import altair as alt
 import seaborn as sns
