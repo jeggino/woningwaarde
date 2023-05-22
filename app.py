@@ -85,16 +85,20 @@ options_species = ['Cuculus canorus',
 species = st.selectbox('chose a species', options_species)
 
 import wikipedia
+from pyWikiCommons import pyWikiCommons
 
 wiki = wikipedia.page(species)
 summary = wiki.summary
 url = wiki.url
 options_images = wiki.images
 
-species = st.selectbox('chose an image', options_images)
+
+
+
+images = pyWikiCommons.get_commons_url(f"File:{species.replace(' ','_')}.jpg")
 
 st.write(
-        f'<iframe src={species}></iframe>',
+        f'<iframe src={images}></iframe>',
         unsafe_allow_html=True,
     )
 
