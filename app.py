@@ -94,7 +94,10 @@ st.write(
         unsafe_allow_html=True,
     )
 
-st.text(summary)
+st.write(summary)
+
+
+
 # -------------------------------------------------------
 import altair as alt
 import seaborn as sns
