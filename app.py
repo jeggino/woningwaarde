@@ -87,26 +87,10 @@ species = st.selectbox('chose a species', options_species)
 import wikipedia
 from pyWikiCommons import pyWikiCommons
 
-wiki = wikipedia.page(species)
-summary = wiki.summary
-url = wiki.url
-options_images = wiki.images
-
-
-
-
+summary = wikipedia.page(species).summary
 images = pyWikiCommons.get_commons_url(f"File:{species.replace(' ','_')}.jpg")
-st.image(images)
-st.write(
-        f'<iframe src={images},width="300", height="900"></iframe>',
-        unsafe_allow_html=True, 
-    )
 
-# st.write(
-#         f'<iframe src={url}></iframe>',
-#         unsafe_allow_html=True,
-#     )
-
+st.image(images,use_column_width=True)
 st.write(summary)
 
 
