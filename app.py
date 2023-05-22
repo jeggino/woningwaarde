@@ -89,10 +89,19 @@ import wikipedia
 wiki = wikipedia.page(species)
 summary = wiki.summary
 url = wiki.url
+options_images = wiki.images
+
+species = st.selectbox('chose an image', options_images)
+
 st.write(
-        f'<iframe src={url}></iframe>',
+        f'<iframe src={species}></iframe>',
         unsafe_allow_html=True,
     )
+
+# st.write(
+#         f'<iframe src={url}></iframe>',
+#         unsafe_allow_html=True,
+#     )
 
 st.write(summary)
 
