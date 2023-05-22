@@ -9,5 +9,6 @@ leafmap
 streamlit-yellowbrick
 yellowbrick
 wikipedia
+pyWikiCommons
 
 st-clickable-images
