@@ -99,7 +99,7 @@ images = pyWikiCommons.get_commons_url(f"File:{species.replace(' ','_')}.jpg")
 
 st.write(
         f'<iframe src={images}></iframe>',
-        unsafe_allow_html=True,
+        unsafe_allow_html=False,
     )
 
 # st.write(
