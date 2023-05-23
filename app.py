@@ -27,6 +27,22 @@ df = pd.DataFrame(data, columns=[i[0] for i in cursor.description])
 st.dataframe(df)
 
 
+#---------------------------------------------
+if st.button("Create table"):
+    with conn.session as s:
+        st.markdown(f"Note that `s` is a `{type(s)}`")
+        s.execute("CREATE TABLE IF NOT EXISTS pet_owners (person TEXT, pet TEXT);")
+        s.execute("DELETE FROM pet_owners;")
+        pet_owners = {"jerry": "fish", "barbara": "cat", "alex": "puppy"}
+        for k in pet_owners:
+            s.execute(
+                "INSERT INTO pet_owners (person, pet) VALUES (:owner, :pet);",
+                params=dict(owner=k, pet=pet_owners[k]),
+            )
+        s.commit()
+
+df = conn.query("select * from pet_owners", ttl=600)
+df
 
 # left, right = st.columns([2,3],gap="large")
 
