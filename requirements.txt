@@ -10,7 +10,7 @@ streamlit-yellowbrick
 yellowbrick
 wikipedia
 pyWikiCommons
-
+deta
 st-clickable-images
 
 
