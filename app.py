@@ -15,19 +15,10 @@ st.write(st.secrets["connections"]["mysql"])
 st.write(st.secrets)
 
 
-# Establish a connection to the MySQL database
-conn = st.experimental_connection('mysql', type = 'sql')
+import streamlit as st
 
-cursor = conn.cursor()
+conn = st.experimental_connection("mysql", type="sql")
 
-query = "SELECT * FROM df"
-cursor.execute(query)
-data = cursor.fetchall()
-df = pd.DataFrame(data, columns=[i[0] for i in cursor.description])
-st.dataframe(df)
-
-
-#---------------------------------------------
 if st.button("Create table"):
     with conn.session as s:
         st.markdown(f"Note that `s` is a `{type(s)}`")
