@@ -1,15 +1,6 @@
 streamlit
 pandas
 geopandas
-streamlit-folium
-scikit-learn
-kneed
-seaborn
-streamlit-yellowbrick
-yellowbrick
-wikipedia
-pyWikiCommons
 
-st-clickable-images
 
 
