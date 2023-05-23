@@ -11,15 +11,7 @@ st.set_page_config(
 )
 
 
-# Initialize connection.
-conn = st.experimental_connection('mysql', type='sql')
 
-# Perform query.
-df = conn.query('SELECT * from mytable;', ttl=600)
-
-# Print results.
-for row in df.itertuples():
-    st.write(f"{row.name} has a :{row.pet}:")
 # left, right = st.columns([2,3],gap="large")
 
 
