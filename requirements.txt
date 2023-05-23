@@ -12,5 +12,4 @@ pyWikiCommons
 
 st-clickable-images
 
-SQLAlchemy 
-mysqlclient
+
