@@ -5,10 +5,9 @@ streamlit-folium
 scikit-learn
 kneed
 seaborn
-leafmap
 streamlit-yellowbrick
 yellowbrick
 wikipedia
 pyWikiCommons
-deta
+
 st-clickable-images
