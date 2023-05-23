@@ -10,417 +10,427 @@ st.set_page_config(
     layout="wide",
 )
 
-left, right = st.columns([2,3],gap="large")
+
+# Initialize connection.
+conn = st.experimental_connection('mysql', type='sql')
+
+# Perform query.
+df = conn.query('SELECT * from mytable;', ttl=600)
+
+# Print results.
+for row in df.itertuples():
+    st.write(f"{row.name} has a :{row.pet}:")
+# left, right = st.columns([2,3],gap="large")
 
 
-# -------------------------------------------------------
-@st.cache_data() 
-def get_data():
-    df_raw =  gpd.read_file("woningwaarde.geojson")
-    return df_raw
+# # -------------------------------------------------------
+# @st.cache_data() 
+# def get_data():
+#     df_raw =  gpd.read_file("woningwaarde.geojson")
+#     return df_raw
 
-# -------------------------------------------------------
-df = get_data()
-
-
-# -------------------------------------------------------
-from sklearn.preprocessing import MinMaxScaler
-import sklearn.cluster as cluster
-from kneed import KneeLocator
-
-@st.cache_resource(experimental_allow_widgets=True) 
-def analysis_cluster():
-    df_segmentation = df[['geometry', 'LABEL','WON','VZN', 'WRK']]
-
-    # Standardizing the features
-    df_feature = df_segmentation.iloc[:,2:]
-    x_MinMax = MinMaxScaler().fit_transform(df_feature)
-    kmeans_kwargs = {
-        "init": "random",
-        "n_init": 10,
-        "max_iter": 300,
-        "random_state": 42,
-    }
-
-    # A list holds the SSE values for each k
-    sse = []
-    for k in range(2, 11):
-        kmeans = cluster.KMeans(n_clusters=k, **kmeans_kwargs)
-        kmeans.fit(x_MinMax)
-        sse.append(kmeans.inertia_)
-
-    kl = KneeLocator(
-        range(2, 11), sse, curve="convex", direction="decreasing"
-    )
+# # -------------------------------------------------------
+# df = get_data()
 
 
-    # -------------------------------------------------------
-    option_clusters = st.sidebar.number_input(f'The best number of cluster is {kl.elbow}, but you can play aroud',
-                                              min_value=2, max_value=8,step=1,value=kl.elbow)
+# # -------------------------------------------------------
+# from sklearn.preprocessing import MinMaxScaler
+# import sklearn.cluster as cluster
+# from kneed import KneeLocator
 
-    kmeans = cluster.KMeans(n_clusters=option_clusters,init="k-means++")
-    kmeans = kmeans.fit(x_MinMax)
+# @st.cache_resource(experimental_allow_widgets=True) 
+# def analysis_cluster():
+#     df_segmentation = df[['geometry', 'LABEL','WON','VZN', 'WRK']]
 
-    df_segmentation['Clusters'] = kmeans.labels_ + 1
+#     # Standardizing the features
+#     df_feature = df_segmentation.iloc[:,2:]
+#     x_MinMax = MinMaxScaler().fit_transform(df_feature)
+#     kmeans_kwargs = {
+#         "init": "random",
+#         "n_init": 10,
+#         "max_iter": 300,
+#         "random_state": 42,
+#     }
+
+#     # A list holds the SSE values for each k
+#     sse = []
+#     for k in range(2, 11):
+#         kmeans = cluster.KMeans(n_clusters=k, **kmeans_kwargs)
+#         kmeans.fit(x_MinMax)
+#         sse.append(kmeans.inertia_)
+
+#     kl = KneeLocator(
+#         range(2, 11), sse, curve="convex", direction="decreasing"
+#     )
+
+
+#     # -------------------------------------------------------
+#     option_clusters = st.sidebar.number_input(f'The best number of cluster is {kl.elbow}, but you can play aroud',
+#                                               min_value=2, max_value=8,step=1,value=kl.elbow)
+
+#     kmeans = cluster.KMeans(n_clusters=option_clusters,init="k-means++")
+#     kmeans = kmeans.fit(x_MinMax)
+
+#     df_segmentation['Clusters'] = kmeans.labels_ + 1
     
-    return df_segmentation, option_clusters, x_MinMax
+#     return df_segmentation, option_clusters, x_MinMax
 
 
-# -------------------------------------------------------
-df_segmentation, option_clusters, x_MinMax = analysis_cluster()
+# # -------------------------------------------------------
+# df_segmentation, option_clusters, x_MinMax = analysis_cluster()
 
 
-#--------------------------------------------------------
-options_species = ['Cuculus canorus',
- 'Strix aluco',
- 'Scolopax rusticola',
- 'Psittacula krameri',
- 'Circus cyaneus',
- 'Somateria mollissima',
- 'Tachybaptus ruficollis',
- 'Accipiter nisus',
- 'Branta bernicla',
- 'Turdus viscivorus']
+# #--------------------------------------------------------
+# options_species = ['Cuculus canorus',
+#  'Strix aluco',
+#  'Scolopax rusticola',
+#  'Psittacula krameri',
+#  'Circus cyaneus',
+#  'Somateria mollissima',
+#  'Tachybaptus ruficollis',
+#  'Accipiter nisus',
+#  'Branta bernicla',
+#  'Turdus viscivorus']
 
-species = st.selectbox('chose a species', options_species)
+# species = st.selectbox('chose a species', options_species)
 
-import wikipedia
-from pyWikiCommons import pyWikiCommons
+# import wikipedia
+# from pyWikiCommons import pyWikiCommons
 
-summary = wikipedia.page(species).summary
-images = pyWikiCommons.get_commons_url(f"File:{species.replace(' ','_')}.jpg")
+# summary = wikipedia.page(species).summary
+# images = pyWikiCommons.get_commons_url(f"File:{species.replace(' ','_')}.jpg")
 
-st.image(images,use_column_width=True)
-st.write(summary)
-
-
-
-# -------------------------------------------------------
-import altair as alt
-import seaborn as sns
+# st.image(images,use_column_width=True)
+# st.write(summary)
 
 
-PALETTE = [ 'Pastel1', 'Pastel1_r', 'Pastel2', 'Pastel2_r', 'Set1', 'Set1_r', 'Set2', 'Set2_r', 'Set3', 'Set3_r', 'Spectral', 'Spectral_r', 'Wistia', 'Wistia_r', 'afmhot', 'afmhot_r', 'autumn', 'autumn_r', 'binary', 'binary_r', 'bone', 'bone_r', 'brg', 'brg_r', 'bwr', 'bwr_r', 'cividis', 'cividis_r', 'cool', 'cool_r', 'coolwarm', 'coolwarm_r', 'copper', 'copper_r', 'crest', 'crest_r', 'cubehelix', 'cubehelix_r', 'flag', 'flag_r', 'flare', 'flare_r', 'gist_earth', 'gist_earth_r', 'gist_gray', 'gist_gray_r', 'gist_heat', 'gist_heat_r', 'gist_ncar', 'gist_ncar_r', 'gist_rainbow', 'gist_rainbow_r', 'gist_stern', 'gist_stern_r', 'gist_yarg', 'gist_yarg_r', 'gnuplot', 'gnuplot2', 'gnuplot2_r', 'gnuplot_r', 'gray', 'gray_r', 'hot', 'hot_r', 'hsv', 'hsv_r', 'icefire', 'icefire_r', 'inferno', 'inferno_r', 'jet', 'jet_r', 'magma', 'magma_r', 'mako', 'mako_r', 'nipy_spectral', 'nipy_spectral_r', 'ocean', 'ocean_r', 'pink', 'pink_r', 'plasma', 'plasma_r', 'prism', 'prism_r', 'rainbow', 'rainbow_r', 'rocket', 'rocket_r', 'seismic', 'seismic_r', 'spring', 'spring_r', 'summer', 'summer_r', 'tab10', 'tab10_r', 'tab20', 'tab20_r', 'tab20b', 'tab20b_r', 'tab20c', 'tab20c_r', 'terrain', 'terrain_r', 'turbo', 'turbo_r', 'twilight', 'twilight_r', 'twilight_shifted', 'twilight_shifted_r', 'viridis', 'viridis_r', 'vlag', 'vlag_r', 'winter', 'winter_r']
-option_palette = st.sidebar.selectbox('Palette',PALETTE,index=4)
-palette = sns.color_palette(option_palette,n_colors=option_clusters)
+
+# # -------------------------------------------------------
+# import altair as alt
+# import seaborn as sns
 
 
-option_outliers = left.checkbox('outliers')
+# PALETTE = [ 'Pastel1', 'Pastel1_r', 'Pastel2', 'Pastel2_r', 'Set1', 'Set1_r', 'Set2', 'Set2_r', 'Set3', 'Set3_r', 'Spectral', 'Spectral_r', 'Wistia', 'Wistia_r', 'afmhot', 'afmhot_r', 'autumn', 'autumn_r', 'binary', 'binary_r', 'bone', 'bone_r', 'brg', 'brg_r', 'bwr', 'bwr_r', 'cividis', 'cividis_r', 'cool', 'cool_r', 'coolwarm', 'coolwarm_r', 'copper', 'copper_r', 'crest', 'crest_r', 'cubehelix', 'cubehelix_r', 'flag', 'flag_r', 'flare', 'flare_r', 'gist_earth', 'gist_earth_r', 'gist_gray', 'gist_gray_r', 'gist_heat', 'gist_heat_r', 'gist_ncar', 'gist_ncar_r', 'gist_rainbow', 'gist_rainbow_r', 'gist_stern', 'gist_stern_r', 'gist_yarg', 'gist_yarg_r', 'gnuplot', 'gnuplot2', 'gnuplot2_r', 'gnuplot_r', 'gray', 'gray_r', 'hot', 'hot_r', 'hsv', 'hsv_r', 'icefire', 'icefire_r', 'inferno', 'inferno_r', 'jet', 'jet_r', 'magma', 'magma_r', 'mako', 'mako_r', 'nipy_spectral', 'nipy_spectral_r', 'ocean', 'ocean_r', 'pink', 'pink_r', 'plasma', 'plasma_r', 'prism', 'prism_r', 'rainbow', 'rainbow_r', 'rocket', 'rocket_r', 'seismic', 'seismic_r', 'spring', 'spring_r', 'summer', 'summer_r', 'tab10', 'tab10_r', 'tab20', 'tab20_r', 'tab20b', 'tab20b_r', 'tab20c', 'tab20c_r', 'terrain', 'terrain_r', 'turbo', 'turbo_r', 'twilight', 'twilight_r', 'twilight_shifted', 'twilight_shifted_r', 'viridis', 'viridis_r', 'vlag', 'vlag_r', 'winter', 'winter_r']
+# option_palette = st.sidebar.selectbox('Palette',PALETTE,index=4)
+# palette = sns.color_palette(option_palette,n_colors=option_clusters)
 
-source = df_segmentation.melt(id_vars="Clusters",value_vars=['WON','VZN', 'WRK'])
 
-chart = alt.Chart(source).mark_boxplot(ticks=True,outliers=option_outliers).encode(
-    x=alt.X("Clusters:N", title=None, axis=alt.Axis(labels=False, ticks=False), scale=alt.Scale(padding=1)), 
-    y=alt.Y("value:Q"), 
-    color = alt.Color("Clusters:N", scale=alt.Scale(range=palette.as_hex())),
-    column=alt.Column('variable:N', sort=['WON','VZN', 'WRK'], header=alt.Header(orient='bottom'))
-).properties(
-    width=100
-).configure_facet(
-    spacing=7
-).configure_view(
-    stroke=None
-)
+# option_outliers = left.checkbox('outliers')
+
+# source = df_segmentation.melt(id_vars="Clusters",value_vars=['WON','VZN', 'WRK'])
+
+# chart = alt.Chart(source).mark_boxplot(ticks=True,outliers=option_outliers).encode(
+#     x=alt.X("Clusters:N", title=None, axis=alt.Axis(labels=False, ticks=False), scale=alt.Scale(padding=1)), 
+#     y=alt.Y("value:Q"), 
+#     color = alt.Color("Clusters:N", scale=alt.Scale(range=palette.as_hex())),
+#     column=alt.Column('variable:N', sort=['WON','VZN', 'WRK'], header=alt.Header(orient='bottom'))
+# ).properties(
+#     width=100
+# ).configure_facet(
+#     spacing=7
+# ).configure_view(
+#     stroke=None
+# )
     
 
-# -------------------------------------------------------
-import pydeck as pdk
+# # -------------------------------------------------------
+# import pydeck as pdk
 
-option_tootip = st.sidebar.selectbox('',('WON','VZN', 'WRK'), index=1)
+# option_tootip = st.sidebar.selectbox('',('WON','VZN', 'WRK'), index=1)
 
-MAPS_LINKS = ["mapbox://styles/mapbox/streets-v12","mapbox://styles/mapbox/outdoors-v12",
-        "mapbox://styles/mapbox/light-v11","mapbox://styles/mapbox/dark-v11",
-        "mapbox://styles/mapbox/satellite-v9","mapbox://styles/mapbox/satellite-streets-v12",
-        "mapbox://styles/mapbox/navigation-day-v1","mapbox://styles/mapbox/navigation-night-v1"]
+# MAPS_LINKS = ["mapbox://styles/mapbox/streets-v12","mapbox://styles/mapbox/outdoors-v12",
+#         "mapbox://styles/mapbox/light-v11","mapbox://styles/mapbox/dark-v11",
+#         "mapbox://styles/mapbox/satellite-v9","mapbox://styles/mapbox/satellite-streets-v12",
+#         "mapbox://styles/mapbox/navigation-day-v1","mapbox://styles/mapbox/navigation-night-v1"]
 
-MAPS_NAMES = ["streets-v12","outdoors","light","dark","satellite","satellite-streets","navigation-day","navigation-night"]
+# MAPS_NAMES = ["streets-v12","outdoors","light","dark","satellite","satellite-streets","navigation-day","navigation-night"]
 
-MAPS_DICTIONARY = dict(zip(MAPS_NAMES,MAPS_LINKS))
+# MAPS_DICTIONARY = dict(zip(MAPS_NAMES,MAPS_LINKS))
 
-option_map = st.sidebar.selectbox("Chose a map style",MAPS_NAMES, index=0)
+# option_map = st.sidebar.selectbox("Chose a map style",MAPS_NAMES, index=0)
 
-colors = dict(zip(list(range(1,option_clusters+1)),
-                  palette
-                 )
-             )
+# colors = dict(zip(list(range(1,option_clusters+1)),
+#                   palette
+#                  )
+#              )
 
-df_segmentation['Color'] = df_segmentation['Clusters'].map(colors)
-df_segmentation['Color'] = df_segmentation["Color"].apply(lambda x: [round(i * 255) for i in x])
-
-
-polygon_layer = pdk.Layer(
-    'GeoJsonLayer',
-    df_segmentation,
-    opacity=1,
-    stroked=True,
-    filled=True,
-    extruded=True,
-    get_elevation=option_tootip,
-    elevation_scale=0.01,
-    wireframe=True,
-    get_fill_color='Color',
-    get_line_color=[255, 255, 255],
-    pickable=True,
-)
-
-INITIAL_VIEW_STATE = pdk.ViewState(
-    latitude=52.374119, 
-    longitude=4.895906,
-    zoom=10,
-    pitch=35,
-    bearing=0
-)
-
-tooltip = {"text": "Cluster: {Clusters} \n WON: {WON} \n VZN: {VZN} \n WRK: {WRK}"}
-
-r = pdk.Deck(
-    [polygon_layer],
-    initial_view_state=INITIAL_VIEW_STATE,
-    tooltip = tooltip,
-    map_style = MAPS_DICTIONARY[option_map],
-)
+# df_segmentation['Color'] = df_segmentation['Clusters'].map(colors)
+# df_segmentation['Color'] = df_segmentation["Color"].apply(lambda x: [round(i * 255) for i in x])
 
 
-#-------------------
-"---"
-import plotly.express as px
-from streamlit_plotly_events import plotly_events
+# polygon_layer = pdk.Layer(
+#     'GeoJsonLayer',
+#     df_segmentation,
+#     opacity=1,
+#     stroked=True,
+#     filled=True,
+#     extruded=True,
+#     get_elevation=option_tootip,
+#     elevation_scale=0.01,
+#     wireframe=True,
+#     get_fill_color='Color',
+#     get_line_color=[255, 255, 255],
+#     pickable=True,
+# )
 
-fig2 = px.choropleth(df_segmentation, geojson=df_segmentation.geometry, locations=df_segmentation.index,animation_frame="Clusters",
-                     projection= "mercator", color="Clusters", animation_group="Clusters",
-                     color_continuous_scale=px.colors.cyclical.IceFire,
+# INITIAL_VIEW_STATE = pdk.ViewState(
+#     latitude=52.374119, 
+#     longitude=4.895906,
+#     zoom=10,
+#     pitch=35,
+#     bearing=0
+# )
+
+# tooltip = {"text": "Cluster: {Clusters} \n WON: {WON} \n VZN: {VZN} \n WRK: {WRK}"}
+
+# r = pdk.Deck(
+#     [polygon_layer],
+#     initial_view_state=INITIAL_VIEW_STATE,
+#     tooltip = tooltip,
+#     map_style = MAPS_DICTIONARY[option_map],
+# )
+
+
+# #-------------------
+# "---"
+# import plotly.express as px
+# from streamlit_plotly_events import plotly_events
+
+# fig2 = px.choropleth(df_segmentation, geojson=df_segmentation.geometry, locations=df_segmentation.index,animation_frame="Clusters",
+#                      projection= "mercator", color="Clusters", animation_group="Clusters",
+#                      color_continuous_scale=px.colors.cyclical.IceFire,
                      
-                   )
+#                    )
 
-fig2.update_geos(fitbounds="locations", visible=False)
-fig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0},mapbox_style="open-street-map")
-
-
-selected_points_3 = plotly_events(fig2, click_event=True, hover_event=False)
-st.write(df_segmentation[df_segmentation.index==selected_points_3[0]["pointNumber"]])
+# fig2.update_geos(fitbounds="locations", visible=False)
+# fig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0},mapbox_style="open-street-map")
 
 
-#-----------------------------
-with left:
-    st.altair_chart(chart, use_container_width=False,theme=None)
+# selected_points_3 = plotly_events(fig2, click_event=True, hover_event=False)
+# st.write(df_segmentation[df_segmentation.index==selected_points_3[0]["pointNumber"]])
+
+
+# #-----------------------------
+# with left:
+#     st.altair_chart(chart, use_container_width=False,theme=None)
     
-with right:
-    st.pydeck_chart(pydeck_obj=r, use_container_width=True)
+# with right:
+#     st.pydeck_chart(pydeck_obj=r, use_container_width=True)
     
-    def filter_by_viewport(widget_instance, payload):
+#     def filter_by_viewport(widget_instance, payload):
         
-        return payload['data']
+#         return payload['data']
             
-    st.write(r.deck_widget.on_click(filter_by_viewport))
+#     st.write(r.deck_widget.on_click(filter_by_viewport))
        
     
-#-----------------------------
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from yellowbrick.classifier import ClassPredictionError
-from streamlit_yellowbrick import st_yellowbrick
-from sklearn.neural_network import MLPClassifier
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.svm import SVC
-from sklearn.gaussian_process import GaussianProcessClassifier
-from sklearn.gaussian_process.kernels import RBF
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
-from sklearn.naive_bayes import GaussianNB
-from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+# #-----------------------------
+# from sklearn.model_selection import train_test_split
+# from sklearn.ensemble import RandomForestClassifier
+# from yellowbrick.classifier import ClassPredictionError
+# from streamlit_yellowbrick import st_yellowbrick
+# from sklearn.neural_network import MLPClassifier
+# from sklearn.neighbors import KNeighborsClassifier
+# from sklearn.svm import SVC
+# from sklearn.gaussian_process import GaussianProcessClassifier
+# from sklearn.gaussian_process.kernels import RBF
+# from sklearn.tree import DecisionTreeClassifier
+# from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
+# from sklearn.naive_bayes import GaussianNB
+# from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 
-MODELS = [
-    "Nearest Neighbors",
-    "Linear SVM",
-    "RBF SVM",
-    "Gaussian Process",
-    "Decision Tree",
-    "Random Forest",
-    "Neural Net",
-    "AdaBoost",
-    "Naive Bayes",
-    "QDA",
-]
+# MODELS = [
+#     "Nearest Neighbors",
+#     "Linear SVM",
+#     "RBF SVM",
+#     "Gaussian Process",
+#     "Decision Tree",
+#     "Random Forest",
+#     "Neural Net",
+#     "AdaBoost",
+#     "Naive Bayes",
+#     "QDA",
+# ]
 
-classifiers = [
-    KNeighborsClassifier(3),
-    SVC(kernel="linear", C=0.025),
-    SVC(gamma=2, C=1),
-    GaussianProcessClassifier(1.0 * RBF(1.0)),
-    DecisionTreeClassifier(max_depth=5),
-    RandomForestClassifier(max_depth=5, n_estimators=10, max_features=1),
-    MLPClassifier(alpha=1, max_iter=1000),
-    AdaBoostClassifier(),
-    GaussianNB(),
-    QuadraticDiscriminantAnalysis(),
-]
+# classifiers = [
+#     KNeighborsClassifier(3),
+#     SVC(kernel="linear", C=0.025),
+#     SVC(gamma=2, C=1),
+#     GaussianProcessClassifier(1.0 * RBF(1.0)),
+#     DecisionTreeClassifier(max_depth=5),
+#     RandomForestClassifier(max_depth=5, n_estimators=10, max_features=1),
+#     MLPClassifier(alpha=1, max_iter=1000),
+#     AdaBoostClassifier(),
+#     GaussianNB(),
+#     QuadraticDiscriminantAnalysis(),
+# ]
 
-dict_models = dict(zip(MODELS,classifiers))
+# dict_models = dict(zip(MODELS,classifiers))
 
-option_model = st.sidebar.selectbox("Select a model", MODELS, index=0)
+# option_model = st.sidebar.selectbox("Select a model", MODELS, index=0)
 
-#Create classification dataset
-X = x_MinMax
-y = df_segmentation["Clusters"]
-
-
-# Perform 80/20 training/test split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20,
-                                                    random_state=42)
-# Instantiate the classification model and visualizer
-visualizer = ClassPredictionError(
-    dict_models[option_model], 
-)
-
-# Fit the training data to the visualizer
-visualizer.fit(X_train, y_train)
-
-# Evaluate the model on the test data
-visualizer.score(X_test, y_test)
-
-# Draw visualization
-st_yellowbrick(visualizer) 
+# #Create classification dataset
+# X = x_MinMax
+# y = df_segmentation["Clusters"]
 
 
-#-------------------
-import streamlit as st
-from st_clickable_images import clickable_images
+# # Perform 80/20 training/test split
+# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20,
+#                                                     random_state=42)
+# # Instantiate the classification model and visualizer
+# visualizer = ClassPredictionError(
+#     dict_models[option_model], 
+# )
 
-clicked = clickable_images(
-    [
-        "https://images.unsplash.com/photo-1565130838609-c3a86655db61?w=700",
-        "https://images.unsplash.com/photo-1565372195458-9de0b320ef04?w=700",
-        "https://images.unsplash.com/photo-1582550945154-66ea8fff25e1?w=700",
-        "https://images.unsplash.com/photo-1591797442444-039f23ddcc14?w=700",
-        "https://images.unsplash.com/photo-1518727818782-ed5341dbd476?w=700",
-    ],
-    titles=[f"Image #{str(i)}" for i in range(5)],
-    div_style={"display": "flex", "justify-content": "center", "flex-wrap": "wrap"},
-    img_style={"margin": "5px", "height": "200px"},
-)
+# # Fit the training data to the visualizer
+# visualizer.fit(X_train, y_train)
 
-st.markdown(f"Image #{clicked} clicked" if clicked > -1 else "No image clicked")
+# # Evaluate the model on the test data
+# visualizer.score(X_test, y_test)
+
+# # Draw visualization
+# st_yellowbrick(visualizer) 
 
 
+# #-------------------
+# import streamlit as st
+# from st_clickable_images import clickable_images
 
-#-------------------
-import plotly.express as px
-from streamlit_plotly_events import plotly_events
+# clicked = clickable_images(
+#     [
+#         "https://images.unsplash.com/photo-1565130838609-c3a86655db61?w=700",
+#         "https://images.unsplash.com/photo-1565372195458-9de0b320ef04?w=700",
+#         "https://images.unsplash.com/photo-1582550945154-66ea8fff25e1?w=700",
+#         "https://images.unsplash.com/photo-1591797442444-039f23ddcc14?w=700",
+#         "https://images.unsplash.com/photo-1518727818782-ed5341dbd476?w=700",
+#     ],
+#     titles=[f"Image #{str(i)}" for i in range(5)],
+#     div_style={"display": "flex", "justify-content": "center", "flex-wrap": "wrap"},
+#     img_style={"margin": "5px", "height": "200px"},
+# )
 
-df = px.data.carshare()
-fig = px.scatter_mapbox(df, lat="centroid_lat", lon="centroid_lon", color_continuous_scale=px.colors.cyclical.IceFire,    color="peak_hour", size="car_hours",
-                   size_max=15, zoom=10)
-fig.update_layout(mapbox_style="open-street-map")
-
-selected_points_2 = plotly_events(fig, click_event=True, hover_event=False)
-st.write(df[df.index==selected_points_2[0]["pointNumber"]])
+# st.markdown(f"Image #{clicked} clicked" if clicked > -1 else "No image clicked")
 
 
-#-------------
-import plotly.graph_objects as go
 
-country = ['Switzerland (2011)', 'Chile (2013)', 'Japan (2014)',
-           'United States (2012)', 'Slovenia (2014)', 'Canada (2011)',
-           'Poland (2010)', 'Estonia (2015)', 'Luxembourg (2013)', 'Portugal (2011)']
-voting_pop = [40, 45.7, 52, 53.6, 54.1, 54.2, 54.5, 54.7, 55.1, 56.6]
-reg_voters = [49.1, 42, 52.7, 84.3, 51.7, 61.1, 55.3, 64.2, 91.1, 58.9]
+# #-------------------
+# import plotly.express as px
+# from streamlit_plotly_events import plotly_events
 
-df_3  = pd.DataFrame(data = {"country":country,"voting_pop":voting_pop,"reg_voters":reg_voters})
+# df = px.data.carshare()
+# fig = px.scatter_mapbox(df, lat="centroid_lat", lon="centroid_lon", color_continuous_scale=px.colors.cyclical.IceFire,    color="peak_hour", size="car_hours",
+#                    size_max=15, zoom=10)
+# fig.update_layout(mapbox_style="open-street-map")
 
-fig4 = go.Figure()
+# selected_points_2 = plotly_events(fig, click_event=True, hover_event=False)
+# st.write(df[df.index==selected_points_2[0]["pointNumber"]])
 
-fig4.add_trace(go.Scatter(
-    x=df_3.voting_pop,
-    y=df_3.country,
-    name='Percent of estimated voting age population',
-    marker=dict(
-        color='rgba(156, 165, 196, 0.95)',
-        line_color='rgba(156, 165, 196, 1.0)',
-    )
-))
+
+# #-------------
+# import plotly.graph_objects as go
+
+# country = ['Switzerland (2011)', 'Chile (2013)', 'Japan (2014)',
+#            'United States (2012)', 'Slovenia (2014)', 'Canada (2011)',
+#            'Poland (2010)', 'Estonia (2015)', 'Luxembourg (2013)', 'Portugal (2011)']
+# voting_pop = [40, 45.7, 52, 53.6, 54.1, 54.2, 54.5, 54.7, 55.1, 56.6]
+# reg_voters = [49.1, 42, 52.7, 84.3, 51.7, 61.1, 55.3, 64.2, 91.1, 58.9]
+
+# df_3  = pd.DataFrame(data = {"country":country,"voting_pop":voting_pop,"reg_voters":reg_voters})
+
+# fig4 = go.Figure()
+
+# fig4.add_trace(go.Scatter(
+#     x=df_3.voting_pop,
+#     y=df_3.country,
+#     name='Percent of estimated voting age population',
+#     marker=dict(
+#         color='rgba(156, 165, 196, 0.95)',
+#         line_color='rgba(156, 165, 196, 1.0)',
+#     )
+# ))
                      
-fig4.add_trace(go.Scatter(
-    x=reg_voters, y=country,
-    name='Percent of estimated registered voters',
-    marker=dict(
-        color='rgba(204, 204, 204, 0.95)',
-        line_color='rgba(217, 217, 217, 1.0)'
-    )
-))
+# fig4.add_trace(go.Scatter(
+#     x=reg_voters, y=country,
+#     name='Percent of estimated registered voters',
+#     marker=dict(
+#         color='rgba(204, 204, 204, 0.95)',
+#         line_color='rgba(217, 217, 217, 1.0)'
+#     )
+# ))
 
-fig4.update_traces(mode='markers', marker=dict(line_width=1, symbol='circle', size=16))
+# fig4.update_traces(mode='markers', marker=dict(line_width=1, symbol='circle', size=16))
 
-fig4.update_layout(
-    title="Votes cast for ten lowest voting age population in OECD countries",
-    xaxis=dict(
-        showgrid=False,
-        showline=True,
-        linecolor='rgb(102, 102, 102)',
-        tickfont_color='rgb(102, 102, 102)',
-        showticklabels=True,
-        dtick=10,
-        ticks='outside',
-        tickcolor='rgb(102, 102, 102)',
-    ),
-    margin=dict(l=140, r=40, b=50, t=80),
-    legend=dict(
-        font_size=10,
-        yanchor='middle',
-        xanchor='right',
-    ),
-    width=800,
-    height=600,
-    paper_bgcolor='white',
-    plot_bgcolor='white',
-    hovermode='closest',
-)
+# fig4.update_layout(
+#     title="Votes cast for ten lowest voting age population in OECD countries",
+#     xaxis=dict(
+#         showgrid=False,
+#         showline=True,
+#         linecolor='rgb(102, 102, 102)',
+#         tickfont_color='rgb(102, 102, 102)',
+#         showticklabels=True,
+#         dtick=10,
+#         ticks='outside',
+#         tickcolor='rgb(102, 102, 102)',
+#     ),
+#     margin=dict(l=140, r=40, b=50, t=80),
+#     legend=dict(
+#         font_size=10,
+#         yanchor='middle',
+#         xanchor='right',
+#     ),
+#     width=800,
+#     height=600,
+#     paper_bgcolor='white',
+#     plot_bgcolor='white',
+#     hovermode='closest',
+# )
                      
-selected_points_4 = plotly_events(fig4, click_event=True, hover_event=False)
-st.write(df_3[df_3.index==selected_points_4[0]["pointNumber"]])
+# selected_points_4 = plotly_events(fig4, click_event=True, hover_event=False)
+# st.write(df_3[df_3.index==selected_points_4[0]["pointNumber"]])
 
 
-#---------------------------
-import plotly.graph_objects as go
+# #---------------------------
+# import plotly.graph_objects as go
 
-fig5 = go.Figure(go.Indicator(
-    domain = {'x': [0, 1], 'y': [0, 1]},
-    value = 220,
-    mode = "gauge+number+delta",
-    title = {'text': "Speed"},
-    delta = {'reference': 380},
-    gauge = {'axis': {'range': [None, 500]},
-             'bar': {'color': "darkblue"},
-             'steps' : [
-                 {'range': [0, 250], 'color': "green"},
-                 {'range': [250, 400], 'color': "yellow"},
-                {'range': [400, 500], 'color': "red"}],
-             'threshold' : {'line': {'color': "black", 'width': 4}, 'thickness': 0.75, 'value': 490}}))
+# fig5 = go.Figure(go.Indicator(
+#     domain = {'x': [0, 1], 'y': [0, 1]},
+#     value = 220,
+#     mode = "gauge+number+delta",
+#     title = {'text': "Speed"},
+#     delta = {'reference': 380},
+#     gauge = {'axis': {'range': [None, 500]},
+#              'bar': {'color': "darkblue"},
+#              'steps' : [
+#                  {'range': [0, 250], 'color': "green"},
+#                  {'range': [250, 400], 'color': "yellow"},
+#                 {'range': [400, 500], 'color': "red"}],
+#              'threshold' : {'line': {'color': "black", 'width': 4}, 'thickness': 0.75, 'value': 490}}))
 
-fig5
+# fig5
 
 
-#---------------------------------
-df_4 = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv')
+# #---------------------------------
+# df_4 = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv')
 
-fig5 = px.histogram(df_4, x="Date", y="AAPL.Close", histfunc="avg", title="Histogram on Date Axes")
-fig5.update_traces(xbins_size="M1")
-fig5.update_xaxes(showgrid=True, ticklabelmode="period", dtick="M1", tickformat="%b\n%Y")
-fig5.update_layout(bargap=0.1)
-fig5.add_trace(go.Scatter(mode="markers", x=df_4["Date"], y=df_4["AAPL.Close"], name="daily"))
-fig5.update_xaxes(
-    rangeslider_visible=False,
-    rangeselector=dict(
-        buttons=list([
-            dict(count=1, label="1m", step="month", stepmode="backward"),
-            dict(count=6, label="6m", step="month", stepmode="backward"),
-            dict(count=1, label="1y", step="year", stepmode="backward"),
-            dict(step="all")
-        ])
-    )
-)
+# fig5 = px.histogram(df_4, x="Date", y="AAPL.Close", histfunc="avg", title="Histogram on Date Axes")
+# fig5.update_traces(xbins_size="M1")
+# fig5.update_xaxes(showgrid=True, ticklabelmode="period", dtick="M1", tickformat="%b\n%Y")
+# fig5.update_layout(bargap=0.1)
+# fig5.add_trace(go.Scatter(mode="markers", x=df_4["Date"], y=df_4["AAPL.Close"], name="daily"))
+# fig5.update_xaxes(
+#     rangeslider_visible=False,
+#     rangeselector=dict(
+#         buttons=list([
+#             dict(count=1, label="1m", step="month", stepmode="backward"),
+#             dict(count=6, label="6m", step="month", stepmode="backward"),
+#             dict(count=1, label="1y", step="year", stepmode="backward"),
+#             dict(step="all")
+#         ])
+#     )
+# )
 
-selected_points_4 = plotly_events(fig5, click_event=True, hover_event=False)
-st.write(df_4[df_4.index==selected_points_4[0]["pointNumber"]])
+# selected_points_4 = plotly_events(fig5, click_event=True, hover_event=False)
+# st.write(df_4[df_4.index==selected_points_4[0]["pointNumber"]])
 
 
 #----------------------------------------
