@@ -11,3 +11,5 @@ wikipedia
 pyWikiCommons
 
 st-clickable-images
+
+sqlalchemy
