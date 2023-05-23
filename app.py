@@ -10,30 +10,16 @@ st.set_page_config(
     layout="wide",
 )
 
-from sqlalchemy import create_engine
+# Establish a connection to the MySQL database
+conn = st.experimental_connection('mysql', type = 'sql')
 
-engine = create_engine("mysql+pymysql://{user}:{pw}@localhost/{db}"
-                       .format(user="root",
-                               pw="Platinum79",
-                               db="ebird"))
+cursor = conn.cursor()
 
-COLUMNS = ['comName', 'date', 'lat', 'lng', 'locId', 'sciName', 'subId']
-
-df_old = pd.read_sql("SELECT * FROM df",con=engine,columns=columns)[columns]
-
-records = get_observations(API_KEY, COUNTRIES,back=BACK)
-df_ebird = pd.DataFrame(records)
-df_ebird['date'] = df_ebird.obsDt.str.split(" ",expand=True)[0]
-df_ebird = df_ebird[columns]
-
-df_updated = pd.concat([df_ebird,df_old],axis=0)
-df_updated[['lat', 'lng']] = df_updated[['lat', 'lng']].astype("float")
-df_updated.drop_duplicates(inplace=True)
-df_updated.reset_index(drop=True,inplace=True)
-
-df_updated.to_sql(con=engine, name='df', if_exists='replace')
-
-st.dataframe(df_updated)
+query = "SELECT * FROM df"
+cursor.execute(query)
+data = cursor.fetchall()
+df = pd.DataFrame(data, columns=[i[0] for i in cursor.description])
+st.dataframe(df)
 
 
 
