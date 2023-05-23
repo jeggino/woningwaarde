@@ -10,6 +10,11 @@ st.set_page_config(
     layout="wide",
 )
 
+st.write(st.secrets["connections"]["mysql"])
+# OR even just
+st.write(st.secrets)
+
+
 # Establish a connection to the MySQL database
 conn = st.experimental_connection('mysql', type = 'sql')
 
