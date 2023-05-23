@@ -12,8 +12,3 @@ wikipedia
 pyWikiCommons
 deta
 st-clickable-images
-
-
-
-mysqlclient
-SQLAlchemy
