@@ -1,7 +1,5 @@
 streamlit>= 1.22
 pandas
 geopandas
-
-
-sqlalchemy
-pymysql
+mysql-connector-python 
+toml
