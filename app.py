@@ -12,8 +12,9 @@ st.set_page_config(
 )
 
 
-import mysql-connector-python 
+import mysql_connector_python 
 import toml
+
 # Reading data
 toml_data = toml.load("secrets.toml")
 # saving each credential into a variable
