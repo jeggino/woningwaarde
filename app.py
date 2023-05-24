@@ -12,25 +12,22 @@ st.set_page_config(
 )
 
 
-import mysql_connector_python 
-import toml
+import streamlit as st
+import numpy as np
+import pandas as pd
+from sqlalchemy import create_engine
+from sklearn.neighbors import NearestNeighbors
+import pyodbc
+import pymysql
 
-# Reading data
-toml_data = toml.load("secrets.toml")
-# saving each credential into a variable
-HOST_NAME = toml_data['mysql']['host']
-DATABASE = toml_data['mysql']['database']
-PASSWORD = toml_data['mysql']['password']
-USER = toml_data['mysql']['user']
-PORT = toml_data['mysql']['port']
-
-
-mydb = connection.connect(host=HOST_NAME, database=DATABASE, user=USER, passwd=PASSWORD, use_pure=True)
+engine = sqlalchemy.create_engine(
+    "mssql+pyodbc://username:passowrd@DB_server/database?driver=ODBC+Driver+17+for+SQL+Server", 
+    )
 
 
 COLUMNS = ['comName', 'date', 'lat', 'lng', 'locId', 'sciName', 'subId']
 
-query = pd.read_sql('SELECT * FROM df;' , mydb)
+query = pd.read_sql_query('SELECT * FROM df;' , engine)
 query
 
 # left, right = st.columns([2,3],gap="large")
