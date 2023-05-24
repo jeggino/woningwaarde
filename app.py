@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import geopandas as gpd
 import pydeck as pdk
+import pymysql
 
 # -------------------------------------------------------
 st.set_page_config(
