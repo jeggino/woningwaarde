@@ -3,4 +3,4 @@ pandas
 geopandas
 
 mysqlclient==2.2.0
-SQLAlchemy==2.12.3
+sqlalchemy
