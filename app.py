@@ -20,21 +20,9 @@ engine = create_engine("mysql+pymysql://{user}:{pw}@localhost/{db}"
 
 COLUMNS = ['comName', 'date', 'lat', 'lng', 'locId', 'sciName', 'subId']
 
-df_old = pd.read_sql("SELECT * FROM df",con=engine,columns=columns)[columns]
+df_old = pd.read_sql("SELECT * FROM df",con=engine)[columns]
 
-records = get_observations(API_KEY, COUNTRIES,back=BACK)
-df_ebird = pd.DataFrame(records)
-df_ebird['date'] = df_ebird.obsDt.str.split(" ",expand=True)[0]
-df_ebird = df_ebird[COLUMNS]
-
-df_updated = pd.concat([df_ebird,df_old],axis=0)
-df_updated[['lat', 'lng']] = df_updated[['lat', 'lng']].astype("float")
-df_updated.drop_duplicates(inplace=True)
-df_updated.reset_index(drop=True,inplace=True)
-
-df_updated.to_sql(con=engine, name='df', if_exists='replace')
-
-df_updated
+df_old
 
 # left, right = st.columns([2,3],gap="large")
 
