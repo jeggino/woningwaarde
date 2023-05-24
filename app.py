@@ -20,7 +20,7 @@ from sklearn.neighbors import NearestNeighbors
 import pyodbc
 import pymysql
 
-engine = sqlalchemy.create_engine(
+engine = create_engine(
     "mssql+pyodbc://username:passowrd@DB_server/database?driver=ODBC+Driver+17+for+SQL+Server", 
     )
 
