@@ -5,3 +5,4 @@ sqlalchemy==1.4.31
 scikit-learn
 pymysql==1.0.2
 pyodbc
+msodbcsql17
