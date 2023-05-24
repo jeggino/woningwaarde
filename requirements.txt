@@ -1,9 +1,3 @@
-# .streamlit/secrets.toml
-
-[connections.mysql]
-dialect = "mysql"
-host = "localhost"
-port = 3306
-database = "pets"
-username = "root"
-password = "Platinum79"
+streamlit
+mysqlclient
+SQLAlchemy
