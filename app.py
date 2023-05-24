@@ -11,19 +11,23 @@ st.set_page_config(
     layout="wide",
 )
 
-from sqlalchemy import create_engine
+# Reading data
+toml_data = toml.load("secrets.toml")
+# saving each credential into a variable
+HOST_NAME = toml_data['mysql']['host']
+DATABASE = toml_data['mysql']['database']
+PASSWORD = toml_data['mysql']['password']
+USER = toml_data['mysql']['user']
+PORT = toml_data['mysql']['port']
 
 
-engine = create_engine("mysql+pymysql://{user}:{pw}@localhost/{db}"
-                       .format(user="root",
-                               pw="Platinum79",
-                               db="ebird"))
+mydb = connection.connect(host=HOST_NAME, database=DATABASE, user=USER, passwd=PASSWORD, use_pure=True)
+
 
 COLUMNS = ['comName', 'date', 'lat', 'lng', 'locId', 'sciName', 'subId']
 
-df_old = pd.read_sql("SELECT * FROM df",con=engine)[columns]
-
-df_old
+query = pd.read_sql('SELECT * FROM df;' , mydb)
+query
 
 # left, right = st.columns([2,3],gap="large")
 
