@@ -1,4 +1,10 @@
-
+import streamlit as st
+import numpy as np
+import pandas as pd
+from sqlalchemy import create_engine
+from sklearn.neighbors import NearestNeighbors
+import pyodbc
+import pymysql
 
 # -------------------------------------------------------
 st.set_page_config(
@@ -8,13 +14,7 @@ st.set_page_config(
 )
 
 
-import streamlit as st
-import numpy as np
-import pandas as pd
-from sqlalchemy import create_engine
-from sklearn.neighbors import NearestNeighbors
-import pyodbc
-import pymysql
+
 
 engine = create_engine(
     "mssql+pyodbc://username:passowrd@DB_server/database?driver=ODBC+Driver+17+for+SQL+Server", 
