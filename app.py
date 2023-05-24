@@ -14,17 +14,11 @@ st.set_page_config(
 )
 
 
+# Initialize connection.
+conn = st.experimental_connection('mysql', type='sql')
 
-
-engine = create_engine(
-    "mssql+pyodbc://username:passowrd@DB_server/database?driver=ODBC+Driver+17+for+SQL+Server", 
-    )
-
-
-COLUMNS = ['comName', 'date', 'lat', 'lng', 'locId', 'sciName', 'subId']
-
-query = pd.read_sql_query('SELECT * FROM df;' , engine)
-query
+# Perform query.
+df = conn.query('SELECT * from df;', ttl=600)
 
 # left, right = st.columns([2,3],gap="large")
 
