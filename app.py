@@ -10,15 +10,57 @@ import pymysql
 st.set_page_config(
     page_title="Amterdam woonplaan",
     page_icon="🏠",
-    layout="wide",
+    layout="dashboard",
 )
 
 
-# Initialize connection.
-conn = st.experimental_connection('mysql', type='sql')
 
-# Perform query.
-df = conn.query('SELECT * from df;', ttl=600)
+
+#creating connection
+
+engine = sqlalchemy.create_engine(
+    "mssql+pyodbc://username:passowrd@DB_server/database?driver=ODBC+Driver+17+for+SQL+Server", 
+    )
+
+@st.cache(allow_output_mutation=True)
+def get_connection():
+    return create_engine("mssql+pyodbc://username:passowrd@DB_server/database?driver=ODBC+Driver+17+for+SQL+Server", 
+    fast_executemany = True
+    )
+
+q1 = 'SELECT * FROM df'
+
+@st.cache
+def read_df1():
+  df1 = pd.read_sql_query(q1, get_connection())
+  return df1
+
+st.write(read_df1())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # left, right = st.columns([2,3],gap="large")
 
