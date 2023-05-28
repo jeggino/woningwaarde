@@ -3,7 +3,7 @@
 import streamlit as st
 import pandas as pd
 
-df = pd.read_file(r"C:\Users\Luigi\OneDrive\Desktop\R\datasets\ebird.csv")
+df = pd.read_csv(r"http://localhost:8888/edit/Documents/Python/Projects/Bird_Migration/bird_migration.csv")
 st.dataframe(df)
     
     
