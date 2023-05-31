@@ -9,7 +9,8 @@ conn = st.experimental_connection(
     url="mysql://root:Platinum79@localhost:3306/ebird"
 )
     
-    
+df = conn.query("select * from df")
+st.dataframe(df)   
     
 # # Initialize connection.
 # # Uses st.cache_resource to only run once.
