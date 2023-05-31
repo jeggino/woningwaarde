@@ -2,12 +2,17 @@
 
 import streamlit as st
 import pandas as pd
+from sqlalchemy import create_engine
 
-conn = st.experimental_connection(
-    "local_db",
-    type="sql",
-    url="mysql://root:Platinum79@localhost:3306/ebird"
-)
+engine = sqlalchemy.create_engine(
+    "mssql+pyodbc:////root:Platinum79@localhost:3306/ebird", 
+    )
+
+# conn = st.experimental_connection(
+#     "local_db",
+#     type="sql",
+#     url="mysql://root:Platinum79@localhost:3306/ebird"
+# )
     
 df = conn.query("select * from df")
 st.dataframe(df)   
