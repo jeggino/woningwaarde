@@ -4,7 +4,7 @@ import streamlit as st
 import pandas as pd
 from sqlalchemy import create_engine
 
-engine = sqlalchemy.create_engine(
+engine = create_engine(
     "mssql+pyodbc:////root:Platinum79@localhost:3306/ebird", 
     )
 
