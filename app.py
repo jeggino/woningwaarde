@@ -3,16 +3,11 @@
 import streamlit as st
 import pandas as pd
 
-df = pd.read_csv(r"http://localhost:8888/edit/Documents/Python/Projects/Bird_Migration/bird_migration.csv")
-st.dataframe(df)
-    
-    
-    
-    
-    
-    
-    
-    
+conn = st.experimental_connection(
+    "local_db",
+    type="sql",
+    url="mysql://root:Platinum79@localhost:3306/ebird"
+)
     
     
     
