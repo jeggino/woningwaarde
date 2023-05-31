@@ -15,7 +15,7 @@ engine = create_engine(
 #     url="mysql://root:Platinum79@localhost:3306/ebird"
 # )
     
-df = conn.query("select * from df")
+df = engine.query("select * from df")
 st.dataframe(df)   
     
 # # Initialize connection.
