@@ -14,9 +14,9 @@ engine = create_engine(
 #     type="sql",
 #     url="mysql://root:Platinum79@localhost:3306/ebird"
 # )
-    
-df = engine.query("select * from df")
-st.dataframe(df)   
+df_old = pd.read_sql("SELECT * FROM df",con=engine)    
+# df = engine.query("select * from df")
+st.dataframe(df_old)   
     
 # # Initialize connection.
 # # Uses st.cache_resource to only run once.
