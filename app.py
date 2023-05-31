@@ -2,21 +2,15 @@
 
 import streamlit as st
 import pandas as pd
-from sqlalchemy import create_engine
-import pyodbc
 
-engine = create_engine(
-    "mssql+pyodbc:////root:Platinum79@localhost:3306/ebird", 
-    )
 
-# conn = st.experimental_connection(
-#     "local_db",
-#     type="sql",
-#     url="mysql://root:Platinum79@localhost:3306/ebird"
-# )
-df_old = pd.read_sql("SELECT * FROM df",con=engine)    
-# df = engine.query("select * from df")
-st.dataframe(df_old)   
+conn = st.experimental_connection(
+    "local_db",
+    type="sql",
+    url="mysql://root:Platinum79@localhost:3306/ebird"
+)
+df = engine.query("select * from df")
+st.dataframe(df)   
     
 # # Initialize connection.
 # # Uses st.cache_resource to only run once.
